@@ -21,6 +21,16 @@ public class Malas extends Artigo {
     this.ano_da_colecao = ano_da_colecao;
     }
 
+    public Malas(Malas mala) {
+        super("Mala",mala.getEstado(), mala.getNumeroDonos(), mala.getAvaliacao(), mala.getDescricao(), mala.getMarca(),
+                mala.getCodigo(), mala.getPrecoBase(), mala.getCorrecaoPreco());
+        this.tipo_mala = mala.getTipo_mala();
+        this.dim = mala.getDim();
+        this.material = mala.getMaterial();
+        this.ano_da_colecao = mala.getAno_da_colecao();
+    }
+
+
     public Tipos_Malas getTipo_mala() {
         return tipo_mala;
     }
