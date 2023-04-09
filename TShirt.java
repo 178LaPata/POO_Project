@@ -22,6 +22,7 @@ public class TShirt extends Artigo {
     public TShirt(Tamanho tamanho, Padrao padrao, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca,
             String codigo, double precoBase, double correcaoPreco) {
     super("T-Shirt", estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
+    // mudar depois ao criar a tshirt
     this.tamanho = tamanho;
     this.padrao = padrao;
     }
