@@ -1,7 +1,5 @@
 
 // falta ver a cena dos descontos e de ser LISO e assim
-// falta o clone
-
 public class TShirt extends Artigo {
     public enum Tamanho {
         S, 
