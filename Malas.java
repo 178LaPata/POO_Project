@@ -3,33 +3,26 @@ public class Malas extends Artigo {
         NORMAL,
         PREMIUM
     }
-
     private Tipos_Malas tipo_mala;
     private float dim;
     private String material;
     private int ano_da_colecao;
 
-
-    public Malas(Tipos_Malas tipo_mala,float dim,String material,int ano_da_colecao, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca,
-            String codigo, double precoBase, double correcaoPreco) {
-
-    // mudar depois ao criar a tshirt
-    super("Mala", estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
-    this.tipo_mala = tipo_mala;
-    this.dim = dim;
-    this.material = material;
-    this.ano_da_colecao = ano_da_colecao;
+    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, Estado estado, Avaliação avaliacao, int numeroDonos, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
+        super("Mala", estado, avaliacao, numeroDonos, descricao, marca, codigo, precoBase, correcaoPreco);
+        this.tipo_mala = tipo_mala;
+        this.dim = dim;
+        this.material = material;
+        this.ano_da_colecao = ano_da_colecao;
     }
 
     public Malas(Malas mala) {
-        super("Mala",mala.getEstado(), mala.getNumeroDonos(), mala.getAvaliacao(), mala.getDescricao(), mala.getMarca(),
-                mala.getCodigo(), mala.getPrecoBase(), mala.getCorrecaoPreco());
+        super("Mala", mala.getEstado(), mala.getAvaliacao(), mala.getNumeroDonos(), mala.getDescricao(), mala.getMarca(), mala.getCodigo(), mala.getPrecoBase(), mala.getCorrecaoPreco());
         this.tipo_mala = mala.getTipo_mala();
         this.dim = mala.getDim();
         this.material = mala.getMaterial();
         this.ano_da_colecao = mala.getAno_da_colecao();
     }
-
 
     public Tipos_Malas getTipo_mala() {
         return tipo_mala;
@@ -63,8 +56,20 @@ public class Malas extends Artigo {
         this.ano_da_colecao = ano_da_colecao;
     }
 
+    public boolean equals(Object o) {
+        if(this == o) 
+            return true;
+        if((o == null) || (this.getClass() != o.getClass())) 
+            return false;
+        if (!super.equals(o)) 
+            return false;
+        Malas malas = (Malas) o;
+        return (this.tipo_mala == malas.getTipo_mala() &&
+                this.dim == malas.getDim() &&
+                this.material.equals(malas.getMaterial()) &&
+                this.ano_da_colecao == malas.getAno_da_colecao());
+    }
 
-    @Override
     public String toString() {
         return super.toString() +
             "\nTipo de Mala : " + tipo_mala +
@@ -72,5 +77,8 @@ public class Malas extends Artigo {
             "\nMaterial :" + material +
             "\nAno da Coleção :" + ano_da_colecao;
     }
-
+    
+    public Malas clone() {
+        return new Malas(this);
+    }
 }

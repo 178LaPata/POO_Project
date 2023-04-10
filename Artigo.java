@@ -1,11 +1,9 @@
 public class Artigo {
     // Atributos
-
     public enum Estado{
         NOVO,
         USADO
     }
-
     public enum Avaliação{
         IMPECÁVEL,
         BOM,
@@ -24,31 +22,14 @@ public class Artigo {
     private double precoBase;           // Preço Base
     private double correcaoPreco;       // Correção do Preço
 
-
-    // Construtor que recebe um objeto Artigo
-    public Artigo(Artigo a) {
-        this.id = a.getId();
-        this.tipo = a.getTipo();
-        this.estado = a.getEstado();
-        this.avaliacao = a.getAvaliacao();
-        this.numeroDonos = a.getNumeroDonos();
-        this.descricao = a.getDescricao();
-        this.marca = a.getMarca();
-        this.codigo = a.getCodigo();
-        this.precoBase = a.getPrecoBase();
-        this.correcaoPreco = a.getCorrecaoPreco();
-    }
-
-    // Construtor que recebe todos os atributos como parâmetros
-    public Artigo(String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca,
-            String codigo, double precoBase, double correcaoPreco) {
+    public Artigo(String tipo, Estado estado, Avaliação avaliacao, int numeroDonos, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
         this.id = nextID++;
         this.tipo = tipo;
         this.estado = estado;
-        if (estado == Estado.NOVO){
+        if(estado == Estado.NOVO){
             this.numeroDonos = 0;
             this.avaliacao = Avaliação.NULL;
-        }else{
+        } else{
             this.numeroDonos = numeroDonos;
             this.avaliacao = avaliacao;
         }
@@ -57,6 +38,19 @@ public class Artigo {
         this.codigo = codigo;
         this.precoBase = precoBase;
         this.correcaoPreco = correcaoPreco;
+    }
+
+    // Construtor que recebe um objeto Artigo
+    public Artigo(Artigo a){
+        this.id = a.getId();
+        this.tipo = a.getTipo();
+        this.estado = a.getEstado();
+        this.numeroDonos = a.getNumeroDonos();
+        this.descricao = a.getDescricao();
+        this.marca = a.getMarca();
+        this.codigo = a.getCodigo();
+        this.precoBase = a.getPrecoBase();
+        this.correcaoPreco = a.getCorrecaoPreco();
     }
 
     // Getters e Setters
@@ -140,17 +134,37 @@ public class Artigo {
         this.correcaoPreco = correcaoPreco;
     }
 
-    // método toString
+    public boolean equals(Object o){
+        if(this == o) 
+            return true;
+        if((o == null) || (this.getClass() != o.getClass())) 
+            return false;
+        Artigo a = (Artigo) o;
+        return (this.id == a.getId() &&
+                this.tipo.equals(a.getTipo()) &&
+                this.estado == a.getEstado() &&
+                this.numeroDonos == a.getNumeroDonos() &&
+                this.descricao.equals(a.getDescricao()) &&
+                this.marca.equals(a.getMarca()) &&
+                this.codigo.equals(a.getCodigo()) &&
+                this.precoBase == a.getPrecoBase() &&
+                this.correcaoPreco == a.getCorrecaoPreco());
+    }
+
     public String toString() {
-        return "ID: " + id + "\n" +
-                "Tipo: " + tipo + "\n" +
-                "Estado: " + estado + "\n" +
-                "Número de donos: " + numeroDonos + "\n" +
-                "Avaliação: " + avaliacao + "\n" +
-                "Descrição: " + descricao + "\n" +
-                "Marca: " + marca + "\n" +
-                "Código: " + codigo + "\n" +
-                "Preço base: " + precoBase + "\n" +
-                "Correção de preço: " + correcaoPreco;
+        return "ID: " + id + 
+                "\nTipo: " + tipo + 
+                "\nEstado: " + estado + 
+                "\nNúmero de donos: " + numeroDonos + 
+                "\nAvaliação: " + avaliacao + 
+                "\nDescrição: " + descricao + 
+                "\nMarca: " + marca + 
+                "\nCódigo: " + codigo +
+                "\nPreço base: " + precoBase + 
+                "\nCorreção de preço: " + correcaoPreco;
+    }
+
+    public Artigo clone(){
+        return new Artigo(this);
     }
 }

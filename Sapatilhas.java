@@ -13,11 +13,9 @@ public class Sapatilhas extends Artigo {
     private LocalDate data_lancamento;
     private Tipos_Sapatilhas tipos_sapatilhas;
 
-    public Sapatilhas(int tamanho_numerico,boolean atilhos,String cor,LocalDate data_lancamento,Tipos_Sapatilhas tipos_sapatilhas, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca,
-            String codigo, double precoBase, double correcaoPreco) {
-
+    public Sapatilhas(int tamanho_numerico, boolean atilhos, String cor, LocalDate data_lancamento, Tipos_Sapatilhas tipos_sapatilhas, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco){
         // mudar depois ao criar a tshirt
-        super("Sapatilha", estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
+        super("Sapatilha", estado, avaliacao, numeroDonos, descricao, marca, codigo, precoBase, correcaoPreco);
         this.tamanho_numerico = tamanho_numerico;
         this.atilhos = atilhos;
         this.cor = cor;
@@ -26,8 +24,7 @@ public class Sapatilhas extends Artigo {
     }
 
     public Sapatilhas(Sapatilhas sap) {
-        super("Sapatilha",sap.getEstado(), sap.getNumeroDonos(), sap.getAvaliacao(), sap.getDescricao(), sap.getMarca(),
-                sap.getCodigo(), sap.getPrecoBase(), sap.getCorrecaoPreco());
+        super("Sapatilha", sap.getEstado(), sap.getAvaliacao(), sap.getNumeroDonos(), sap.getDescricao(), sap.getMarca(), sap.getCodigo(), sap.getPrecoBase(), sap.getCorrecaoPreco());
         this.tamanho_numerico = sap.getTamanhoNumerico();
         this.atilhos = sap.getAtilhos();
         this.cor = sap.getCor();
@@ -76,8 +73,22 @@ public class Sapatilhas extends Artigo {
         this.tipos_sapatilhas = tipos_sapatilhas;
     }
 
+    public boolean equals(Object o) {
+        if(this == o) 
+            return true;
+        if((o == null) || (this.getClass() != o.getClass())) 
+            return false;
+        if (!super.equals(o)) 
+            return false;
 
-    @Override
+        Sapatilhas s = (Sapatilhas) o;
+        return (this.tamanho_numerico == s.getTamanhoNumerico() && 
+                this.atilhos == s.getAtilhos() && 
+                this.cor.equals(s.getCor()) && 
+                this.data_lancamento.equals(s.getDataLancamento()) && 
+                this.tipos_sapatilhas.equals(s.getTiposSapatilhas()));
+    }
+
     public String toString() {
         return super.toString() +
         "\nTamanho Numérico: " + tamanho_numerico +
@@ -87,13 +98,7 @@ public class Sapatilhas extends Artigo {
         "\nTipo de sapatilhas: " + tipos_sapatilhas;
     }
 
-    @Override
     public Sapatilhas clone() {
-        return new Sapatilhas(this.getTamanhoNumerico(), this.getAtilhos(), this.getCor(), this.getDataLancamento(), 
-                            this.getTiposSapatilhas(), this.getEstado(), this.getNumeroDonos(), this.getAvaliacao(),
-                            this.getDescricao(), this.getMarca(), this.getCodigo(), this.getPrecoBase(), this.getCorrecaoPreco());
+        return new Sapatilhas(this);
     }
-
-
-
 }
