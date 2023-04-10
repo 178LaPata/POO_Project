@@ -29,6 +29,16 @@ public class ArtigoTeste {
         System.out.println(sapatilha.toString());
         System.out.println("\n");
 
+        Encomenda en = new Encomenda();
+        System.out.println(en.toString());
+        en.adicionarArtigo(tshirt);
+        System.out.println(en.toString());
+        en.removerArtigo(tshirt);
+        System.out.println(en.toString());
+
+
+
+
         //Sapatilhas sap = new Sapatilhas(sapatilha);
         //System.out.println(sapatilha.toString());
         // Neste caso o id mantem-se o mesmo, não sei se deveria ser
