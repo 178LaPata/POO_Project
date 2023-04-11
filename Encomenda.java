@@ -26,9 +26,9 @@ public class Encomenda {
     public Encomenda() {
         this.artigos = new ArrayList<>();
         this.precoFinal = 0;
-        this.taxaSatisfacao = 0.5;
+        this.taxaSatisfacao = 0.0;
         this.custosExpedicao = 0;
-        this.estado = Estado_Encomenda.PENDENTE;
+        this.estado = null;
         this.dataCriacao = LocalDate.now();
     }
 
@@ -130,21 +130,16 @@ public class Encomenda {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        
+        sb.append("========== Encomenda ==========\n");
         sb.append("Encomenda criada em: " + dataCriacao + "\n");
-        
-        sb.append("==========Artigos===================\n");
+        sb.append("========== Artigos ==========\n");
         for (Artigo artigo : artigos) {
             sb.append(artigo.toString() + "\n");
         }
-        sb.append("=====================================\n");
-        
+        sb.append("========== Fim Artigos ==========\n");
         sb.append("Dimensão da embalagem: " + embalagem + "\n");
-    
         sb.append("Preço final: " + precoFinal + "\n");
-        
         sb.append("Estado da encomenda: " + estado + "\n");
-        
         return sb.toString();
     }
 

@@ -8,8 +8,16 @@ public class Malas extends Artigo {
     private String material;
     private int ano_da_colecao;
 
-    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, Estado estado, Avaliação avaliacao, int numeroDonos, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
-        super("Mala", estado, avaliacao, numeroDonos, descricao, marca, codigo, precoBase, correcaoPreco);
+    public Malas(){
+        super();
+        this.tipo_mala = null; // nao sei se é null
+        this.dim = 0;
+        this.material = "";
+        this.ano_da_colecao = 0;
+    }
+
+    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
+        super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
         this.tipo_mala = tipo_mala;
         this.dim = dim;
         this.material = material;
@@ -17,7 +25,7 @@ public class Malas extends Artigo {
     }
 
     public Malas(Malas mala) {
-        super("Mala", mala.getEstado(), mala.getAvaliacao(), mala.getNumeroDonos(), mala.getDescricao(), mala.getMarca(), mala.getCodigo(), mala.getPrecoBase(), mala.getCorrecaoPreco());
+        super(mala);
         this.tipo_mala = mala.getTipo_mala();
         this.dim = mala.getDim();
         this.material = mala.getMaterial();
@@ -61,24 +69,33 @@ public class Malas extends Artigo {
             return true;
         if((o == null) || (this.getClass() != o.getClass())) 
             return false;
-        if (!super.equals(o)) 
-            return false;
-        Malas malas = (Malas) o;
-        return (this.tipo_mala == malas.getTipo_mala() &&
-                this.dim == malas.getDim() &&
-                this.material.equals(malas.getMaterial()) &&
-                this.ano_da_colecao == malas.getAno_da_colecao());
+        Artigo a = (Malas) o;
+        return (this.tipo_mala == ((Malas) o).getTipo_mala() &&
+                this.dim == ((Malas) o).getDim() &&
+                this.material.equals(((Malas) o).getMaterial()) &&
+                this.ano_da_colecao == ((Malas) o).getAno_da_colecao());
     }
 
     public String toString() {
-        return super.toString() +
-            "\nTipo de Mala : " + tipo_mala +
-            "\nDimensão : " + dim +
-            "\nMaterial :" + material +
-            "\nAno da Coleção :" + ano_da_colecao;
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append("Tipo de mala: ").append(this.tipo_mala).append("\n");
+        sb.append("Dimensões: ").append(this.dim).append("\n");
+        sb.append("Material: ").append(this.material).append("\n");
+        sb.append("Ano da coleção: ").append(this.ano_da_colecao).append("\n");
+        sb.append("Preco Final: ").append(this.precoFinal()).append("\n");
+        return sb.toString();
     }
     
     public Malas clone() {
         return new Malas(this);
     }
+
+    public double precoFinal() {
+        double pf = getPrecoBase();
+        double c = getCorrecaoPreco();
+        pf -= pf * c;
+        return pf;
+    }
 }
+

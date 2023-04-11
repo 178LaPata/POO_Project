@@ -17,14 +17,20 @@ public class TShirt extends Artigo {
     private Tamanho tamanho;
     private Padrao padrao;
 
-    public TShirt(Tamanho tamanho, Padrao padrao, Estado estado, Avaliação avaliacao, int numeroDonos, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
-        super("TShirt", estado, avaliacao, numeroDonos, descricao, marca, codigo, precoBase, correcaoPreco);
+    public TShirt() {
+        super();
+        this.tamanho = null;
+        this.padrao = null;
+    }
+
+    public TShirt(Tamanho tamanho, Padrao padrao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
+        super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
         this.tamanho = tamanho;
         this.padrao = padrao;
     }
 
     public TShirt(TShirt t) {
-        super("TShirt", t.getEstado(), t.getAvaliacao(), t.getNumeroDonos(), t.getDescricao(), t.getMarca(), t.getCodigo(), t.getPrecoBase(), t.getCorrecaoPreco()); 
+        super(t);
         this.tamanho = t.getTamanho();
         this.padrao = t.getPadrao();
     }
@@ -50,17 +56,18 @@ public class TShirt extends Artigo {
             return true;
         if((o == null) || (this.getClass() != o.getClass())) 
             return false;
-        if (!super.equals(o)) 
-            return false;
-        TShirt t = (TShirt) o;
-        return (this.tamanho == t.getTamanho() &&
-                this.padrao == t.getPadrao());
+        Artigo a = (TShirt) o;
+        return (this.tamanho == ((TShirt) o).getTamanho() &&
+                this.padrao == ((TShirt) o).getPadrao());
     }
 
     public String toString() {
-        return super.toString() + 
-            "\nTamanho: " + this.tamanho +
-            "\nPadrão: " + this.padrao;
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append("Tamanho: ").append(this.tamanho).append("\n");
+        sb.append("Padrao: ").append(this.padrao).append("\n");
+        sb.append("Preço Final: ").append(this.precoFinal()).append("\n");
+        return sb.toString();
     }
 
     public TShirt clone() {

@@ -22,7 +22,20 @@ public class Artigo {
     private double precoBase;           // Preço Base
     private double correcaoPreco;       // Correção do Preço
 
-    public Artigo(String tipo, Estado estado, Avaliação avaliacao, int numeroDonos, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
+    public Artigo(){
+        this.id = nextID++;
+        this.tipo = "";
+        this.estado = null;
+        this.numeroDonos = 0;
+        this.avaliacao = Avaliação.NULL;
+        this.descricao = "";
+        this.marca = "";
+        this.codigo = "";
+        this.precoBase = 0;
+        this.correcaoPreco = 0;
+    }
+
+    public Artigo(String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
         this.id = nextID++;
         this.tipo = tipo;
         this.estado = estado;
@@ -46,6 +59,7 @@ public class Artigo {
         this.tipo = a.getTipo();
         this.estado = a.getEstado();
         this.numeroDonos = a.getNumeroDonos();
+        this.avaliacao = a.getAvaliacao();
         this.descricao = a.getDescricao();
         this.marca = a.getMarca();
         this.codigo = a.getCodigo();
@@ -152,16 +166,18 @@ public class Artigo {
     }
 
     public String toString() {
-        return "ID: " + id + 
-                "\nTipo: " + tipo + 
-                "\nEstado: " + estado + 
-                "\nNúmero de donos: " + numeroDonos + 
-                "\nAvaliação: " + avaliacao + 
-                "\nDescrição: " + descricao + 
-                "\nMarca: " + marca + 
-                "\nCódigo: " + codigo +
-                "\nPreço base: " + precoBase + 
-                "\nCorreção de preço: " + correcaoPreco;
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(this.id).append("\n");
+        sb.append("Tipo: ").append(this.tipo).append("\n");
+        sb.append("Estado: ").append(this.estado).append("\n");
+        sb.append("Número de Donos: ").append(this.numeroDonos).append("\n");
+        sb.append("Avaliação: ").append(this.avaliacao).append("\n");
+        sb.append("Descrição: ").append(this.descricao).append("\n");
+        sb.append("Marca: ").append(this.marca).append("\n");
+        sb.append("Código: ").append(this.codigo).append("\n");
+        sb.append("Preço Base: ").append(this.precoBase).append("\n");
+        sb.append("Correção do Preço: ").append(this.correcaoPreco).append("\n");
+        return sb.toString();
     }
 
     public Artigo clone(){

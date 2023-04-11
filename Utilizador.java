@@ -10,6 +10,16 @@ public class Utilizador {
     private List<Artigo> compras;
     private List<Artigo> vendas;
 
+    public Utilizador() {
+        this.id = 0;
+        this.email = "";
+        this.nome = "";
+        this.morada = "";
+        this.nif = 0;
+        this.compras = new ArrayList<>();
+        this.vendas = new ArrayList<>();
+    }
+
     public Utilizador(int id, String email, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas) {
         this.id = id;
         this.email = email;
@@ -118,14 +128,16 @@ public class Utilizador {
     }
 
     public String toString() {
-        return "Utilizador" +
-                "\nID: " + id +
-                "\nEmail: " + email + 
-                "\nNome: " + nome + 
-                "\nMorada: " + morada +
-                "\nNIF: " + nif +
-                "\nCompras: " + compras +
-                "\nVendas: " + vendas;
+        StringBuilder sb = new StringBuilder();
+        sb.append("========== Utilizador ==========\n");
+        sb.append("Utilizador: ").append(this.id).append("\n");
+        sb.append("Email: ").append(this.email).append("\n");
+        sb.append("Nome: ").append(this.nome).append("\n");
+        sb.append("Morada: ").append(this.morada).append("\n");
+        sb.append("NIF: ").append(this.nif).append("\n");
+        sb.append("Compras: ").append(this.compras).append("\n");
+        sb.append("Vendas: ").append(this.vendas).append("\n");
+        return sb.toString();
     }
 
     public Utilizador clone() {
