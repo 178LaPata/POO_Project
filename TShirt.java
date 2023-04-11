@@ -66,4 +66,14 @@ public class TShirt extends Artigo {
     public TShirt clone() {
         return new TShirt(this);
     }
+
+    public double precoFinal() {
+        double preco = getPrecoBase();
+        double correcao = getCorrecaoPreco();
+        if (this.padrao == Padrao.RISCAS || this.padrao == Padrao.PALMEIRAS) {
+            correcao = 0.5 * preco;
+            return correcao;
+        } else  
+            return preco;
+    }
 }

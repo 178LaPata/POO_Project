@@ -101,4 +101,24 @@ public class Sapatilhas extends Artigo {
     public Sapatilhas clone() {
         return new Sapatilhas(this);
     }
+
+    // nao e bem assim, o desconto nao esta bem ig
+    public double precoFinal() {
+        double pf = getPrecoBase();
+        double c = getCorrecaoPreco();
+        if(tamanho_numerico > 45 || this.getEstado() == Estado.USADO) {
+            pf -= c*pf;                
+            return pf;
+        } else 
+            return pf;
+    }
+    
+    // nao sei bem que valor é suposto aumentar
+    public double valorMercado() {
+        double vm = getPrecoBase();
+        if(tipos_sapatilhas == Tipos_Sapatilhas.PREMIUM) {
+            vm *= 1.1;
+        }
+        return vm;
+    }
 }

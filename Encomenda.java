@@ -151,7 +151,7 @@ public class Encomenda {
     public Encomenda clone() {
         return new Encomenda(this);
     }
-    
+
     // Quando adicionamos um produto a uma Encomenda, o seu preço é incrementado
     public void adicionarArtigo(Artigo artigo) {
         this.artigos.add(artigo);
@@ -175,4 +175,6 @@ public class Encomenda {
         }
         this.precoFinal-=pf;
     }
+
+    
 }

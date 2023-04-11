@@ -15,7 +15,7 @@ public class ArtigoTeste {
         System.out.println(b.toString());
         System.out.println("\n");
         
-        TShirt tshirt = new TShirt(TShirt.Tamanho.M, TShirt.Padrao.LISO, Artigo.Estado.USADO, Artigo.Avaliação.BOM, 1, "T-Shirt de algodão", "Nike", "NIK123", 30.0, 1.5);
+        TShirt tshirt = new TShirt(TShirt.Tamanho.M, TShirt.Padrao.RISCAS, Artigo.Estado.USADO, Artigo.Avaliação.BOM, 1, "T-Shirt de algodão", "Nike", "NIK123", 30.0, 1.5);
         
         System.out.println(tshirt.toString());
         System.out.println("\n");
@@ -25,7 +25,7 @@ public class ArtigoTeste {
         System.out.println("\n");
 
         
-        Sapatilhas sapatilha = new Sapatilhas(42, true, "vermelho", LocalDate.of(2022, Month.JANUARY, 1), Sapatilhas.Tipos_Sapatilhas.NORMAL, Artigo.Estado.USADO, 1, Artigo.Avaliação.IMPECÁVEL, "Sapatilha confortável", "Nike", "NIK123", 100.0, 0.0);
+        Sapatilhas sapatilha = new Sapatilhas(42, true, "vermelho", LocalDate.of(2022, Month.JANUARY, 1), Sapatilhas.Tipos_Sapatilhas.PREMIUM, Artigo.Estado.USADO, 1, Artigo.Avaliação.IMPECÁVEL, "Sapatilha confortável", "Nike", "NIK123", 100.0, 0.0);
         System.out.println(sapatilha.toString());
         System.out.println("\n");
 
@@ -37,7 +37,9 @@ public class ArtigoTeste {
         System.out.println(en.toString());
 
 
-
+        System.out.println(tshirt.precoFinal());
+        System.out.println(sapatilha.precoFinal());
+        System.out.println(sapatilha.valorMercado());
 
         //Sapatilhas sap = new Sapatilhas(sapatilha);
         //System.out.println(sapatilha.toString());
