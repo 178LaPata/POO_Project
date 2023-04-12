@@ -31,6 +31,9 @@ public class ArtigoTeste {
         en.adicionarArtigo(sapatilha);
         System.out.println(en.toString());
 
+        Apresentacao ap = new Apresentacao();
+        ap.printMenuLogin();
+
 
         //Sapatilhas sap = new Sapatilhas(sapatilha);
         //System.out.println(sapatilha.toString());
