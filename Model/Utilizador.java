@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utilizador {
+    private static int nextID = 1;
     private int id;
     private String email;
     private String nome;
@@ -9,25 +10,28 @@ public class Utilizador {
     private int nif;
     private List<Artigo> compras;
     private List<Artigo> vendas;
+    private List<Artigo> porVender;
 
     public Utilizador() {
-        this.id = 0;
+        this.id = nextID++;
         this.email = "";
         this.nome = "";
         this.morada = "";
         this.nif = 0;
         this.compras = new ArrayList<>();
         this.vendas = new ArrayList<>();
+        this.porVender = new ArrayList<>();
     }
 
-    public Utilizador(int id, String email, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas) {
-        this.id = id;
+    public Utilizador(int id, String email, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas, List<Artigo> porVender) {
+        this.id = nextID++;
         this.email = email;
         this.nome = nome;
         this.morada = morada;
         this.nif = nif;
         this.compras = compras;
         this.vendas = vendas;
+        this.porVender = porVender;
     }
 
     public Utilizador(Utilizador u) {
@@ -38,6 +42,7 @@ public class Utilizador {
         this.nif = u.getNif();
         this.compras = u.getCompras();
         this.vendas = u.getVendas();
+        this.porVender = u.getPorVender();
     }
 
     public int getId() {
@@ -110,6 +115,21 @@ public class Utilizador {
         }
     }
 
+    public List<Artigo> getPorVender() {
+        ArrayList<Artigo> aux = new ArrayList<Artigo>();
+        for(Artigo a : porVender){
+            aux.add(a.clone());
+        }
+        return aux;
+    }
+
+    public void setPorVender(List<Artigo> porVender) {
+        this.porVender = new ArrayList<>(porVender.size());
+        for(Artigo a: porVender){
+            this.porVender.add(a.clone());
+        }
+    }
+
     public boolean equals(Object o) {
         if(this == o) 
             return true;
@@ -124,7 +144,8 @@ public class Utilizador {
                 this.morada.equals(u.getMorada()) &&
                 this.nif == u.getNif() &&
                 this.compras.equals(u.getCompras()) &&
-                this.vendas.equals(u.getVendas()));
+                this.vendas.equals(u.getVendas()) &&
+                this.porVender.equals(u.getPorVender()));
     }
 
     public String toString() {
@@ -137,6 +158,7 @@ public class Utilizador {
         sb.append("NIF: ").append(this.nif).append("\n");
         sb.append("Compras: ").append(this.compras).append("\n");
         sb.append("Vendas: ").append(this.vendas).append("\n");
+        sb.append("Por Vender: ").append(this.porVender).append("\n");
         return sb.toString();
     }
 

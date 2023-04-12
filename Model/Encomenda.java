@@ -171,5 +171,7 @@ public class Encomenda {
         this.precoFinal-=pf;
     }
 
+
+
     
 }
