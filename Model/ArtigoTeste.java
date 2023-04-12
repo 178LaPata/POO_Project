@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.Month;
 
+
 public class ArtigoTeste {
 
     public static void main(String[] args) {
@@ -33,6 +34,9 @@ public class ArtigoTeste {
 
         Apresentacao ap = new Apresentacao();
         ap.printMenuLogin();
+        ApresentacaoMain am = new ApresentacaoMain();
+        am.welcome();
+        am.printMainMenuLogIn();
 
 
         //Sapatilhas sap = new Sapatilhas(sapatilha);
