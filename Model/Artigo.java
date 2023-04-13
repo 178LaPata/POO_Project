@@ -55,7 +55,6 @@ public class Artigo {
         this.correcaoPreco = correcaoPreco;
     }
 
-    // Construtor que recebe um objeto Artigo
     public Artigo(Artigo a){
         this.id = a.getId();
         this.tipo = a.getTipo();
@@ -69,7 +68,6 @@ public class Artigo {
         this.correcaoPreco = a.getCorrecaoPreco();
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }

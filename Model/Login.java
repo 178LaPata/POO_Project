@@ -1,30 +1,30 @@
 package Model;
 
 public class Login {
-    private String username;
+    private String email;
     private String password;
     private String nome;
 
     public Login() {
-        this.username = "";
+        this.email = "";
         this.password = "";
         this.nome = "";
     }
 
-    public Login(String username, String password, String nome) {
-        this.username = username;
+    public Login(String email, String password, String nome) {
+        this.email = email;
         this.password = password;
         this.nome = nome;
     }
 
     public Login(Login l) {
-        this.username = l.getUsername();
+        this.email = l.getemail();
         this.password = l.getPassword();
         this.nome = l.getNome();
     }
 
-    public String getUsername() {
-        return this.username;
+    public String getemail() {
+        return this.email;
     }
 
     public String getPassword() {
@@ -35,8 +35,8 @@ public class Login {
         return this.nome;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setemail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
@@ -53,14 +53,14 @@ public class Login {
         if ((o == null) || (this.getClass() != o.getClass())) 
             return false;
         Login l = (Login) o;
-        return (this.username.equals(l.getUsername()) && 
+        return (this.email.equals(l.getemail()) && 
                 this.password.equals(l.getPassword()) && 
                 this.nome.equals(l.getNome()));
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Username: ").append(this.username).append("\n");
+        sb.append("email: ").append(this.email).append("\n");
         sb.append("Password: ").append(this.password).append("\n");
         sb.append("Nome: ").append(this.nome).append("\n");
         return sb.toString();

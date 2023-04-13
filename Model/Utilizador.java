@@ -7,6 +7,7 @@ public class Utilizador {
     private static int nextID = 1;
     private int id;
     private String email;
+    private String password;
     private String nome;
     private String morada;
     private int nif;
@@ -17,6 +18,7 @@ public class Utilizador {
     public Utilizador() {
         this.id = nextID++;
         this.email = "";
+        this.password = "";
         this.nome = "";
         this.morada = "";
         this.nif = 0;
@@ -25,9 +27,10 @@ public class Utilizador {
         this.porVender = new ArrayList<>();
     }
 
-    public Utilizador(int id, String email, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas, List<Artigo> porVender) {
+    public Utilizador(int id, String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas, List<Artigo> porVender) {
         this.id = nextID++;
         this.email = email;
+        this.password = password;
         this.nome = nome;
         this.morada = morada;
         this.nif = nif;
@@ -39,6 +42,7 @@ public class Utilizador {
     public Utilizador(Utilizador u) {
         this.id = u.getId();
         this.email = u.getEmail();
+        this.password = u.getPassword();
         this.nome = u.getNome();
         this.morada = u.getMorada();
         this.nif = u.getNif();
@@ -61,6 +65,14 @@ public class Utilizador {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNome() {
@@ -142,6 +154,7 @@ public class Utilizador {
         Utilizador u = (Utilizador) o;
         return (this.id == u.getId() &&
                 this.email.equals(u.getEmail()) &&
+                this.password.equals(u.getPassword()) &&
                 this.nome.equals(u.getNome()) &&
                 this.morada.equals(u.getMorada()) &&
                 this.nif == u.getNif() &&
@@ -152,9 +165,12 @@ public class Utilizador {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("========== Utilizador ==========\n");
+        sb.append("----------------------------------------\n");
+        sb.append("               UTILIZADOR               \n");
+        sb.append("----------------------------------------\n");
         sb.append("Utilizador: ").append(this.id).append("\n");
         sb.append("Email: ").append(this.email).append("\n");
+        sb.append("Password: ").append(this.password).append("\n");
         sb.append("Nome: ").append(this.nome).append("\n");
         sb.append("Morada: ").append(this.morada).append("\n");
         sb.append("NIF: ").append(this.nif).append("\n");

@@ -38,4 +38,15 @@ public class Vintage {
         encomendas.replace(e.getId(), e);
     }
 
+    public Login getLogin(String user) {
+        return login.get(user).clone();
+    }
+
+    public boolean existeUtilizador(String user) {
+        return login.containsKey(user);
+    }
+
+    public boolean existePassword(String user, String password) {
+        return login.get(user).getPassword().equals(password);
+    }
 }

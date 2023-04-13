@@ -23,8 +23,12 @@ public class Apresentacao implements Serializable {
         am.printMenuInicial();
     }
 
+    public void printMenuEscolha() {
+        am.printMenuEscolha();
+    }
+
     public void printSair() {
-        System.out.println("A Sair do Programa");
+        am.printSair();
     }
 
     // Login
@@ -46,18 +50,6 @@ public class Apresentacao implements Serializable {
 
     public void printErroDadosInvalidos() {
         al.printErroDadosInvalidos();
-    }
-
-    public void printUsername() {
-        al.printUsername();
-    }
-
-    public void printPassword() {
-        al.printPassword();
-    }
-
-    public void printRegisto() {
-        al.printRegisto();
     }
 
     //Outros

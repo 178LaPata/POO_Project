@@ -9,9 +9,6 @@ public class ApresentacaoMain implements Serializable {
         out = new Output();
     }
 
-    /**
-     * Apresenta menu welcome
-     */
     public void welcome() {
         System.out.println("    __      _______ _   _ _______       _____ ______      ");
         System.out.println("    \\ \\    / /_   _| \\ | |__   __|/\\   / ____|  ____| ");
@@ -27,21 +24,13 @@ public class ApresentacaoMain implements Serializable {
         
     }
 
-    /**
-     * Apresenta menu login
-     */
     public void printMenuInicial() {
         out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um ficheiro"}),"      MENU PRINCIPAL",0);
     }
 
-    /*
-
-    public void printMainMenuLogOut(String type, int numN) {
-        out.printMenus((new String[]{"Logout","Menu " + type, "Consultas", "Notificações (" + numN + ")"}),"MENU PRINCIPAL",0);
-    }
-
-    public void printMenuConsultas() {
-        out.printMenus((new String[]{"Top Utilizadores do Sistema", "Top Transportadoras do Sistema"}),"MENU CONSULTAS",1);
+    //Menu para escolher se quer ser vender ou comprar
+    public void printMenuEscolha() {
+        out.printMenus((new String[]{"Comprar", "Vender"}),"     MENU",1);
     }
 
     public void printErroComandoInvalido(){
@@ -59,6 +48,4 @@ public class ApresentacaoMain implements Serializable {
     public void printSair() {
         System.out.println("A Sair do Programa");
     }
-
-    */
 }
