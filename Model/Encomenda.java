@@ -1,3 +1,5 @@
+package Model;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Encomenda {
         FINALIZADA,
         EXPEDIDA
     }
+    private static int nextID = 1;
+    private int id;
     private List<Artigo> artigos;
     private Dimensao_Embalagem embalagem;
     private double precoFinal;
@@ -24,6 +28,7 @@ public class Encomenda {
 
     // Construtor vazio
     public Encomenda() {
+        this.id = nextID++;
         this.artigos = new ArrayList<>();
         this.precoFinal = 0;
         this.taxaSatisfacao = 0.0;
@@ -34,6 +39,7 @@ public class Encomenda {
 
     public Encomenda(List<Artigo> artigos, Dimensao_Embalagem embalagem, double precoFinal, double taxaSatisfacao, double custosExpedicao, Estado_Encomenda estado, LocalDate dataCriacao) {
         setArtigos(artigos);
+        this.id = nextID++;
         this.embalagem = embalagem;
         this.precoFinal = precoFinal;
         this.taxaSatisfacao = taxaSatisfacao;
@@ -43,6 +49,7 @@ public class Encomenda {
     }
 
     public Encomenda(Encomenda enc) {
+        this.id = enc.getId();
         this.artigos = enc.getArtigos();
         this.embalagem = enc.getEmbalagem();
         this.precoFinal = enc.getPrecoFinal();
@@ -50,6 +57,14 @@ public class Encomenda {
         this.custosExpedicao = enc.getCustosExpedicao();
         this.estado = enc.getEstado();
         this.dataCriacao = enc.getDataCriacao();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Artigo> getArtigos() {
@@ -119,7 +134,8 @@ public class Encomenda {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         Encomenda enc = (Encomenda) o;
-        return this.artigos.equals(enc.getArtigos()) &&
+        return  this.id == enc.getId() &&
+                this.artigos.equals(enc.getArtigos()) &&
                 this.embalagem == enc.getEmbalagem() &&
                 this.precoFinal == enc.getPrecoFinal() &&
                 this.taxaSatisfacao == enc.getTaxaSatisfacao() &&
@@ -130,9 +146,10 @@ public class Encomenda {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("========== Encomenda ==========\n");
+        sb.append("==========  Encomenda  ==========\n");
+        sb.append("ID da Encomenda: " + id + "\n");
         sb.append("Encomenda criada em: " + dataCriacao + "\n");
-        sb.append("========== Artigos ==========\n");
+        sb.append("==========   Artigos   ==========\n");
         for (Artigo artigo : artigos) {
             sb.append(artigo.toString() + "\n");
         }
@@ -170,8 +187,6 @@ public class Encomenda {
         }
         this.precoFinal-=pf;
     }
-
-
 
     
 }

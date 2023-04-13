@@ -1,3 +1,5 @@
+package Model;
+
 public class Artigo {
     // Atributos
     public enum Estado{

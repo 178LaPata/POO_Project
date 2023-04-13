@@ -1,3 +1,5 @@
+package Model;
+
 public class Malas extends Artigo {
     public enum Tipos_Malas {
         NORMAL,

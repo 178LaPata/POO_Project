@@ -1,5 +1,5 @@
+package Model;
 
-// falta ver a cena dos descontos e de ser LISO e assim
 public class TShirt extends Artigo {
     public enum Tamanho {
         S, 
