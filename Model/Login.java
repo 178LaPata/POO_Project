@@ -60,7 +60,7 @@ public class Login {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("email: ").append(this.email).append("\n");
+        sb.append("Email: ").append(this.email).append("\n");
         sb.append("Password: ").append(this.password).append("\n");
         sb.append("Nome: ").append(this.nome).append("\n");
         return sb.toString();

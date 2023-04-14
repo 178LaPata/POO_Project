@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class VintageApp implements Serializable{
     
     public static void main(String[] args) {
-        Apresentacao ap = new Apresentacao();
+        View v = new View();
 
 
     }

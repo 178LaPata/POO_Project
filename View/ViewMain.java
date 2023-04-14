@@ -2,10 +2,10 @@ package View;
 
 import java.io.Serializable;
 
-public class ApresentacaoMain implements Serializable {
+public class ViewMain implements Serializable {
     private final Output out;
 
-    public ApresentacaoMain() {
+    public ViewMain() {
         out = new Output();
     }
 

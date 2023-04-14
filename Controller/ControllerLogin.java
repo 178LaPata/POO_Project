@@ -9,7 +9,7 @@ import View.*;
 
 public class ControllerLogin {
     
-    private Login login(Vintage c, Apresentacao a) {
+    private Login login(Vintage c, View a) {
         Scanner s = new Scanner(System.in);
         String email, pass;
 
@@ -28,7 +28,7 @@ public class ControllerLogin {
     }
 
     // a questao do id aqui nao esta bem
-    private Utilizador registarUtilizador (Apresentacao a, String email, String nome){
+    private Utilizador registarUtilizador (View a, String email, String nome){
         Scanner s = new Scanner(System.in);
         String password, morada, email2;
         int nif, id;
@@ -50,7 +50,7 @@ public class ControllerLogin {
     }
 
     // o estado e a avaliacao nao podem ser strings e falta o id
-    private Artigo registarArtigo (Apresentacao a, int id, String tipo){
+    private Artigo registarArtigo (View a, int id, String tipo){
         Scanner s = new Scanner(System.in);
         String descricao, marca, codigo, estado, avaliacao;
         double precoBase, correcaoPreco;

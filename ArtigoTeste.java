@@ -33,8 +33,8 @@ public class ArtigoTeste {
         en.adicionarArtigo(sapatilha);
         //System.out.println(en.toString());
 
-        ApresentacaoMain am = new ApresentacaoMain();
-        ApresentacaoLogin al = new ApresentacaoLogin();
+        ViewMain am = new ViewMain();
+        ViewLogin al = new ViewLogin();
         Output out = new Output();
         am.welcome();
         //out.screenClear();

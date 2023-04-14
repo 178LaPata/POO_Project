@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Encomenda {
     public enum Dimensao_Embalagem {
-        GRANDE,
-        MEDIO,
-        PEQUENO
+        GRANDE, // + de 5 artigos
+        MEDIO,  // 2 a 5 artigos
+        PEQUENO // 1 artigo
     }
     public enum Estado_Encomenda {
         PENDENTE,
@@ -20,13 +20,11 @@ public class Encomenda {
     private List<Artigo> artigos;
     private Dimensao_Embalagem embalagem;
     private double precoFinal;
-    private double taxaSatisfacao;                  // 0,5 caso seja novo, 0.25 nos outros casos
+    private double taxaSatisfacao; // acho que isto nao devia ser um atributo
     private double custosExpedicao;                 // Dependem da transportadora, na classe Artigo vamos ter de adicionar a transportadora depois
     private Estado_Encomenda estado;
     private LocalDate dataCriacao;
     
-
-    // Construtor vazio
     public Encomenda() {
         this.id = nextID++;
         this.artigos = new ArrayList<>();

@@ -3,10 +3,10 @@ package View;
 import java.io.Serializable;
 import java.util.Scanner;
 
-public class ApresentacaoLogin implements Serializable {
+public class ViewLogin implements Serializable {
     private final Output out;
 
-    public ApresentacaoLogin() {
+    public ViewLogin() {
         out = new Output();
     }
 

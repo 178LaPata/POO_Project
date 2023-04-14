@@ -3,14 +3,14 @@ package View;
 import java.io.Serializable;
 import java.util.List;
 
-public class Apresentacao implements Serializable {
-    private final ApresentacaoMain am;
-    private final ApresentacaoLogin al;
+public class View implements Serializable {
+    private final ViewMain am;
+    private final ViewLogin al;
     private final Output out;
 
-    public Apresentacao() {
-        am = new ApresentacaoMain();
-        al = new ApresentacaoLogin();
+    public View() {
+        am = new ViewMain();
+        al = new ViewLogin();
         out = new Output();
     }
 
