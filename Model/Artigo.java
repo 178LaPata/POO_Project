@@ -16,8 +16,8 @@ public class Artigo {
     private int id;                     // Id do Produto
     private String tipo;                // Tipo do Produto
     private Estado estado;              // Estado do Produto
-    private Avaliação avaliacao;
     private int numeroDonos;            // Número de Donos
+    private Avaliação avaliacao;
     private String descricao;           // Descrição do Produto
     private String marca;               // Marca do Produto
     private String codigo;              // Código Alfa-Númerico
