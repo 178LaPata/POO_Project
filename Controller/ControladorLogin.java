@@ -36,28 +36,54 @@ public class ControladorLogin {
     }
 
 
-    private boolean registo(Vintage v, Apresentacao a){
+    private Utilizador regista_Utilizador (Vintage v, Apresentacao a){
         Scanner s = new Scanner(System.in);
+        String email,password,nome,morada;
+        int nif;
+
+
+        List<Artigo> compras = new ArrayList<>();
+        List<Artigo> vendas = new ArrayList<>();
+        List<Artigo> porVender = new ArrayList<>();
+        
+        // Pede o nome, recebe o nome, e mete o nome no Login
+        a.printMessage(">>> Introduza o nome:");
+        nome = s.nextLine();
+
+        // Pede email, recebe o email, e verifica se o email já esta associado alguma conta
+        a.printMessage(">>> Introduza o email: ");
+        email = s.nextLine();
+        // Ver se o email não existe ja
+        if (v.existeUtilizador(email)){
+            return null;
+        }
+        
+        a.printMessage(">>> Introduza a Password: ");
+        password = s.nextLine();
+
+        a.printMessage(">>> Introduza a Morada: ");
+        morada = s.nextLine();
+
+        nif = in.lerInt(a,">>> Introduza um NIF: ",0,99999);
+
+        return new Utilizador(email,password,nome,morada,nif,compras,vendas,porVender);
+
+    }
+
+    private boolean registo(Utilizador u, Apresentacao a,Vintage v){
         Login l = new Login();
         String email,password,nome;
         
         // Pede o nome, recebe o nome, e mete o nome no Login
-        a.printMessage(">>> Submete o nome:");
-        nome = s.nextLine();
+        nome = u.getNome();
         l.setNome(nome);
 
         // Pede email, recebe o email, e verifica se o email já esta associado alguma conta
-        a.printMessage(">>> Submete o email: ");
-        email = s.nextLine();
+        email = u.getEmail();
+        l.setemail(email);
         // Ver se o email não existe ja
-        if (!v.existeUtilizador(email)){
-            l.setemail(email);
-        }else{
-            return false;
-        }
 
-        a.printMessage(">>> Submete a Password: ");
-        password = s.nextLine();
+        password = u.getPassword();
         l.setPassword(password);
 
         v.adicionaLogin(l);
@@ -87,11 +113,16 @@ public class ControladorLogin {
                     }
                     break;
                 case 2:
-                    if (registo(v,a)){
+                    Utilizador u = regista_Utilizador(v,a);
+                    if (u == null){
+                         a.printMessage("Dados inválidos");
+                    }else{
+                        v.adicionaUtilizador(u);
+                        System.out.println("kkkkkkkkkkkkkkkk");
+                        v.printUtilizadores();
+                        registo(u,a,v);
                         a.printMessage("Registo Sucesso");
                         v.printAllLogins();
-                    } else{
-                        a.printMessage("Dados inválidos");
                     }
                     break;
                 case 0:

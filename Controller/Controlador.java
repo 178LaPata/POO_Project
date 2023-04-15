@@ -22,6 +22,7 @@ public class Controlador {
         int comando;
         boolean b = true;
         Login l = null;
+        Utilizador u = null;
 
         Scanner s = new Scanner(System.in);
 
@@ -41,10 +42,18 @@ public class Controlador {
                 }
             }else{
                 a.printMainMenuLogOut();
-                comando = in.lerInt(a,"Escolhe uma das opções: ",0,3);
+                comando = in.lerInt(a,"Escolhe uma das opções: ",0,4);
                 switch(comando){
                     case 1:
-                        a.printMessage("OIIIIII");
+                        l = null;
+                        a.printMessage("LogOut feito com Sucesso");
+                        break;
+                    case 4:
+                        u = v.getUtilizador(l.getemail());
+                        ca.interpretador(u,a);
+                        break;
+
+
                 }
             }
         }

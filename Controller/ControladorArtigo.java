@@ -130,7 +130,7 @@ public class ControladorArtigo {
 
 
 
-    public void interpretador(Apresentacao a){
+    public void interpretador(Utilizador u,Apresentacao a){
         boolean b = true;
         int comando;
 
