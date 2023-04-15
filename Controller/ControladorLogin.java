@@ -20,11 +20,11 @@ public class ControladorLogin {
         Scanner s = new Scanner(System.in);
         String email,pass;
 
-        a.printMessage("Email pff");
+        a.printMessage(">>> Introduza o Email:");
         email = s.nextLine();
 
         if(v.existeUtilizador(email)){
-            a.printMessage("Pass pff");
+            a.printMessage(">>> Introduza a Password:");
             pass = s.nextLine();
 
             if(v.existePassword(email,pass)){
@@ -118,7 +118,7 @@ public class ControladorLogin {
                          a.printMessage("Dados inválidos");
                     }else{
                         v.adicionaUtilizador(u);
-                        System.out.println("kkkkkkkkkkkkkkkk");
+                        System.out.println("kkkkkkkkkkkkkkk");
                         v.printUtilizadores();
                         registo(u,a,v);
                         a.printMessage("Registo Sucesso");
