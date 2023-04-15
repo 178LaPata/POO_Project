@@ -35,7 +35,7 @@ public class ArtigoTeste {
 
         ViewMain am = new ViewMain();
         ViewLogin al = new ViewLogin();
-        Output out = new Output();
+        //Output out = new Output();
         am.welcome();
         //out.screenClear();
         am.printMenuInicial();
