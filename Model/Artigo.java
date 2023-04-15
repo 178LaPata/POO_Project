@@ -10,7 +10,6 @@ public class Artigo {
         IMPECÁVEL,
         BOM,
         SATISFATÓRIO,
-        NULL
     }
     private static int nextID = 1;
     private int id;                     // Id do Produto
@@ -29,7 +28,7 @@ public class Artigo {
         this.tipo = "";
         this.estado = null;
         this.numeroDonos = 0;
-        this.avaliacao = Avaliação.NULL;
+        this.avaliacao = null;
         this.descricao = "";
         this.marca = "";
         this.codigo = "";
@@ -43,7 +42,7 @@ public class Artigo {
         this.estado = estado;
         if(estado == Estado.NOVO){
             this.numeroDonos = 0;
-            this.avaliacao = Avaliação.NULL;
+            this.avaliacao = null;
         } else{
             this.numeroDonos = numeroDonos;
             this.avaliacao = avaliacao;

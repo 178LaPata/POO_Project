@@ -24,26 +24,32 @@ public class Encomenda {
     private double custosExpedicao;                 // Dependem da transportadora, na classe Artigo vamos ter de adicionar a transportadora depois
     private Estado_Encomenda estado;
     private LocalDate dataCriacao;
+    private int tamanho;  // não sei se é preciso (serve para definir a Dimensão da embalagem)
     
     public Encomenda() {
         this.id = nextID++;
         this.artigos = new ArrayList<>();
+        this.embalagem = null;
         this.precoFinal = 0;
         this.taxaSatisfacao = 0.0;
         this.custosExpedicao = 0;
-        this.estado = null;
+        this.estado = Estado_Encomenda.PENDENTE;
         this.dataCriacao = LocalDate.now();
+        this.tamanho = 0;
     }
 
-    public Encomenda(List<Artigo> artigos, Dimensao_Embalagem embalagem, double precoFinal, double taxaSatisfacao, double custosExpedicao, Estado_Encomenda estado, LocalDate dataCriacao) {
+    public Encomenda(List<Artigo> artigos, double precoFinal, double taxaSatisfacao, double custosExpedicao, Estado_Encomenda estado, LocalDate dataCriacao) {
         setArtigos(artigos);
         this.id = nextID++;
-        this.embalagem = embalagem;
         this.precoFinal = precoFinal;
         this.taxaSatisfacao = taxaSatisfacao;
         this.custosExpedicao = custosExpedicao;
         this.estado = estado;
         this.dataCriacao = dataCriacao;
+        this.tamanho = artigos.size();
+        if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
+        if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
+        if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
     }
 
     public Encomenda(Encomenda enc) {
@@ -55,6 +61,7 @@ public class Encomenda {
         this.custosExpedicao = enc.getCustosExpedicao();
         this.estado = enc.getEstado();
         this.dataCriacao = enc.getDataCriacao();
+        this.tamanho =  enc.getTamanho();
     }
 
     public int getId() {
@@ -64,6 +71,15 @@ public class Encomenda {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getTamanho(){
+        return this.tamanho;
+    }
+
+    public void setTamanho(int t){
+        this.tamanho = t;
+    }
+
 
     public List<Artigo> getArtigos() {
     ArrayList<Artigo> res = new ArrayList<>();
@@ -164,6 +180,10 @@ public class Encomenda {
 
     // Quando adicionamos um produto a uma Encomenda, o seu preço é incrementado
     public void adicionarArtigo(Artigo artigo) {
+        this.tamanho++;
+        if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
+        if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
+        if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
         this.artigos.add(artigo);
         double pf = artigo.getPrecoBase() - (artigo.getPrecoBase() * artigo.getCorrecaoPreco() / 100.0);  // basicamente nós aqui aplicamos o desconto ao preco base do produto
         if (artigo.getEstado() == Artigo.Estado.NOVO){
@@ -176,6 +196,10 @@ public class Encomenda {
 
     // Quando retiramos um produto a uma Encomenda, o seu preço é reduzido
     public void removerArtigo(Artigo artigo) {
+        this.tamanho--;
+        if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
+        if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
+        if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
         this.artigos.remove(artigo);
         double pf = artigo.getPrecoBase() - (artigo.getPrecoBase() * artigo.getCorrecaoPreco() / 100.0);  // basicamente nós aqui aplicamos o desconto ao preco base do produto
         if (artigo.getEstado() == Artigo.Estado.NOVO){

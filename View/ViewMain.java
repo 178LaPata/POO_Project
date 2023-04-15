@@ -28,6 +28,11 @@ public class ViewMain implements Serializable {
         out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um ficheiro"}),"      MENU PRINCIPAL",0);
     }
 
+    public void printMenuArtigo(){
+        out.printMenus((new String[]{"Criar T-Shirt", "Criar Mala", "Criar Sapatilha AInda nao da"}),"      REGISTO ARTIGOS",0);
+
+    }
+
     //Menu para escolher se quer ser vender ou comprar
     public void printMenuEscolha() {
         out.printMenus((new String[]{"Comprar", "Vender"}),"     MENU",1);

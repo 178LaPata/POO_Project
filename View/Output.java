@@ -69,4 +69,12 @@ public class Output implements Serializable {
     public void printMessage(String message) {
         System.out.println(message);
     }
+
+    public void printDouble(Double dou){
+        System.out.println(dou);
+    }
+
+    public void printInteiro(int inteiro){
+        System.out.println(inteiro);
+    }
 }

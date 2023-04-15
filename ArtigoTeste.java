@@ -1,5 +1,6 @@
 import Model.*;
 import View.*;
+import Controller.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -31,18 +32,33 @@ public class ArtigoTeste {
         //System.out.println(en.toString());
         en.removerArtigo(tshirt);
         en.adicionarArtigo(sapatilha);
-        //System.out.println(en.toString());
+        System.out.println(en.toString());
 
-        ViewMain am = new ViewMain();
-        ViewLogin al = new ViewLogin();
+
+        Transportadoras t = new Transportadoras();
+        System.out.println(t.calculaPrecoExpedicao(en));
+
+
+        Apresentacao v = new Apresentacao();
         //Output out = new Output();
-        am.welcome();
+        //am.welcome();
         //out.screenClear();
-        am.printMenuInicial();
+        //am.printMenuInicial();
         //out.screenClear();
-        al.printMenuLogin();
-        am.printMenuEscolha();
-        am.printSair();
+        //al.printMenuLogin();
+        //am.printMenuEscolha();
+        //am.printSair();
+
+        ControllerLogin cl = new ControllerLogin();
+        //cl.registaoi(v);
+        //TShirt xdxd = cl.registarTshirt(v);
+        //System.out.println(xdxd.toString());
+        cl.interpretador(v);
+
+        //TShirt teste = new TShirt();
+        //System.out.println(teste.toString());
+        
+
 
 
 
