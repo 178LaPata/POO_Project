@@ -3,6 +3,9 @@ package Controller;
 import Model.*;
 import View.*;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+
 
 import java.util.*;
 public class Input {
@@ -81,6 +84,27 @@ public class Input {
         line = s.nextLine();
 
         return line;
+    }
+
+    public LocalDate lerData(Apresentacao a, String message) {
+    Scanner s = new Scanner(System.in);
+    boolean val = true;
+    LocalDate data = null;
+    String[] date;
+
+    do {
+        a.printMessage(message);
+        try {
+            date = s.nextLine().split("-",3);
+            data = LocalDate.of(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+            val = false;
+        } catch (DateTimeException dte) {
+            a.printMessage("Data inválida");
+        } catch (NumberFormatException ignored) {
+        }
+    } while (val);
+
+    return data;
     }
     
 }

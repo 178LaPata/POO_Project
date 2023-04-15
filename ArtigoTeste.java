@@ -16,27 +16,27 @@ public class ArtigoTeste {
         //System.out.println(b.toString());
         //System.out.println("\n");
 
-        TShirt tshirt = new TShirt(TShirt.Tamanho.M, TShirt.Padrao.RISCAS, "TShirt", Artigo.Estado.USADO, 1, Artigo.Avaliação.BOM, "T-Shirt de algodão", "Nike", "NIK123", 30.0, 1.5);
+        //TShirt tshirt = new TShirt(TShirt.Tamanho.M, TShirt.Padrao.RISCAS, "TShirt", Artigo.Estado.USADO, 1, Artigo.Avaliação.BOM, "T-Shirt de algodão", "Nike", "NIK123", 30.0, 1.5);
         //System.out.println(tshirt.toString());
 
-        Malas mala1 = new Malas(Malas.Tipos_Malas.NORMAL, 50.0f, "Couro", 2022, "Mala" ,Artigo.Estado.NOVO, 0, Artigo.Avaliação.BOM, "Mala preta de couro", "Louis Vuitton", "LV001", 1000.0, 1.0);
+        //Malas mala1 = new Malas(Malas.Tipos_Malas.NORMAL, 50.0f, "Couro", 2022, "Mala" ,Artigo.Estado.NOVO, 0, Artigo.Avaliação.BOM, "Mala preta de couro", "Louis Vuitton", "LV001", 1000.0, 1.0);
         //System.out.println(mala1.toString());
 
         
-        Sapatilhas sapatilha = new Sapatilhas(42, true, "vermelho", LocalDate.of(2022, Month.JANUARY, 1), Sapatilhas.Tipos_Sapatilhas.PREMIUM, "Sapatilhas", Artigo.Estado.USADO, 1, Artigo.Avaliação.IMPECÁVEL, "Sapatilha confortável", "Nike", "NIK123", 100.0, 0.0);
+        //Sapatilhas sapatilha = new Sapatilhas(42, true, "vermelho", LocalDate.of(2022, Month.JANUARY, 1), Sapatilhas.Tipos_Sapatilhas.PREMIUM, "Sapatilhas", Artigo.Estado.USADO, 1, Artigo.Avaliação.IMPECÁVEL, "Sapatilha confortável", "Nike", "NIK123", 100.0, 0.0);
         //System.out.println(sapatilha.toString());
 
-        Encomenda en = new Encomenda();
-        en.adicionarArtigo(tshirt);
-        en.adicionarArtigo(mala1);
+        //Encomenda en = new Encomenda();
+        //en.adicionarArtigo(tshirt);
+        //en.adicionarArtigo(mala1);
         //System.out.println(en.toString());
-        en.removerArtigo(tshirt);
-        en.adicionarArtigo(sapatilha);
-        System.out.println(en.toString());
+        //en.removerArtigo(tshirt);
+        //en.adicionarArtigo(sapatilha);
+        //System.out.println(en.toString());
 
 
-        Transportadoras t = new Transportadoras();
-        System.out.println(t.calculaPrecoExpedicao(en));
+        //Transportadoras t = new Transportadoras();
+        //System.out.println(t.calculaPrecoExpedicao(en));
 
 
         Apresentacao v = new Apresentacao();
@@ -49,14 +49,14 @@ public class ArtigoTeste {
         //am.printMenuEscolha();
         //am.printSair();
 
-        ControllerLogin cl = new ControllerLogin();
-        //cl.registaoi(v);
-        //TShirt xdxd = cl.registarTshirt(v);
-        //System.out.println(xdxd.toString());
-        cl.interpretador(v);
+        ControladorArtigo ca = new ControladorArtigo();
+        ca.interpretador(v);
 
-        //TShirt teste = new TShirt();
-        //System.out.println(teste.toString());
+
+        // ISTO(EM BAIXO) É MAIOR PARTE DO MENU MAIS AINDA FALTA MUITA COISA
+        //Controlador c = new Controlador();
+        //c.interpretador(v);
+
         
 
 
