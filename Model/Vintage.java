@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Vintage {
-    private Map<Integer, Utilizador> utilizadores;
+    private Map<String, Utilizador> utilizadores;
     private Map<Integer, Encomenda> encomendas;
     private Map<Integer, Artigo> artigos;
     private Map<String, Login> login;
@@ -18,16 +18,25 @@ public class Vintage {
         this.transportadoras = new HashMap<>();
     }
     
-    public Utilizador getUtilizador(int id) {
-        return utilizadores.get(id).clone();
+    public void printAllLogins() {
+    for (String email : login.keySet()) {
+        Login l = login.get(email);
+        System.out.println("Email: " + email + ", Password: " + l.getPassword());
+    }
     }
 
-    public void setUtilizador(int id, Utilizador u) {
-        utilizadores.replace(u.getId(), u);
+
+
+    public Utilizador getUtilizador(String email) {
+        return utilizadores.get(email).clone();
     }
 
-    public void adicionaUtilizador(Utilizador u) {
-        utilizadores.put(u.getId(), u);
+    public void setUtilizador(String email, Utilizador u) {
+        utilizadores.replace(u.getEmail(), u);
+    }
+
+    public void adicionaUtilizador(Utilizador user){
+        utilizadores.put(user.getEmail(),user);
     }
 
     public Encomenda getEncomenda(int id) {
@@ -42,11 +51,15 @@ public class Vintage {
         return login.get(user).clone();
     }
 
-    public boolean existeUtilizador(String user) {
-        return login.containsKey(user);
+    public boolean existeUtilizador(String email) {
+        return login.containsKey(email);
     }
 
     public boolean existePassword(String user, String password) {
         return login.get(user).getPassword().equals(password);
+    }
+
+    public void adicionaLogin(Login l){
+        login.put(l.getemail(),l);
     }
 }

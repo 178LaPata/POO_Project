@@ -27,7 +27,7 @@ public class Utilizador {
         this.porVender = new ArrayList<>();
     }
 
-    public Utilizador(int id, String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas, List<Artigo> porVender) {
+    public Utilizador(String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas, List<Artigo> porVender) {
         this.id = nextID++;
         this.email = email;
         this.password = password;

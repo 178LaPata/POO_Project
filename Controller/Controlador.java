@@ -18,7 +18,7 @@ public class Controlador {
     }
 
 
-    public void interpretador (Apresentacao a){
+    public void interpretador (Vintage v, Apresentacao a){
         int comando;
         boolean b = true;
         Login l = null;
@@ -33,11 +33,18 @@ public class Controlador {
                 comando = in.lerInt(a,"Escolhe uma das opcões: ",0,2);
                 switch(comando){
                     case 1:
-                        cl.interpretador(a);
+                        l = cl.interpretador(v,a);
                         break;
                     case 0:
                         b = false;
                         break;
+                }
+            }else{
+                a.printMainMenuLogOut();
+                comando = in.lerInt(a,"Escolhe uma das opções: ",0,3);
+                switch(comando){
+                    case 1:
+                        a.printMessage("OIIIIII");
                 }
             }
         }

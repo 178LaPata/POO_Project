@@ -28,6 +28,10 @@ public class ViewMain implements Serializable {
         out.printMenus((new String[]{"Login/Registar"}),"      MENU PRINCIPAL",0);
     }
 
+    public void printMainMenuLogOut() {
+        out.printMenus((new String[]{"Logout","Estatísticas", "Consultas", "Adicionar Novo Produto Para Venda"}),"MENU PRINCIPAL",0);
+    }
+
     public void printMenuArtigo(){
         out.printMenus((new String[]{"Criar T-Shirt", "Criar Mala", "Criar Sapatilha"}),"      REGISTO ARTIGOS",0);
 

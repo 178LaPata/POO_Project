@@ -5,6 +5,7 @@ import Controller.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.*;
 
 public class ArtigoTeste {
     public static void main(String[] args) {
@@ -39,6 +40,13 @@ public class ArtigoTeste {
         //System.out.println(t.calculaPrecoExpedicao(en));
 
 
+        List<Artigo> compras = new ArrayList<>();
+        List<Artigo> vendas = new ArrayList<>();
+        List<Artigo> porVender = new ArrayList<>();
+
+        Utilizador utilizador = new Utilizador("email@example.com", "password", "Nome Sobrenome", "Rua Nome da Rua, Número 123", 123456789, compras, vendas, porVender);
+
+        Vintage vin = new Vintage();
         Apresentacao v = new Apresentacao();
         //Output out = new Output();
         //am.welcome();
@@ -49,13 +57,15 @@ public class ArtigoTeste {
         //am.printMenuEscolha();
         //am.printSair();
 
-        ControladorArtigo ca = new ControladorArtigo();
-        ca.interpretador(v);
+        //ControladorArtigo ca = new ControladorArtigo();
+        //ca.interpretador(v);
+
+
 
 
         // ISTO(EM BAIXO) É MAIOR PARTE DO MENU MAIS AINDA FALTA MUITA COISA
-        //Controlador c = new Controlador();
-        //c.interpretador(v);
+        Controlador c = new Controlador();
+        c.interpretador(vin,v);
 
         
 
