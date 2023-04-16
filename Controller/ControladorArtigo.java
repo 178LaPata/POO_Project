@@ -136,22 +136,29 @@ public class ControladorArtigo {
 
         while(b){
             a.printMenuArtigo();
-            comando = (int) in.lerDouble(a,"Escolha a sua opção:",0,3);
+            comando = in.lerInt(a,"Escolha a sua opção:",0,3);
 
             switch(comando){
                 case 1:
                     TShirt oi = registarTshirt(a);
                     a.printMessage("T-Shirt registada com sucesso!");
+                    u.adicionarPorVender(oi);
                     System.out.println(oi.toString());
                     break;
                 case 2:
                     registarMala(a);
                     a.printMessage("Mala registada com sucesso!");
+                    break;
                 case 3:
                     Sapatilhas sap = registarSapatilha(a);
                     a.printMessage("Sapatilha registada com sucesso!");
                     System.out.println(sap.toString());
+                    break;
+                case 0:
+                    b = false;
+                    break;
                 default:
+                    a.printMessage("Erro Comando Inválido");
                     break;
             }
         }

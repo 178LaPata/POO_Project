@@ -144,6 +144,17 @@ public class Utilizador {
         }
     }
 
+    public void adicionarPorVender(Artigo a){
+        this.porVender.add(a);
+    }
+
+    public void printArtigos() {
+    for (Artigo a : porVender) {
+        System.out.println(a);
+    }
+    }
+
+
     public boolean equals(Object o) {
         if(this == o) 
             return true;

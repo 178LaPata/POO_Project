@@ -29,8 +29,7 @@ public class Vintage {
     for (Utilizador u : utilizadores.values()) {
         System.out.println("UTI" + u);
     }
-}
-
+    }
 
 
     public Utilizador getUtilizador(String email) {

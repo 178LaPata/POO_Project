@@ -109,7 +109,7 @@ public class ControladorLogin {
                         a.printMessage("Login Sucesso");
                         b = false;
                     }else{
-                        a.printMessage("Dados inválidos oiiii");
+                        a.printMessage("Dados Inválidos");
                     }
                     break;
                 case 2:
@@ -118,8 +118,6 @@ public class ControladorLogin {
                          a.printMessage("Dados inválidos");
                     }else{
                         v.adicionaUtilizador(u);
-                        System.out.println("kkkkkkkkkkkkkkk");
-                        v.printUtilizadores();
                         registo(u,a,v);
                         a.printMessage("Registo Sucesso");
                         v.printAllLogins();
