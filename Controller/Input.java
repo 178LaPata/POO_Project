@@ -76,6 +76,32 @@ public class Input {
     return n;
     }
 
+
+
+    public float lerBoolean(Apresentacao a, String message, float min, float max) {
+        Scanner s = new Scanner(System.in);
+        Boolean n = Boolean.NaN;
+    
+        do {
+            a.printMessage(message);
+            try {
+                String line = s.nextLine();
+                n = Boolean.parseFloat(line);
+            } catch (NumberFormatException nfe) {
+                a.printMessage(nfe.getMessage());
+                n = Float.NaN;
+            }
+        } while (n < min || n > max);
+    
+        return n;
+        }
+
+
+
+
+
+
+
     public String lerString(Apresentacao a, String message){
         Scanner s = new Scanner(System.in);
         String line;

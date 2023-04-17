@@ -67,4 +67,8 @@ public class Vintage {
     public void adicionaLogin(Login l){
         login.put(l.getemail(),l);
     }
+
+    public void adicionarTransportadora(Transportadoras t){
+        transportadoras.put(t.getNome(), t);
+    }
 }

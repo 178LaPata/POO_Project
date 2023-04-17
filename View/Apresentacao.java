@@ -35,6 +35,10 @@ public class Apresentacao implements Serializable {
         am.printMenuArtigo();
     }
 
+    public void printMenuTransportadoras(){
+        am.printMenuTransportadoras();
+    }
+
     public void printMainMenuLogOut(){
         am.printMainMenuLogOut();
     }

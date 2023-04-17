@@ -37,6 +37,11 @@ public class ViewMain implements Serializable {
 
     }
 
+    public void printMenuTransportadoras(){
+        out.printMenus((new String[]{"Criar Transportadora"}),"      REGISTO TRANSPORTADORAS" , 0);
+    }
+    
+
     public void printMenuConsultas(){
         out.printMenus((new String[]{"Consultar meus Produtos a Vender", "Consultar Produtos Comprados", "Consultar Produtos Vendidos","Consultar Transportadoras Disponíveis"}),"      CONSULTAS",0);
     }
