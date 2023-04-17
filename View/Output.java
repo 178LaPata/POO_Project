@@ -1,5 +1,6 @@
 package View;
 
+import Model.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -57,11 +58,11 @@ public class Output implements Serializable {
         System.out.print("\n");
     }
 
-    public void printTable(String message, List<String> arr) {
+    public void printTable(String message, List<Artigo> arr) {
         System.out.println("\n" + message);
 
         for(int i=0; i<arr.size(); i++)
-            System.out.println(String.format("%2d %1s",(i+1), ") ") + arr.get(i));
+            System.out.println(String.format("%2d %1s",(i+1), ") ") + arr.get(i).toString());
 
         System.out.print("\n");
     }

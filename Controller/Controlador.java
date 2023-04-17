@@ -3,6 +3,8 @@ package Controller;
 
 import Model.*;
 import View.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Scanner;
 
@@ -56,10 +58,7 @@ public class Controlador {
             comando = in.lerInt(a,"Escolha uma das opções:",0,3);
 
             switch(comando){
-                 case 1: // Ver Produtos que está a Vender
-                    a.printMessage("TENHO DE PRINTAR");
-                    u.printArtigos();
-                    a.printMessage("TENHO DE PRINTAR");
+                 case 1: // Ver Produtos que está a Vender       
                     break;
                 case 2: // Ver os Produtos que já Comprou
                     break;
@@ -94,9 +93,9 @@ public class Controlador {
                     case 1: // Login / Registar
                         l = cl.interpretador(v,a);
                         break;
-                    case 2: // Gravar para um Ficheiro
+                    case 2: // Gravar para um Ficheiro (AINDA A NÂO FUNCIONAR)
                         break;
-                    case 3: // Carregar um Ficheiro
+                    case 3: // Carregar um Ficheiro (AINDA A NÂO FUNCIONAR)
                         break;
                     case 0: // Sair do programa
                         b = false;

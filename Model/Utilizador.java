@@ -149,9 +149,14 @@ public class Utilizador {
     }
 
     public void printArtigos() {
-    for (Artigo a : porVender) {
-        System.out.println(a);
-    }
+        if (porVender.isEmpty()) {
+            System.out.println("Não há artigos à venda.");
+            return;
+        }
+        
+        for (Artigo a : porVender) {
+            System.out.println(a);
+        }
     }
 
 

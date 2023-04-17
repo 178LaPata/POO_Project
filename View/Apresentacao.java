@@ -1,5 +1,7 @@
 package View;
 
+
+import Model.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class Apresentacao implements Serializable {
         out.printArray(message, arr);
     }
 
-    public void printTable(String message, List<String> arr) {
+    public void printTable(String message, List<Artigo> arr) {
         out.printTable(message, arr);
     }
 

@@ -143,7 +143,12 @@ public class ControladorArtigo {
                     TShirt oi = registarTshirt(a);
                     a.printMessage("T-Shirt registada com sucesso!");
                     u.adicionarPorVender(oi);
-                    System.out.println(oi.toString());
+                    if(u.getPorVender().isEmpty()){
+                        System.out.println("ESTA VAZIA");
+                    }else{
+                        System.out.println("NAO ESTA VAZIA");
+                    }
+                    u.printArtigos();
                     break;
                 case 2:
                     registarMala(a);

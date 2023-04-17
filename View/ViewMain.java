@@ -25,7 +25,7 @@ public class ViewMain implements Serializable {
     }
 
     public void printMenuInicial() {
-        out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um ficheiro"}),"MENU PRINCIPAL",0);
+        out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um ficheiro"}),"      MENU PRINCIPAL",0);
     }
 
     public void printMainMenuLogOut() {
