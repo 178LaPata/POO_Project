@@ -12,11 +12,13 @@ public class Controlador {
     private final Input in;
     private final ControladorArtigo ca;
     private final ControladorLogin cl;
+    private final ControladorTransportadoras ct;
 
     public Controlador(){
         in = new Input();
         ca = new ControladorArtigo();
         cl = new ControladorLogin();
+        ct = new ControladorTransportadoras();
     }
 
 
@@ -64,6 +66,10 @@ public class Controlador {
                     break;
                 case 3: // Ver os Produtos que já Vendeu
                     break;
+                case 4: // Ver transportadoras disponíveis
+                    // Sacar o map das transportadoras
+                    // Printar esse Map
+                    break;
                 case 0:
                     b = false;
                     break;
@@ -88,7 +94,7 @@ public class Controlador {
         while(b){
             if(l == null){
                 a.printMenuInicial();
-                comando = in.lerInt(a,"Escolhe uma das opcões: ",0,3);
+                comando = in.lerInt(a,"Escolhe uma das opcões: ",0,4);
                 switch(comando){
                     case 1: // Login / Registar
                         l = cl.interpretador(v,a);
@@ -97,8 +103,14 @@ public class Controlador {
                         break;
                     case 3: // Carregar um Ficheiro (AINDA A NÂO FUNCIONAR)
                         break;
+                    case 4: // Criar Transportadora
+                        ct.interpretador(v,a);
+                        break;
                     case 0: // Sair do programa
                         b = false;
+                        break;
+                    default:
+                        a.printMessage("Erro Comando Inválido");
                         break;
                 }
             }else{

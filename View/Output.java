@@ -3,6 +3,8 @@ package View;
 import Model.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Output implements Serializable {
 
@@ -58,13 +60,37 @@ public class Output implements Serializable {
         System.out.print("\n");
     }
 
-    public void printTable(String message, List<Artigo> arr) {
+
+    public void printTable(String message, List<String> arr) {
+        System.out.println("\n" + message);
+
+        for(int i=0; i<arr.size(); i++)
+            System.out.println(String.format("%2d %1s",(i+1), ") ") + arr.get(i));
+
+        System.out.print("\n");
+    }
+
+    public void printTableArtigo(String message, List<Artigo> arr) {
         System.out.println("\n" + message);
 
         for(int i=0; i<arr.size(); i++)
             System.out.println(String.format("%2d %1s",(i+1), ") ") + arr.get(i).toString());
 
         System.out.print("\n");
+    }
+
+    public void imprimirTabelaTransportadoras(Map<String, Transportadoras> transportadoras) {
+            System.out.printf("| %-20s | %-10s | %-15s | %-10s | %-10s |\n", "Nome", "Imposto", "Preço Expedição", "Lucro", "Premium");
+            System.out.println("|----------------------|------------|-----------------|----------|----------|");
+
+            for (Map.Entry<String, Transportadoras> entry : transportadoras.entrySet()) {
+                Transportadoras transportadora = entry.getValue();
+
+                System.out.printf("| %-20s | %-10.2f | %-15.2f | %-8.2f | %-8s |\n", 
+                                    transportadora.getNome(), transportadora.getImposto(), 
+                                    transportadora.getPrecoExpedicao(), transportadora.getLucro(),
+                                    transportadora.isPremium());
+            }
     }
 
     public void printMessage(String message) {

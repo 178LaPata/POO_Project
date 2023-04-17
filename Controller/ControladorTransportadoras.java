@@ -26,8 +26,7 @@ public class ControladorTransportadoras {
         Double imposto = in.lerDouble(a, ">>> Imposto da Transportadora: ",0,10000);
         Double precoExpedicao = in.lerDouble(a, ">>> Preço da Expedição; ",0,100000);
         Double lucro = in.lerDouble(a, ">>> Margem de lucro da Transportadora: ",0,100000);
-        a.printMessage(">>> A Transportadora é Premium: (true,false)");
-        Boolean premium = s.nextBoolean();
+        boolean premium = in.lerSN(a,">>> A Transportadora é Premium(S/N): ");
 
         return new Transportadoras(nome, imposto, precoExpedicao, lucro , premium);
 
