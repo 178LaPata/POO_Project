@@ -1,4 +1,8 @@
 package Model;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import Model.Encomenda.Dimensao_Embalagem;
 
 public class Transportadoras {
@@ -7,6 +11,8 @@ public class Transportadoras {
     private double precoExpedicao;
     private double lucro;
     private boolean premium; // pode vir a ser mudado para enum
+    private List<Artigo> artigos;
+
 
     public Transportadoras() {
         this.nome = "";
@@ -14,14 +20,16 @@ public class Transportadoras {
         this.precoExpedicao = 0;
         this.lucro = 5.5;
         this.premium = false;
+        this.artigos = null;
     }
 
-    public Transportadoras(String nome, double imposto, double precoExpedicao, double lucro, boolean premium) {
+    public Transportadoras(String nome, double imposto, double precoExpedicao, double lucro, boolean premium, List<Artigo> artigos) {
         this.nome = nome;
         this.imposto = imposto;
         this.precoExpedicao = precoExpedicao;
         this.lucro = lucro;
         this.premium = premium;
+        setArtigos(artigos);
     }
 
     public Transportadoras(Transportadoras t) {
@@ -30,6 +38,7 @@ public class Transportadoras {
         this.precoExpedicao = t.getPrecoExpedicao();
         this.lucro = t.getLucro();
         this.premium = t.isPremium();
+        this.artigos = t.getArtigos();
     }
 
     public String getNome() {
@@ -72,6 +81,18 @@ public class Transportadoras {
         this.premium = premium;
     }
 
+    public List<Artigo> getArtigos(){
+        return this.artigos.stream().map(Artigo::clone).collect(Collectors.toList());
+    }
+
+    public void setArtigos(List<Artigo> artigos){
+        this.artigos = artigos.stream().map(Artigo::clone).collect(Collectors.toList());
+    }
+
+    public void addArtigo(Artigo a){
+        this.artigos.add(a);
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Nome: ").append(this.nome).append("\n");
@@ -90,7 +111,8 @@ public class Transportadoras {
                 this.imposto == t.getImposto() &&
                 this.precoExpedicao == t.getPrecoExpedicao() &&
                 this.lucro == t.getLucro() &&
-                this.premium == t.isPremium();
+                this.premium == t.isPremium() && 
+                this.artigos.equals(t.getArtigos()); // NAO SEI SE POSSO FAZER ASSIM O EQUALS!
     }
 
     public Transportadoras clone() {

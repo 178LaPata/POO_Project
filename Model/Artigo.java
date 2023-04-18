@@ -22,6 +22,8 @@ public class Artigo {
     private String codigo;              // Código Alfa-Númerico
     private double precoBase;           // Preço Base
     private double correcaoPreco;       // Correção do Preço
+    private Transportadoras transportadora; // Transportadora
+
 
     public Artigo(){
         this.id = nextID++;
@@ -34,9 +36,10 @@ public class Artigo {
         this.codigo = "";
         this.precoBase = 0;
         this.correcaoPreco = 0;
+        this.transportadora = null;
     }
 
-    public Artigo(String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
+    public Artigo(String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco,Transportadoras transportadora) {
         this.id = nextID++;
         this.tipo = tipo;
         this.estado = estado;
@@ -52,6 +55,7 @@ public class Artigo {
         this.codigo = codigo;
         this.precoBase = precoBase;
         this.correcaoPreco = correcaoPreco;
+        this.transportadora = transportadora;
     }
 
     public Artigo(Artigo a){
@@ -147,6 +151,16 @@ public class Artigo {
         this.correcaoPreco = correcaoPreco;
     }
 
+
+    public Transportadoras getTransportadora(){
+        return this.transportadora;
+    }
+
+    public void setTransportadora(Transportadoras t){
+        this.transportadora = t;
+    }
+
+
     public boolean equals(Object o){
         if(this == o) 
             return true;
@@ -161,7 +175,8 @@ public class Artigo {
                 this.marca.equals(a.getMarca()) &&
                 this.codigo.equals(a.getCodigo()) &&
                 this.precoBase == a.getPrecoBase() &&
-                this.correcaoPreco == a.getCorrecaoPreco());
+                this.correcaoPreco == a.getCorrecaoPreco()) &&
+                this.transportadora.equals(a.getTransportadora());
     }
 
     public String toString() {
@@ -175,7 +190,8 @@ public class Artigo {
         sb.append("Marca: ").append(this.marca).append("\n");
         sb.append("Código: ").append(this.codigo).append("\n");
         sb.append("Preço Base: ").append(this.precoBase).append("\n");
-        sb.append("Correção do Preço: ").append(this.correcaoPreco).append("\n");
+        sb.append("Correção do Preço: ").append(this.correcaoPreco).append("\n\n");
+        sb.append("Transportadora: ").append(this.transportadora).append("\n");
         return sb.toString();
     }
 

@@ -106,4 +106,8 @@ public class Apresentacao implements Serializable {
         out.imprimirTabelaTransportadoras(transportadoras);
     }
 
+    public void printMapTransportadoras(String message, Map<String,Transportadoras> t){
+        out.printMapTransportadoras(message, t);
+    }
+
 }

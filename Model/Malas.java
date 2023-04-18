@@ -18,8 +18,8 @@ public class Malas extends Artigo {
         this.ano_da_colecao = 0;
     }
 
-    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco) {
-        super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
+    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, Transportadoras t) {
+        super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco, t);
         this.tipo_mala = tipo_mala;
         this.dim = dim;
         this.material = material;

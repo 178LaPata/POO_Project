@@ -104,4 +104,12 @@ public class Output implements Serializable {
     public void printInteiro(int inteiro){
         System.out.println(inteiro);
     }
+
+    public void printMapTransportadoras(String message, Map<String,Transportadoras> t){
+        System.out.println("\n" + message);
+        for (String transp : t.keySet()){
+            System.out.println(transp);
+        }
+        System.out.println("\n");
+    }
 }

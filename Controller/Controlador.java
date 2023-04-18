@@ -3,8 +3,6 @@ package Controller;
 
 import Model.*;
 import View.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import java.util.Scanner;
 
@@ -130,7 +128,7 @@ public class Controlador {
                         break;
                     case 4: // Colocar Produto para Vender
                         u = v.getUtilizador(l.getemail());
-                        ca.interpretador(u,a);
+                        ca.interpretador(u,a,v);
                         break;
                     case 5: // Comprar produto
                         break;

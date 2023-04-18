@@ -24,9 +24,9 @@ public class Sapatilhas extends Artigo {
         this.tipos_sapatilhas = null;
     }
 
-    public Sapatilhas(int tamanho_numerico, boolean atilhos, String cor, LocalDate data_lancamento, Tipos_Sapatilhas tipos_sapatilhas, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco){
+    public Sapatilhas(int tamanho_numerico, boolean atilhos, String cor, LocalDate data_lancamento, Tipos_Sapatilhas tipos_sapatilhas, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, Transportadoras t){
         // mudar depois ao criar a tshirt
-        super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco);
+        super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco, t);
         this.tamanho_numerico = tamanho_numerico;
         this.atilhos = atilhos;
         this.cor = cor;

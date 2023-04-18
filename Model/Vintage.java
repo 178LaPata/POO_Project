@@ -17,6 +17,32 @@ public class Vintage {
         this.login = new HashMap<>();
         this.transportadoras = new HashMap<>();
     }
+
+
+
+
+
+
+
+
+
+
+    // nao sei se faz sentido fazer clone das transportadoras porque se vamos alterar algo nelas aqui tipo adicionar 
+    // um artigo ou assim não faz sentido fazer clone porque iriamos estar a adicionar ao clone e nao à transportadora
+    public Map<String, Transportadoras> getTransportadoras() {
+        return transportadoras;
+    }
+
+
+
+
+
+
+
+
+
+
+
     
     public void printAllLogins() {
     for (String email : login.keySet()) {
@@ -70,5 +96,9 @@ public class Vintage {
 
     public void adicionarTransportadora(Transportadoras t){
         transportadoras.put(t.getNome(), t);
+    }
+
+    public Transportadoras getTransportadora(String t){
+        return this.transportadoras.get(t);
     }
 }

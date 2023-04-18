@@ -1,10 +1,7 @@
 package Controller;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import Model.*;
 import View.*;
@@ -27,8 +24,8 @@ public class ControladorTransportadoras {
         Double precoExpedicao = in.lerDouble(a, ">>> Preço da Expedição; ",0,100000);
         Double lucro = in.lerDouble(a, ">>> Margem de lucro da Transportadora: ",0,100000);
         boolean premium = in.lerSN(a,">>> A Transportadora é Premium(S/N): ");
-
-        return new Transportadoras(nome, imposto, precoExpedicao, lucro , premium);
+        List<Artigo> artigos = new ArrayList<Artigo>();
+        return new Transportadoras(nome, imposto, precoExpedicao, lucro , premium,artigos);
 
     }
 
@@ -46,6 +43,7 @@ public class ControladorTransportadoras {
                     Transportadoras t = registarTransportadoras(a);
                     a.printMessage("Transportadora registada com sucesso!");
                     v.adicionarTransportadora(t);
+                    a.printMapTransportadoras("Transportadoras disponíveis", v.getTransportadoras());
                     break;
                 case 0:
                     b = false;

@@ -16,13 +16,15 @@ public class ControladorArtigo {
     public ControladorArtigo(){
         in = new Input();
     }
+
     
     // Método para registar uma TShirt
-    public TShirt registarTshirt (Apresentacao a){
+    public TShirt registarTshirt (Apresentacao a, Vintage v){
         Scanner s = new Scanner(System.in);
 
         int numDonos;
         TShirt.Avaliação avaliacao;
+
 
         a.printMessage("===== Registo de T-Shirt ====");
         a.printMessage(">>> Tipo da TShirt(S,M,L,XL): ");
@@ -48,12 +50,15 @@ public class ControladorArtigo {
         String cod = in.lerString(a,">>> Código da TShirt: ");
         Double precoB = in.lerDouble(a,">>> Preço da TShirt: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">>> Correção da TShirt: ",0,1000000);
+        a.printMapTransportadoras("Transportadoras Disponíveis",v.getTransportadoras());
+        String transp = in.lerString(a, ">>> Transportadora: ");
+        Transportadoras transportadora = v.getTransportadora(transp);
 
-        return new TShirt(tamanho, padrao,"TShirt", estado, numDonos, avaliacao, desc, marca, cod, precoB,correcaoP);
+        return new TShirt(tamanho, padrao,"TShirt", estado, numDonos, avaliacao, desc, marca, cod, precoB,correcaoP, transportadora);
     }
 
     // Método para registar uma Mala
-    public Malas registarMala (Apresentacao a){
+    public Malas registarMala (Apresentacao a, Vintage v){
         Scanner s = new Scanner(System.in);
 
         int numDonos;
@@ -83,14 +88,17 @@ public class ControladorArtigo {
         String cod = in.lerString(a,">>> Código da Mala: ");
         Double precoB = in.lerDouble(a,">>> Preço da Mala: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">>> Correção da Mala: ",0,1000000);
+        a.printMapTransportadoras("Transportadoras Disponíveis",v.getTransportadoras());
+        String transp = in.lerString(a, ">>> Transportadora: ");
+        Transportadoras transportadora = v.getTransportadora(transp);
 
 
-        return new Malas(tipo, dim, material, ano, "Mala" ,estado, numDonos, avaliacao, desc, marca, cod, precoB, correcaoP);
+        return new Malas(tipo, dim, material, ano, "Mala" ,estado, numDonos, avaliacao, desc, marca, cod, precoB, correcaoP, transportadora);
 
     }
 
     // Método para registar uma Sapatilha
-    public Sapatilhas registarSapatilha (Apresentacao a){
+    public Sapatilhas registarSapatilha (Apresentacao a, Vintage v){
         Scanner s = new Scanner(System.in);
 
         int numDonos;
@@ -121,8 +129,11 @@ public class ControladorArtigo {
         String cod = in.lerString(a,">>> Código da Mala: ");
         Double precoB = in.lerDouble(a,">>> Preço da Mala: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">>> Correção da Mala: ",0,1000000);
+        a.printMapTransportadoras("Transportadoras Disponíveis",v.getTransportadoras());
+        String transp = in.lerString(a, ">>> Transportadora: ");
+        Transportadoras transportadora = v.getTransportadora(transp);
 
-        return new Sapatilhas(tamanho_sapatilha,tem_atilhos,cor,data,tipo,"Sapatilhas",estado,numDonos,avaliacao,desc,marca,cod,precoB,correcaoP);
+        return new Sapatilhas(tamanho_sapatilha,tem_atilhos,cor,data,tipo,"Sapatilhas",estado,numDonos,avaliacao,desc,marca,cod,precoB,correcaoP,transportadora);
         
 
     }
@@ -130,7 +141,7 @@ public class ControladorArtigo {
 
 
 
-    public void interpretador(Utilizador u,Apresentacao a){
+    public void interpretador(Utilizador u,Apresentacao a,Vintage v){
         boolean b = true;
         int comando;
 
@@ -140,7 +151,7 @@ public class ControladorArtigo {
 
             switch(comando){
                 case 1:
-                    TShirt oi = registarTshirt(a);
+                    TShirt oi = registarTshirt(a, v);
                     a.printMessage("T-Shirt registada com sucesso!");
                     u.adicionarPorVender(oi);
                     if(u.getPorVender().isEmpty()){
@@ -151,11 +162,11 @@ public class ControladorArtigo {
                     u.printArtigos();
                     break;
                 case 2:
-                    registarMala(a);
+                    registarMala(a,v);
                     a.printMessage("Mala registada com sucesso!");
                     break;
                 case 3:
-                    Sapatilhas sap = registarSapatilha(a);
+                    Sapatilhas sap = registarSapatilha(a,v);
                     a.printMessage("Sapatilha registada com sucesso!");
                     System.out.println(sap.toString());
                     break;
