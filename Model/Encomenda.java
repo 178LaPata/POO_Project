@@ -25,6 +25,7 @@ public class Encomenda {
     private Estado_Encomenda estado;
     private LocalDate dataCriacao;
     private int tamanho;  // não sei se é preciso (serve para definir a Dimensão da embalagem)
+    private LocalDate prazoLimite; // 30 dias para trocar 
     
     public Encomenda() {
         this.id = nextID++;
@@ -36,6 +37,7 @@ public class Encomenda {
         this.estado = Estado_Encomenda.PENDENTE;
         this.dataCriacao = LocalDate.now();
         this.tamanho = 0;
+        prazoLimite = dataCriacao.plusDays(30);
     }
 
     public Encomenda(List<Artigo> artigos, double precoFinal, double taxaSatisfacao, double custosExpedicao, Estado_Encomenda estado, LocalDate dataCriacao) {
@@ -50,6 +52,7 @@ public class Encomenda {
         if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
         if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
         if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
+        this.prazoLimite = dataCriacao.plusDays(30);
     }
 
     public Encomenda(Encomenda enc) {
@@ -62,6 +65,7 @@ public class Encomenda {
         this.estado = enc.getEstado();
         this.dataCriacao = enc.getDataCriacao();
         this.tamanho =  enc.getTamanho();
+        this.prazoLimite = enc.getPrazoLimite();
     }
 
     public int getId() {
@@ -142,6 +146,14 @@ public class Encomenda {
 
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public LocalDate getPrazoLimite(){
+        return this.prazoLimite;
+    }
+
+    public void setPrazoLimite(LocalDate prazo){
+        this.prazoLimite = prazo;
     }
 
     public boolean equals(Object o) {
