@@ -148,16 +148,6 @@ public class Utilizador {
         this.porVender.add(a);
     }
 
-    public void printArtigos() {
-        if (porVender.isEmpty()) {
-            System.out.println("Não há artigos à venda.");
-            return;
-        }
-        
-        for (Artigo a : porVender) {
-            System.out.println(a);
-        }
-    }
 
 
     public boolean equals(Object o) {

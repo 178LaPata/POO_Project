@@ -4,7 +4,6 @@ package View;
 import Model.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Apresentacao implements Serializable {
@@ -27,10 +26,6 @@ public class Apresentacao implements Serializable {
         am.printMenuInicial();
     }
 
-    public void printMenuEscolha() {
-        am.printMenuEscolha();
-    }
-
     public void printSair() {
         am.printSair();
     }
@@ -39,9 +34,6 @@ public class Apresentacao implements Serializable {
         am.printMenuArtigo();
     }
 
-    public void printMenuTransportadoras(){
-        am.printMenuTransportadoras();
-    }
 
     public void printMainMenuLogOut(){
         am.printMainMenuLogOut();
@@ -106,8 +98,12 @@ public class Apresentacao implements Serializable {
         out.imprimirTabelaTransportadoras(transportadoras);
     }
 
-    public void printMapTransportadoras(String message, Map<String,Transportadoras> t){
-        out.printMapTransportadoras(message, t);
+    public void printTransportadoras( Map<String,Transportadoras> t){
+        out.printTransportadoras(t);
+    }
+
+    public void printArtigos(List<Artigo> a){
+        out.printArtigos(a);
     }
 
 }

@@ -190,8 +190,8 @@ public class Artigo {
         sb.append("Marca: ").append(this.marca).append("\n");
         sb.append("Código: ").append(this.codigo).append("\n");
         sb.append("Preço Base: ").append(this.precoBase).append("\n");
-        sb.append("Correção do Preço: ").append(this.correcaoPreco).append("\n\n");
-        sb.append("Transportadora: ").append(this.transportadora).append("\n");
+        sb.append("Correção do Preço: ").append(this.correcaoPreco).append("\n");
+        sb.append("Transportadora: ").append(this.transportadora.getNome()).append("\n");
         return sb.toString();
     }
 

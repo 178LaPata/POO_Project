@@ -1,7 +1,6 @@
 package View;
 
 import java.io.Serializable;
-import java.util.Scanner;
 
 public class ViewLogin implements Serializable {
     private final Output out;

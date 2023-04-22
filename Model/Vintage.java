@@ -1,26 +1,22 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Vintage {
+    private String sessaoAtual; // é a pessoa na qual damos o login fica com o email associado para conseguir associar os artigos que comprar ou vender a ela
     private Map<String, Utilizador> utilizadores;
     private Map<Integer, Encomenda> encomendas;
-    private Map<Integer, Artigo> artigos;
-    private Map<String, Login> login;
     private Map<String, Transportadoras> transportadoras;
 
     public Vintage() {
+        this.sessaoAtual = null;
         this.utilizadores = new HashMap<>();
         this.encomendas = new HashMap<>();
-        this.artigos = new HashMap<>();
-        this.login = new HashMap<>();
         this.transportadoras = new HashMap<>();
     }
-
-
-
-
 
 
 
@@ -36,30 +32,31 @@ public class Vintage {
 
 
 
-
-
-
-
+    // PERGUNTAR AO PROFESSOR
+    public List<Artigo> getArtigosVenda(){
+        List<Artigo> artigos = new ArrayList<>();
+        for (Map.Entry<String,Utilizador> entry: utilizadores.entrySet()){
+            if (entry.getKey() != this.sessaoAtual){
+                entry.getValue().getPorVender().stream().map(Artigo :: clone).forEach(artigos::add);
+            } 
+        }
+        return artigos;
+    }
 
 
 
     
-    public void printAllLogins() {
-    for (String email : login.keySet()) {
-        Login l = login.get(email);
-        System.out.println("Email: " + email + ", Password: " + l.getPassword());
-    }
-    }
 
+    // REMOVER ISTO
     public void printUtilizadores() {
     for (Utilizador u : utilizadores.values()) {
         System.out.println("UTI" + u);
     }
     }
 
-
+    // Aqui tirei o clone porque supostamente vamos querer adicionar produtos ao Utilizador original e não a uma clone dele
     public Utilizador getUtilizador(String email) {
-        return utilizadores.get(email).clone();
+        return utilizadores.get(email);
     }
 
     public void setUtilizador(String email, Utilizador u) {
@@ -78,21 +75,7 @@ public class Vintage {
         encomendas.replace(e.getId(), e);
     }
 
-    public Login getLogin(String user) {
-        return login.get(user).clone();
-    }
 
-    public boolean existeUtilizador(String email) {
-        return login.containsKey(email);
-    }
-
-    public boolean existePassword(String user, String password) {
-        return login.get(user).getPassword().equals(password);
-    }
-
-    public void adicionaLogin(Login l){
-        login.put(l.getemail(),l);
-    }
 
     public void adicionarTransportadora(Transportadoras t){
         transportadoras.put(t.getNome(), t);
@@ -101,4 +84,25 @@ public class Vintage {
     public Transportadoras getTransportadora(String t){
         return this.transportadoras.get(t);
     }
+
+    public String getSessaoAtual(){
+        return this.sessaoAtual;
+    }
+
+    public void SetSessaoAtual(String s){
+        this.sessaoAtual = s;
+    }
+
+    public boolean existeEmail(String email){
+        return this.utilizadores.containsKey(email);
+    }
+
+    public boolean existeUser(String email, String password){
+        Utilizador user = this.utilizadores.get(email);
+        if (user != null){
+        return this.utilizadores.get(email).getPassword().equals(password);
+        }
+        return false;
+    }
+
 }

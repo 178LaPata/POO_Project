@@ -1,6 +1,5 @@
 package Model;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import Model.Encomenda.Dimensao_Embalagem;
@@ -11,7 +10,7 @@ public class Transportadoras {
     private double precoExpedicao;
     private double lucro;
     private boolean premium; // pode vir a ser mudado para enum
-    private List<Artigo> artigos;
+    private List<Artigo> artigos; // lista de artigos entregues. 
 
 
     public Transportadoras() {

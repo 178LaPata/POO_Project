@@ -61,6 +61,8 @@ public class TShirt extends Artigo {
                 this.padrao == ((TShirt) o).getPadrao());
     }
 
+
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(super.toString());

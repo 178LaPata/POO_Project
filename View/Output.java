@@ -3,7 +3,6 @@ package View;
 import Model.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Output implements Serializable {
@@ -79,6 +78,9 @@ public class Output implements Serializable {
         System.out.print("\n");
     }
 
+
+
+    
     public void imprimirTabelaTransportadoras(Map<String, Transportadoras> transportadoras) {
             System.out.printf("| %-20s | %-10s | %-15s | %-10s | %-10s |\n", "Nome", "Imposto", "Preço Expedição", "Lucro", "Premium");
             System.out.println("|----------------------|------------|-----------------|----------|----------|");
@@ -93,6 +95,8 @@ public class Output implements Serializable {
             }
     }
 
+
+
     public void printMessage(String message) {
         System.out.println(message);
     }
@@ -105,11 +109,23 @@ public class Output implements Serializable {
         System.out.println(inteiro);
     }
 
-    public void printMapTransportadoras(String message, Map<String,Transportadoras> t){
-        System.out.println("\n" + message);
-        for (String transp : t.keySet()){
-            System.out.println(transp);
+
+
+    public void printTransportadoras(Map<String, Transportadoras> transportadoras){
+        System.out.println("+------------------------------+\n|        Transportadoras       |\n+------------------------------+");
+        for (Transportadoras a : transportadoras.values()){
+            System.out.print(a);
+            System.out.println("+------------------------------+");
         }
-        System.out.println("\n");
+    }
+
+
+
+    public void printArtigos(List<Artigo> artigos){
+        System.out.println("+--------------------------+\n|          Artigos         |\n+--------------------------+");
+        for (Artigo a : artigos){
+            System.out.print(a);
+            System.out.println("+--------------------------+");
+        }
     }
 }

@@ -1,10 +1,6 @@
 package Controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import Model.*;
 import View.*;
@@ -17,164 +13,149 @@ public class ControladorArtigo {
         in = new Input();
     }
 
-    
-    // Método para registar uma TShirt
-    public TShirt registarTshirt (Apresentacao a, Vintage v){
-        Scanner s = new Scanner(System.in);
 
+
+    public TShirt registarTShirt(Apresentacao a, Vintage v){
         int numDonos;
-        TShirt.Avaliação avaliacao;
+        Artigo.Avaliação avaliacao;
 
-
-        a.printMessage("===== Registo de T-Shirt ====");
-        a.printMessage(">>> Tipo da TShirt(S,M,L,XL): ");
-        String tamanho_string = s.nextLine();
-        TShirt.Tamanho tamanho = TShirt.Tamanho.valueOf(tamanho_string);
-        a.printMessage(">>> Padrão da TShirt(LISO,RISCAS,PALMEIRAS): ");
-        String padrao_string = s.nextLine();
-        TShirt.Padrao padrao = TShirt.Padrao.valueOf(padrao_string);
-        a.printMessage(">>> Estado da TShirt(NOVO,USADO): ");
-        String estado_string = s.nextLine();
-        Artigo.Estado estado = Artigo.Estado.valueOf(estado_string);
-        if (estado != Artigo.Estado.NOVO){
-            numDonos = in.lerInt(a,">>> Número de Donos: ",0,1000);
-            a.printMessage(">>> Avaliação da TShirt(IMPECÁVEL,BOM,SATISFATÓRIO): ");
-            String avaliacao_string = s.nextLine();
-            avaliacao = TShirt.Avaliação.valueOf(avaliacao_string);
-        }else{
+        a.printMessage("===== Registo T-Shirt ====");
+        String tamanhoString = in.lerString(a, ">> Tamanho T-Shirt (S,M,L,XL): ");
+        TShirt.Tamanho tamanho = TShirt.Tamanho.valueOf(tamanhoString);
+        String padraoString = in.lerString(a, ">> Padrão T-Shirt (LISO,RISCAS,PALMEIRAS): ");
+        TShirt.Padrao padrao = TShirt.Padrao.valueOf(padraoString);
+        String estadoString = in.lerString(a, ">> Estado T-Shirt (NOVO,USADO): ");
+        Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
+        if (estadoString == "USADO"){
+            numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
+            String avaliacaoString = in.lerString(a, ">> Avaliação T-Shirt (IMPECÁVEL,BOM,SATISFATÓRIO): ");
+            avaliacao = Artigo.Avaliação.valueOf(avaliacaoString);
+        }else {
             numDonos = 0;
             avaliacao = null;
         }
-        String desc = in.lerString(a,">>> Descrição da TShirt: ");
-        String marca = in.lerString(a,">>> Marca da TShirt: ");
-        String cod = in.lerString(a,">>> Código da TShirt: ");
-        Double precoB = in.lerDouble(a,">>> Preço da TShirt: ",0,10000000);
-        Double correcaoP = in.lerDouble(a,">>> Correção da TShirt: ",0,1000000);
-        a.printMapTransportadoras("Transportadoras Disponíveis",v.getTransportadoras());
-        String transp = in.lerString(a, ">>> Transportadora: ");
+        String descricao = in.lerString(a,">> Descrição T-Shirt: ");
+        String marca = in.lerString(a,">> Marca T-Shirt: ");
+        String cod = in.lerString(a,">> Código T-Shirt: ");
+        Double precoB = in.lerDouble(a,">> Preço Base T-Shirt: ",0,100000);
+        Double correcaoP = in.lerDouble(a,">> Correção Preço T-Shirt: ",0,10000);
+        a.printTransportadoras(v.getTransportadoras());
+        String transp = in.lerString(a, ">> Transportadora: ");
         Transportadoras transportadora = v.getTransportadora(transp);
 
-        return new TShirt(tamanho, padrao,"TShirt", estado, numDonos, avaliacao, desc, marca, cod, precoB,correcaoP, transportadora);
-    }
-
-    // Método para registar uma Mala
-    public Malas registarMala (Apresentacao a, Vintage v){
-        Scanner s = new Scanner(System.in);
-
-        int numDonos;
-        TShirt.Avaliação avaliacao;
-
-        a.printMessage("===== Registo da Mala ====");
-        a.printMessage(">>> Tipo da Mala(NORMAL,PREMIUM): ");
-        String tipo_string = s.nextLine();
-        Malas.Tipos_Malas tipo = Malas.Tipos_Malas.valueOf(tipo_string);
-        float dim = in.lerFloat(a,">>> Dimensão da Mala: ",0,10000);
-        String material = in.lerString(a,">>> Material da Mala: ");
-        int ano = in.lerInt(a,">>> Ano da Coleção: ",0,100000);
-        a.printMessage(">>> Estado da Mala(NOVO,USADO): ");
-        String estado_string = s.nextLine();
-        Artigo.Estado estado = Artigo.Estado.valueOf(estado_string);
-        if (estado != Artigo.Estado.NOVO){
-            numDonos = in.lerInt(a,">>> Número de Donos: ",0,1000);
-            a.printMessage(">>> Avaliação da Mala(IMPECÁVEL,BOM,SATISFATÓRIO): ");
-            String avaliacao_string = s.nextLine();
-            avaliacao = TShirt.Avaliação.valueOf(avaliacao_string);
-        }else{
-            numDonos = 0;
-            avaliacao = null;
-        }
-        String desc = in.lerString(a,">>> Descrição da Mala: ");
-        String marca = in.lerString(a,">>> Marca da Mala: ");
-        String cod = in.lerString(a,">>> Código da Mala: ");
-        Double precoB = in.lerDouble(a,">>> Preço da Mala: ",0,10000000);
-        Double correcaoP = in.lerDouble(a,">>> Correção da Mala: ",0,1000000);
-        a.printMapTransportadoras("Transportadoras Disponíveis",v.getTransportadoras());
-        String transp = in.lerString(a, ">>> Transportadora: ");
-        Transportadoras transportadora = v.getTransportadora(transp);
-
-
-        return new Malas(tipo, dim, material, ano, "Mala" ,estado, numDonos, avaliacao, desc, marca, cod, precoB, correcaoP, transportadora);
-
-    }
-
-    // Método para registar uma Sapatilha
-    public Sapatilhas registarSapatilha (Apresentacao a, Vintage v){
-        Scanner s = new Scanner(System.in);
-
-        int numDonos;
-        TShirt.Avaliação avaliacao;
-
-        a.printMessage("===== Registo da Sapatilha ====");
-        a.printMessage(">>> Tipo da Sapatilha(NORMAL,PREMIUM): ");
-        String tipo_string = s.nextLine();
-        Sapatilhas.Tipos_Sapatilhas tipo = Sapatilhas.Tipos_Sapatilhas.valueOf(tipo_string);
-        int tamanho_sapatilha = in.lerInt(a,">>> Tamanho da Sapatilha: ",0,10000);
-        boolean tem_atilhos = in.lerSN(a,">>> Tem atilhos(S/N): ");
-        String cor = in.lerString(a,">>> Cor da Sapatilha: ");
-        LocalDate data = in.lerData(a, ">>> Data de lançamento da Sapatilha(Formato dd-mm-yyyy): ");
-        a.printMessage(">>> Estado da Sapatilha(NOVO,USADO): ");
-        String estado_string = s.nextLine();
-        Artigo.Estado estado = Artigo.Estado.valueOf(estado_string);
-        if (estado != Artigo.Estado.NOVO){
-            numDonos = in.lerInt(a,">>> Número de Donos: ",0,1000);
-            a.printMessage(">>> Avaliação da Sapatilha(IMPECÁVEL,BOM,SATISFATÓRIO): ");
-            String avaliacao_string = s.nextLine();
-            avaliacao = TShirt.Avaliação.valueOf(avaliacao_string);
-        }else{
-            numDonos = 0;
-            avaliacao = null;
-        }
-        String desc = in.lerString(a,">>> Descrição da Mala: ");
-        String marca = in.lerString(a,">>> Marca da Mala: ");
-        String cod = in.lerString(a,">>> Código da Mala: ");
-        Double precoB = in.lerDouble(a,">>> Preço da Mala: ",0,10000000);
-        Double correcaoP = in.lerDouble(a,">>> Correção da Mala: ",0,1000000);
-        a.printMapTransportadoras("Transportadoras Disponíveis",v.getTransportadoras());
-        String transp = in.lerString(a, ">>> Transportadora: ");
-        Transportadoras transportadora = v.getTransportadora(transp);
-
-        return new Sapatilhas(tamanho_sapatilha,tem_atilhos,cor,data,tipo,"Sapatilhas",estado,numDonos,avaliacao,desc,marca,cod,precoB,correcaoP,transportadora);
-        
-
+        return new TShirt(tamanho, padrao,"TShirt",estado,numDonos,avaliacao,descricao,marca,cod,precoB,correcaoP, transportadora);
     }
 
 
 
 
-    public void interpretador(Utilizador u,Apresentacao a,Vintage v){
+    public Malas registarMala(Apresentacao a, Vintage v){
+        int numDonos;
+        Artigo.Avaliação avaliacao;
+
+        a.printMessage("===== Registo Mala =====");
+        String tipoString = in.lerString(a, ">> Tipo Mala (NORMAL,PREMIUM)");
+        Malas.Tipos_Malas tipo = Malas.Tipos_Malas.valueOf(tipoString);
+        float dimensao = in.lerFloat(a, ">> Dimensão Mala: ", 0, 100000);
+        String material = in.lerString(a, ">> Material Mala: ");
+        int ano = in.lerInt(a, ">> Ano Coleção: ", 0, 10000);
+        String estadoString = in.lerString(a, ">> Estado da Mala (NOVO,USADO): ");
+        Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
+        if (estadoString == "USADO"){
+            numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
+            String avaliacaoString = in.lerString(a, ">> Avaliação Mala (IMPECÁVEL,BOM,SATISFATÓRIO): ");
+            avaliacao = Artigo.Avaliação.valueOf(avaliacaoString);
+        } else {
+            numDonos = 0;
+            avaliacao = null;
+        }
+        String descricao = in.lerString(a,">> Descrição Mala: ");
+        String marca = in.lerString(a,">> Marca Mala: ");
+        String cod = in.lerString(a,">> Código Mala: ");
+        Double precoB = in.lerDouble(a,">> Preço Base Mala: ",0,10000000);
+        Double correcaoP = in.lerDouble(a,">> Correção Preço Mala: ",0,1000000);
+        a.printTransportadoras(v.getTransportadoras());
+        String transp = in.lerString(a, ">> Transportadora: ");
+        Transportadoras transportadora = v.getTransportadora(transp);
+
+        return new Malas(tipo,dimensao,material,ano,"Mala",estado,numDonos,avaliacao,descricao,marca,cod,precoB,correcaoP,transportadora);
+    }
+
+
+
+
+
+    public Sapatilhas registarSapatilha(Apresentacao a, Vintage v){
+        int numDonos;
+        Artigo.Avaliação avaliacao;
+
+        a.printMessage("===== Registo Sapatilha =====");
+        String tipoString = in.lerString(a, ">> Tipo Sapatilha (NORMAL,PREMIUM): ");
+        Sapatilhas.Tipos_Sapatilhas tipo = Sapatilhas.Tipos_Sapatilhas.valueOf(tipoString);
+        int tamanho = in.lerInt(a, ">> Tamanho Sapatilha: ", 0, 100);
+        boolean temAtilhos = in.lerSN(a, "Tem atilhos (S,N): ");
+        String cor = in.lerString(a, ">> Cor Sapatilha: ");
+        LocalDate data = in.lerData(a, ">> Data Lançamento Sapatilha (dd-mm-yyyy): ");
+        String estadoString = in.lerString(a, ">> Estado Sapatilha (NOVO,USADO): ");
+        Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
+        if (estadoString == "USADO"){
+            numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
+            String avaliacaoString = in.lerString(a, ">> Avaliação Sapatilha (IMPECÁVEL,BOM,SATISFATÓRIO): ");
+            avaliacao = TShirt.Avaliação.valueOf(avaliacaoString);
+        } else {
+            numDonos = 0;
+            avaliacao = null;
+        }
+        String desc = in.lerString(a,">> Descrição Sapatilha: ");
+        String marca = in.lerString(a,">> Marca Sapatilha: ");
+        String cod = in.lerString(a,">>> Código Sapatilha: ");
+        Double precoB = in.lerDouble(a,">>> Preço Base Sapatilha: ",0,10000000);
+        Double correcaoP = in.lerDouble(a,">>> Correção Preço Sapatilha: ",0,1000000);
+        a.printTransportadoras(v.getTransportadoras());
+        String transp = in.lerString(a, ">>> Transportadora: ");
+        Transportadoras transportadora = v.getTransportadora(transp);
+
+        return new Sapatilhas(tamanho,temAtilhos,cor,data,tipo,"Sapatilha",estado,numDonos,avaliacao,desc,marca,cod,precoB,correcaoP,transportadora);
+    }
+
+
+
+
+
+
+
+    public void interpretador(Apresentacao a,Vintage v){
         boolean b = true;
         int comando;
-
+        Utilizador u =  v.getUtilizador(v.getSessaoAtual());
+        
         while(b){
             a.printMenuArtigo();
             comando = in.lerInt(a,"Escolha a sua opção:",0,3);
 
             switch(comando){
                 case 1:
-                    TShirt oi = registarTshirt(a, v);
-                    a.printMessage("T-Shirt registada com sucesso!");
-                    u.adicionarPorVender(oi);
-                    if(u.getPorVender().isEmpty()){
-                        System.out.println("ESTA VAZIA");
-                    }else{
-                        System.out.println("NAO ESTA VAZIA");
-                    }
-                    u.printArtigos();
+                    TShirt tShirt = registarTShirt(a, v);
+                    a.printMessage("T-Shirt registada com Sucesso!");
+                    u.adicionarPorVender(tShirt);
                     break;
+                    
                 case 2:
-                    registarMala(a,v);
-                    a.printMessage("Mala registada com sucesso!");
+                    Malas mala = registarMala(a,v);
+                    a.printMessage("Mala registada com Sucesso!");
+                    u.adicionarPorVender(mala);
                     break;
+
                 case 3:
                     Sapatilhas sap = registarSapatilha(a,v);
-                    a.printMessage("Sapatilha registada com sucesso!");
-                    System.out.println(sap.toString());
+                    a.printMessage("Sapatilha registada com Sucesso!");
+                    u.adicionarPorVender(sap);
                     break;
                 case 0:
                     b = false;
                     break;
                 default:
-                    a.printMessage("Erro Comando Inválido");
+                    a.printMessage("Erro! Comando Inválido.");
                     break;
             }
         }

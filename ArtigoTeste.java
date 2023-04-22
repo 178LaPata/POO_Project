@@ -2,9 +2,7 @@ import Model.*;
 import View.*;
 import Controller.*;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.Month;
+
 import java.util.*;
 
 public class ArtigoTeste {

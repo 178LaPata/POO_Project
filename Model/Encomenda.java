@@ -20,7 +20,6 @@ public class Encomenda {
     private List<Artigo> artigos;
     private Dimensao_Embalagem embalagem;
     private double precoFinal;
-    private double taxaSatisfacao; // acho que isto nao devia ser um atributo
     private double custosExpedicao;                 // Dependem da transportadora, na classe Artigo vamos ter de adicionar a transportadora depois
     private Estado_Encomenda estado;
     private LocalDate dataCriacao;
@@ -32,7 +31,6 @@ public class Encomenda {
         this.artigos = new ArrayList<>();
         this.embalagem = null;
         this.precoFinal = 0;
-        this.taxaSatisfacao = 0.0;
         this.custosExpedicao = 0;
         this.estado = Estado_Encomenda.PENDENTE;
         this.dataCriacao = LocalDate.now();
@@ -44,7 +42,6 @@ public class Encomenda {
         setArtigos(artigos);
         this.id = nextID++;
         this.precoFinal = precoFinal;
-        this.taxaSatisfacao = taxaSatisfacao;
         this.custosExpedicao = custosExpedicao;
         this.estado = estado;
         this.dataCriacao = dataCriacao;
@@ -60,7 +57,6 @@ public class Encomenda {
         this.artigos = enc.getArtigos();
         this.embalagem = enc.getEmbalagem();
         this.precoFinal = enc.getPrecoFinal();
-        this.taxaSatisfacao = enc.getTaxaSatisfacao();
         this.custosExpedicao = enc.getCustosExpedicao();
         this.estado = enc.getEstado();
         this.dataCriacao = enc.getDataCriacao();
@@ -116,14 +112,6 @@ public class Encomenda {
         this.precoFinal = precoFinal;
     }
 
-    public double getTaxaSatisfacao() {
-        return taxaSatisfacao;
-    }
-
-    public void setTaxaSatisfacao(double taxaSatisfacao) {
-        this.taxaSatisfacao = taxaSatisfacao;
-    }
-
     public double getCustosExpedicao() {
         return custosExpedicao;
     }
@@ -164,7 +152,6 @@ public class Encomenda {
                 this.artigos.equals(enc.getArtigos()) &&
                 this.embalagem == enc.getEmbalagem() &&
                 this.precoFinal == enc.getPrecoFinal() &&
-                this.taxaSatisfacao == enc.getTaxaSatisfacao() &&
                 this.custosExpedicao == enc.getCustosExpedicao() &&
                 this.estado == enc.getEstado() &&
                 this.dataCriacao.equals(enc.getDataCriacao());
@@ -215,9 +202,9 @@ public class Encomenda {
         this.artigos.remove(artigo);
         double pf = artigo.getPrecoBase() - (artigo.getPrecoBase() * artigo.getCorrecaoPreco() / 100.0);  // basicamente nós aqui aplicamos o desconto ao preco base do produto
         if (artigo.getEstado() == Artigo.Estado.NOVO){
-            pf+=0.5;
+            pf-=0.5;
         }else{
-            pf+=0.25;
+            pf-=0.25;
         }
         this.precoFinal-=pf;
     }

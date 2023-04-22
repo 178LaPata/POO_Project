@@ -29,17 +29,14 @@ public class ViewMain implements Serializable {
     }
 
     public void printMainMenuLogOut() {
-        out.printMenus((new String[]{"Logout","Estatísticas", "Consultas", "VENDER - Adicionar Produto para Vender","COMPRAR - Fazer Encomenda"}),"      MENU PRINCIPAL",0);
+        out.printMenus((new String[]{"Logout","Estatísticas", "Consultas", "Vender Artigo","Comprar Artigo"}),"   MENU PRINCIPAL  ",0);
     }
 
     public void printMenuArtigo(){
-        out.printMenus((new String[]{"Anunciar T-Shirt", "Anunciar Mala", "Anunciar Sapatilha"}),"      REGISTO ARTIGOS",0);
+        out.printMenus((new String[]{"Vender T-Shirt", "Vender Mala", "Vender Sapatilha"}),"  VENDER ARTIGOS  ",1);
 
     }
 
-    public void printMenuTransportadoras(){
-        out.printMenus((new String[]{"Criar Transportadora"}),"      REGISTO TRANSPORTADORAS" , 0);
-    }
     
 
     public void printMenuConsultas(){
@@ -55,10 +52,6 @@ public class ViewMain implements Serializable {
                                     }),"      ESTATISTICAS",0);
     }
 
-    //Menu para escolher se quer ser vender ou comprar
-    public void printMenuEscolha() {
-        out.printMenus((new String[]{"Comprar", "Vender"}),"     MENU",1);
-    }
 
     public void printErroComandoInvalido(){
         System.out.println("Comando Inválido");

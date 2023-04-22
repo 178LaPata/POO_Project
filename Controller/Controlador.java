@@ -9,17 +9,18 @@ import java.util.Scanner;
 public class Controlador {
     private final Input in;
     private final ControladorArtigo ca;
-    private final ControladorLogin cl;
+    private final ControladorUtilizador cu;
     private final ControladorTransportadoras ct;
 
     public Controlador(){
         in = new Input();
         ca = new ControladorArtigo();
-        cl = new ControladorLogin();
+        cu = new ControladorUtilizador();
         ct = new ControladorTransportadoras();
     }
 
 
+    /*
     private void interpretadorEstatisticas (Vintage v, Apresentacao a){
         int comando;
         boolean b = true;
@@ -48,7 +49,12 @@ public class Controlador {
             }
         }
     }
+    */
 
+
+
+
+    /*
     private void interpretadorConsultas (Vintage v, Apresentacao a, Utilizador u){
         int comando;
         boolean b = true;
@@ -78,24 +84,36 @@ public class Controlador {
 
     }
 
+    */
+
+
+
+
+
+
+
+
 
     public void interpretador (Vintage v, Apresentacao a){
         int comando;
         boolean b = true;
-        Login l = null;
-        Utilizador u = null;
+
 
         Scanner s = new Scanner(System.in);
-
         a.welcome();
         s.nextLine();
+
         while(b){
-            if(l == null){
+            if(v.getSessaoAtual() == null){
+                
                 a.printMenuInicial();
                 comando = in.lerInt(a,"Escolhe uma das opcões: ",0,4);
+                
                 switch(comando){
                     case 1: // Login / Registar
-                        l = cl.interpretador(v,a);
+                        a.printMenuLogin();
+                        String sessaoAtual = cu.interpretador(v, a);
+                        v.SetSessaoAtual(sessaoAtual);
                         break;
                     case 2: // Gravar para um Ficheiro (AINDA A NÂO FUNCIONAR)
                         break;
@@ -108,35 +126,35 @@ public class Controlador {
                         b = false;
                         break;
                     default:
-                        a.printMessage("Erro Comando Inválido");
+                        a.printMessage("Erro! Comando Inválido.");
                         break;
                 }
             }else{
                 a.printMainMenuLogOut();
-                comando = in.lerInt(a,"Escolhe uma das opções: ",0,4);
+                comando = in.lerInt(a,"Escolhe uma das opções: ",0,5);
                 switch(comando){
                     case 1: // Dar logout
-                        l = null;
-                        a.printMessage("Logout feito com Sucesso");
+                        v.SetSessaoAtual(null);
+                        a.printMessage("Logout feito com Sucesso!");
                         break;
                     case 2: // Consultar as Estatisticas
-                        interpretadorEstatisticas(v,a);
+                        //interpretadorEstatisticas(v,a);
                         break;
                     case 3: // Consultar os Produtos
-                        u = v.getUtilizador(l.getemail());
-                        interpretadorConsultas(v,a,u);
+                        //u = v.getUtilizador(l.getemail());
+                        // interpretadorConsultas(v,a,u);
                         break;
                     case 4: // Colocar Produto para Vender
-                        u = v.getUtilizador(l.getemail());
-                        ca.interpretador(u,a,v);
+                        ca.interpretador(a,v);
                         break;
                     case 5: // Comprar produto
+                        a.printArtigos(v.getArtigosVenda());
                         break;
                     case 0: // Sair do programa
                         b = false;
                         break;
                     default:
-                        a.printMessage("Erro Comando Inválido");
+                        a.printMessage("Erro! Comando Inválido.");
                         break;
 
 
