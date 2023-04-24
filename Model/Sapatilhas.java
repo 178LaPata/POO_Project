@@ -2,8 +2,9 @@ package Model;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.io.*;
 
-public class Sapatilhas extends Artigo {
+public class Sapatilhas extends Artigo implements Serializable{
 
     public enum Tipos_Sapatilhas{
         NORMAL,

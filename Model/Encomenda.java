@@ -3,8 +3,9 @@ package Model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
-public class Encomenda {
+public class Encomenda implements Serializable{
     public enum Dimensao_Embalagem {
         GRANDE, // + de 5 artigos
         MEDIO,  // 2 a 5 artigos

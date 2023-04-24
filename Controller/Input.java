@@ -4,10 +4,11 @@ import View.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.io.*;
 
 
 import java.util.*;
-public class Input {
+public class Input implements Serializable{
     
     public boolean lerSN(Apresentacao a, String message){
         Scanner s = new Scanner(System.in);

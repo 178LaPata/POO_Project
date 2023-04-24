@@ -1,11 +1,12 @@
 package Controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 import Model.*;
 import View.*;
 
-public class ControladorTransportadoras {
+public class ControladorTransportadoras implements Serializable{
     private final Input in;
     
     public ControladorTransportadoras(){

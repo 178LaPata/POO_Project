@@ -1,6 +1,8 @@
 package Model;
 
-public class TShirt extends Artigo {
+import java.io.*;
+
+public class TShirt extends Artigo implements Serializable{
     public enum Tamanho {
         S, 
         M, 

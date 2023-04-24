@@ -1,6 +1,8 @@
 package Model;
 
-public class Malas extends Artigo {
+import java.io.*;
+
+public class Malas extends Artigo implements Serializable{
     public enum Tipos_Malas {
         NORMAL,
         PREMIUM

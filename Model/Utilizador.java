@@ -2,8 +2,9 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
-public class Utilizador {
+public class Utilizador implements Serializable{
     private static int nextID = 1;
     private int id;
     private String email;

@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.*;
 
-public class Vintage {
+public class Vintage implements Serializable{
     private String sessaoAtual; // é a pessoa na qual damos o login fica com o email associado para conseguir associar os artigos que comprar ou vender a ela
     private Map<String, Utilizador> utilizadores;
     private Map<Integer, Encomenda> encomendas;

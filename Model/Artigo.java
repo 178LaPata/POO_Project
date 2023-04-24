@@ -1,6 +1,8 @@
 package Model;
 
-public class Artigo {
+import java.io.*;
+
+public class Artigo implements Serializable{
     // Atributos
     public enum Estado{
         NOVO,

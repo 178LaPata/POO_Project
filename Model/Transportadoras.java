@@ -1,10 +1,11 @@
 package Model;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.*;
 
 import Model.Encomenda.Dimensao_Embalagem;
 
-public class Transportadoras {
+public class Transportadoras implements Serializable{
     private String nome;
     private double imposto;
     private double precoExpedicao;

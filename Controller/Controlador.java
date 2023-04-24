@@ -1,12 +1,13 @@
 package Controller;
 
-
+import Files.*;
 import Model.*;
 import View.*;
 
 import java.util.Scanner;
+import java.io.*;
 
-public class Controlador {
+public class Controlador implements Serializable{
     private final Input in;
     private final ControladorArtigo ca;
     private final ControladorUtilizador cu;
@@ -94,11 +95,11 @@ public class Controlador {
 
 
 
-    public void interpretador (Vintage v, Apresentacao a){
+    public void interpretador (Vintage v, Apresentacao a) throws ClassNotFoundException, IOException{
         int comando;
         boolean b = true;
 
-
+        Estados e = new Estados();
         Scanner s = new Scanner(System.in);
         a.welcome();
         s.nextLine();
@@ -116,8 +117,12 @@ public class Controlador {
                         v.SetSessaoAtual(sessaoAtual);
                         break;
                     case 2: // Gravar para um Ficheiro (AINDA A NÂO FUNCIONAR)
+                        e.dadosGuardar("Vintage.dat",v);
+                        a.printMessage("Dados Guardados com Sucesso!");
                         break;
                     case 3: // Carregar um Ficheiro (AINDA A NÂO FUNCIONAR)
+                        v = e.dadoscarregar("Vintage.dat");
+                        a.printMessage("Dados Carregados com Sucesso!");
                         break;
                     case 4: // Criar Transportadora
                         ct.interpretador(v,a);

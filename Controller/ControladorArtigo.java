@@ -1,11 +1,12 @@
 package Controller;
 
 import java.time.LocalDate;
+import java.io.*;
 
 import Model.*;
 import View.*;
 
-public class ControladorArtigo {
+public class ControladorArtigo implements Serializable{
 
     private final Input in;
 

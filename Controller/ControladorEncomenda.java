@@ -3,7 +3,9 @@ package Controller;
 import Model.*;
 import View.*;
 
-public class ControladorEncomenda {
+import java.io.*;
+
+public class ControladorEncomenda implements Serializable{
     
     private final Input in;
 
