@@ -149,6 +149,7 @@ public class ControladorArtigo implements Serializable{
                     TShirt tShirt = registarTShirt(a, v);
                     a.printMessage("T-Shirt registada com Sucesso!");
                     u.adicionarPorVender(tShirt);
+                    System.out.println(tShirt);
                     break;
                     
                 case 2:

@@ -203,7 +203,7 @@ public class Encomenda implements Serializable{
                 this.dataCriacao.equals(enc.getDataCriacao());
     }
 
-    public String toString(LocalDate data) {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("==========  Encomenda  ==========\n");
         sb.append("ID da Encomenda: " + id + "\n");

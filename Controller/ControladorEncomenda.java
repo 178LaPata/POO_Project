@@ -81,7 +81,7 @@ public class ControladorEncomenda implements Serializable{
         boolean b = true;
         int comando;
         Utilizador u = v.getUtilizador(v.getSessaoAtual());
-        List<Artigo> artigosVenda = v.getArtigosVenda(); // id de produtos disponíveis
+        List<Artigo> artigosVenda = v.getArtigosVenda(); // produtos disponíveis
 
         List<Integer> carrinho = new ArrayList<>(); // carrinho de compras
         List<Integer> idDisponivel = getIDArtigosVenda(artigosVenda);
@@ -105,6 +105,7 @@ public class ControladorEncomenda implements Serializable{
                     break;
 
                 case 3: // terminar encomenda
+                    if (carrinho.isEmpty()){a.printMessage("Carrinho de Compras Vazio!");break;}
                     List<Artigo> artigos = new ArrayList<>();            // guarda a lista de artigos da encomenda
                     Map<Integer,String> vendedores = new HashMap<>();    // guarda o id do produto e o email do vendedor 
                     
@@ -140,10 +141,23 @@ public class ControladorEncomenda implements Serializable{
 
     public void interpretadorDevolver(Apresentacao a, Vintage v){
         List<Encomenda> encomendas = v.encomendasParaDevolver();
-        int encomenda;
+        if (encomendas.size() == 0){
+            a.printMessage("Não existem encomendas para devolução.");
+            return;
+        }
+
+        int encomenda = -1;
         a.printEncomendas(encomendas, v.getDataPrograma());
-        encomenda = in.lerInt(a, "Escolha a encomenda que quer devolver: ", 0, 100000);
+
+        List<Integer> idEnc = encomendas.stream().map(enc -> enc.getId()).collect(Collectors.toList());
+        boolean b = true;
+        while (b){
+            encomenda = in.lerInt(a, "Escolha a encomenda que quer devolver: ", 0, 100000);
+            if (idEnc.contains(encomenda)){b = false;}
+            else{a.printMessage("Encomenda não existe.");}
+        }
         v.devolverEncomenda(encomenda);
+        a.printMessage("Encomenda foi devolvida.");
     }
 
         

@@ -118,15 +118,16 @@ public class Controlador implements Serializable{
                         a.printMenuLogin();
                         String sessaoAtual = cu.interpretador(v, a);
                         v.SetSessaoAtual(sessaoAtual);
-                        a.printMessage("OLA");
                         break;
-                    case 2: // Gravar para um Ficheiro (AINDA A NÂO FUNCIONAR)
-                        e.dadosGuardar("Vintage.dat",v);
-                        a.printMessage("Dados Guardados com Sucesso!");
+                    case 2: // Gravar para um Ficheiro
+                        String ficheiroG = in.lerString(a, "Nome do ficheiro que pretende guardar: ");
+                        e.dadosGuardar(ficheiroG + ".dat",v);
+                        a.printMessage("Dados Guardados com Sucesso em " + ficheiroG + ".dat");
                         break;
-                    case 3: // Carregar um Ficheiro (AINDA A NÂO FUNCIONAR)
-                        v = e.dadoscarregar("Vintage.dat");
-                        a.printMessage("Dados Carregados com Sucesso!");
+                    case 3: // Carregar um Ficheiro
+                        String ficheiroA = in.lerString(a, "Nome do ficheiro que prentede carregar: ");
+                        v = e.dadoscarregar(ficheiroA + ".dat");
+                        a.printMessage("Dados Carregados com Sucesso em " + ficheiroA + ".dat");
                         break;
                     case 4: // Criar Transportadora
                         ct.interpretador(v,a);
@@ -170,7 +171,8 @@ public class Controlador implements Serializable{
                         ce.interpretador(a,v);
                         break;
                     case 6: // Devolver encomenda
-                        
+                        ce.interpretadorDevolver(a,v);
+                        break;
                     case 0: // Sair do programa
                         b = false;
                         break;
