@@ -1,8 +1,8 @@
 package Model;
 
-import java.io.*;
+import java.time.LocalDate;
 
-public class TShirt extends Artigo implements Serializable{
+public class TShirt extends Artigo {
     public enum Tamanho {
         S, 
         M, 
@@ -25,7 +25,7 @@ public class TShirt extends Artigo implements Serializable{
         this.padrao = null;
     }
 
-    public TShirt(Tamanho tamanho, Padrao padrao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, Transportadoras t) {
+    public TShirt(Tamanho tamanho, Padrao padrao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, String t) {
         super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco, t);
         this.tamanho = tamanho;
         this.padrao = padrao;
@@ -58,19 +58,19 @@ public class TShirt extends Artigo implements Serializable{
             return true;
         if((o == null) || (this.getClass() != o.getClass())) 
             return false;
-        Artigo a = (TShirt) o;
-        return (this.tamanho == ((TShirt) o).getTamanho() &&
-                this.padrao == ((TShirt) o).getPadrao());
+        TShirt t = (TShirt) o;
+        return (this.tamanho == t.getTamanho() &&
+                this.padrao == t.getPadrao());
     }
 
 
 
-    public String toString() {
+    public String toString(LocalDate data) {
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString());
+        sb.append(super.toString(data));
         sb.append("Tamanho: ").append(this.tamanho).append("\n");
         sb.append("Padrao: ").append(this.padrao).append("\n");
-        sb.append("Preço Final: ").append(this.precoFinal()).append("\n");
+        sb.append("Preço Final: ").append(this.precoFinal(data)).append("\n");
         return sb.toString();
     }
 
@@ -78,13 +78,11 @@ public class TShirt extends Artigo implements Serializable{
         return new TShirt(this);
     }
 
-    public double precoFinal() {
-        double preco = getPrecoBase();
-        double correcao = getCorrecaoPreco();
+    public double precoFinal(LocalDate data) {
+        double precoFinal = super.getPrecoBase();
         if (this.padrao == Padrao.RISCAS || this.padrao == Padrao.PALMEIRAS) {
-            correcao = 0.5 * preco;
-            return correcao;
-        } else  
-            return preco;
+            if (super.getNumeroDonos() > 0){precoFinal = super.getPrecoBase() * 0.5;}
+        }
+            return precoFinal;
     }
 }

@@ -25,11 +25,11 @@ public class ViewMain implements Serializable {
     }
 
     public void printMenuInicial() {
-        out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um ficheiro","Criar Transportadora"}),"      MENU PRINCIPAL",0);
+        out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um Ficheiro","Criar Transportadora","Avançar no Tempo"}),"      MENU PRINCIPAL",0);
     }
 
     public void printMainMenuLogOut() {
-        out.printMenus((new String[]{"Logout","Estatísticas", "Consultas", "Vender Artigo","Comprar Artigo"}),"   MENU PRINCIPAL  ",0);
+        out.printMenus((new String[]{"Logout","Estatísticas", "Consultas", "Vender Artigo","Comprar Artigo","Devolver Encomenda"}),"   MENU PRINCIPAL  ",0);
     }
 
     public void printMenuArtigo(){
@@ -50,6 +50,12 @@ public class ViewMain implements Serializable {
                                     "Fornecer uma ordenação dos maiores compradores/vendedores do sistema durante um período a determinar",
                                     "Determinar quanto dinheiro ganhou o Vintage no seu funcionamento"
                                     }),"      ESTATISTICAS",0);
+    }
+
+
+
+    public void printMenuEncomenda(){
+        out.printMenus((new String[] {"Adicionar Produto ao Carrinho", "Remover Produto do Carrinho", "Terminar Encomenda"}), "         NOVA ENCOMENDA", 1);
     }
 
 

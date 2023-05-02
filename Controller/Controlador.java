@@ -6,18 +6,21 @@ import View.*;
 
 import java.util.Scanner;
 import java.io.*;
+import java.time.LocalDate;
 
 public class Controlador implements Serializable{
     private final Input in;
     private final ControladorArtigo ca;
     private final ControladorUtilizador cu;
     private final ControladorTransportadoras ct;
+    private final ControladorEncomenda ce;
 
     public Controlador(){
         in = new Input();
         ca = new ControladorArtigo();
         cu = new ControladorUtilizador();
         ct = new ControladorTransportadoras();
+        ce = new ControladorEncomenda();
     }
 
 
@@ -108,13 +111,14 @@ public class Controlador implements Serializable{
             if(v.getSessaoAtual() == null){
                 
                 a.printMenuInicial();
-                comando = in.lerInt(a,"Escolhe uma das opcões: ",0,4);
+                comando = in.lerInt(a,"Escolhe uma das opcões: ",0,5);
                 
                 switch(comando){
                     case 1: // Login / Registar
                         a.printMenuLogin();
                         String sessaoAtual = cu.interpretador(v, a);
                         v.SetSessaoAtual(sessaoAtual);
+                        a.printMessage("OLA");
                         break;
                     case 2: // Gravar para um Ficheiro (AINDA A NÂO FUNCIONAR)
                         e.dadosGuardar("Vintage.dat",v);
@@ -127,6 +131,16 @@ public class Controlador implements Serializable{
                     case 4: // Criar Transportadora
                         ct.interpretador(v,a);
                         break;
+                    case 5: // Avançar no Tempo
+                        Input in = new Input();
+                        a.printMessage("Data do Programa: " + LocalDate.now());
+                        LocalDate data = in.lerData(a, "Selecione a data para que pretende ir: (dd-MM-yyyy)");
+                        v.setDataPrograma(data);
+                        v.avancarTempo();
+                        a.printMessage("Data do Programa Atualizada: " + v.getDataPrograma());
+                        break;
+
+                        
                     case 0: // Sair do programa
                         b = false;
                         break;
@@ -136,7 +150,7 @@ public class Controlador implements Serializable{
                 }
             }else{
                 a.printMainMenuLogOut();
-                comando = in.lerInt(a,"Escolhe uma das opções: ",0,5);
+                comando = in.lerInt(a,"Escolhe uma das opções: ",0,6);
                 switch(comando){
                     case 1: // Dar logout
                         v.SetSessaoAtual(null);
@@ -152,9 +166,11 @@ public class Controlador implements Serializable{
                     case 4: // Colocar Produto para Vender
                         ca.interpretador(a,v);
                         break;
-                    case 5: // Comprar produto
-                        a.printArtigos(v.getArtigosVenda());
+                    case 5: // Fazer encomenda
+                        ce.interpretador(a,v);
                         break;
+                    case 6: // Devolver encomenda
+                        
                     case 0: // Sair do programa
                         b = false;
                         break;

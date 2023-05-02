@@ -33,7 +33,6 @@ public class ControladorUtilizador implements Serializable{
     private Utilizador registo(Vintage v, Apresentacao a){
 
         List<Artigo> compras = new ArrayList<>();
-        List<Artigo> vendas = new ArrayList<>();
         List<Artigo> porVender = new ArrayList<>();
         String nome = in.lerString(a, "Introduza o nome: ");
         String email = in.lerString(a, "Introduza o email: ");
@@ -41,7 +40,7 @@ public class ControladorUtilizador implements Serializable{
         String password = in.lerString(a, "Introduza a password: ");
         String morada = in.lerString(a, "Introduza a morada: ");
         int nif = in.lerInt(a, "Introduza o NIF: ", 0, 10000);
-        return new Utilizador(email,password,nome,morada,nif,compras,vendas,porVender);
+        return new Utilizador(email,password,nome,morada,nif,compras,porVender);
     }
 
 
@@ -71,6 +70,9 @@ public class ControladorUtilizador implements Serializable{
                     a.printMessage("Registo com Sucesso!");
                     b = false;
                     System.out.println("Email: " + u.getEmail() + " Password: " + u.getPassword()); // REMOVER (APENAS PARA TESTE)
+                case 0:
+                    b = false;
+                    break;
             }
         }
         return email;

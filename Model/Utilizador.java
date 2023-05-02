@@ -13,8 +13,8 @@ public class Utilizador implements Serializable{
     private String morada;
     private int nif;
     private List<Artigo> compras;
-    private List<Artigo> vendas;
     private List<Artigo> porVender;
+
 
     public Utilizador() {
         this.id = nextID++;
@@ -23,12 +23,10 @@ public class Utilizador implements Serializable{
         this.nome = "";
         this.morada = "";
         this.nif = 0;
-        this.compras = new ArrayList<>();
-        this.vendas = new ArrayList<>();
         this.porVender = new ArrayList<>();
     }
 
-    public Utilizador(String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> vendas, List<Artigo> porVender) {
+    public Utilizador(String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> porVender) {
         this.id = nextID++;
         this.email = email;
         this.password = password;
@@ -36,7 +34,6 @@ public class Utilizador implements Serializable{
         this.morada = morada;
         this.nif = nif;
         this.compras = compras;
-        this.vendas = vendas;
         this.porVender = porVender;
     }
 
@@ -47,8 +44,6 @@ public class Utilizador implements Serializable{
         this.nome = u.getNome();
         this.morada = u.getMorada();
         this.nif = u.getNif();
-        this.compras = u.getCompras();
-        this.vendas = u.getVendas();
         this.porVender = u.getPorVender();
     }
 
@@ -100,43 +95,27 @@ public class Utilizador implements Serializable{
         this.nif = nif;
     }
 
-    public List<Artigo> getCompras() {
-        ArrayList<Artigo> aux = new ArrayList<Artigo>();
-        for(Artigo a : compras){
+
+    public List<Artigo> getCompras(){
+        List<Artigo> aux = new ArrayList<>();
+        for (Artigo a : this.compras){
             aux.add(a.clone());
         }
         return aux;
     }
 
-    public void setCompras(List<Artigo> compras) {
-        this.compras = new ArrayList<>(compras.size());
-        for(Artigo a: compras){
+    public void setCompras(List<Artigo> compras){
+        this.compras = new ArrayList<>();
+        for (Artigo a : compras){
             this.compras.add(a.clone());
         }
     }
 
-    public List<Artigo> getVendas() {
-        ArrayList<Artigo> aux = new ArrayList<Artigo>();
-        for(Artigo a : vendas){
-            aux.add(a.clone());
-        }
-        return aux;
-    }
-
-    public void setVendas(List<Artigo> vendas) {
-        this.vendas = new ArrayList<>(vendas.size());
-        for(Artigo a: vendas){
-            this.vendas.add(a.clone());
-        }
-    }
 
     public List<Artigo> getPorVender() {
-        ArrayList<Artigo> aux = new ArrayList<Artigo>();
-        for(Artigo a : porVender){
-            aux.add(a.clone());
-        }
-        return aux;
+        return this.porVender;
     }
+
 
     public void setPorVender(List<Artigo> porVender) {
         this.porVender = new ArrayList<>(porVender.size());
@@ -145,11 +124,16 @@ public class Utilizador implements Serializable{
         }
     }
 
+    
     public void adicionarPorVender(Artigo a){
         this.porVender.add(a);
     }
 
 
+    
+    public void adicionaCompra(Artigo a){
+        this.compras.add(a.clone());
+    }
 
     public boolean equals(Object o) {
         if(this == o) 
@@ -165,8 +149,6 @@ public class Utilizador implements Serializable{
                 this.nome.equals(u.getNome()) &&
                 this.morada.equals(u.getMorada()) &&
                 this.nif == u.getNif() &&
-                this.compras.equals(u.getCompras()) &&
-                this.vendas.equals(u.getVendas()) &&
                 this.porVender.equals(u.getPorVender()));
     }
 
@@ -181,8 +163,6 @@ public class Utilizador implements Serializable{
         sb.append("Nome: ").append(this.nome).append("\n");
         sb.append("Morada: ").append(this.morada).append("\n");
         sb.append("NIF: ").append(this.nif).append("\n");
-        sb.append("Compras: ").append(this.compras).append("\n");
-        sb.append("Vendas: ").append(this.vendas).append("\n");
         sb.append("Por Vender: ").append(this.porVender).append("\n");
         return sb.toString();
     }

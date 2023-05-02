@@ -3,6 +3,7 @@ package View;
 
 import Model.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,10 @@ public class Apresentacao implements Serializable {
 
     public void printMenuArtigo(){
         am.printMenuArtigo();
+    }
+
+    public void printMenuEncomenda(){
+        am.printMenuEncomenda();
     }
 
 
@@ -71,17 +76,6 @@ public class Apresentacao implements Serializable {
 
     //Outros
 
-    public void printArray(String message, List<String> arr) {
-        out.printArray(message, arr);
-    }
-
-    public void printTable(String message, List<String> arr) {
-        out.printTable(message, arr);
-    }
-
-    public void printTableArtigo(String message, List<Artigo> arr) {
-        out.printTableArtigo(message, arr);
-    }
 
     public void printMessage(String message) {
         out.printMessage(message);
@@ -95,16 +89,21 @@ public class Apresentacao implements Serializable {
         out.printInteiro(inteiro);
     }
 
-    public void imprimirTabelaTransportadoras(Map<String, Transportadoras> transportadoras){
-        out.imprimirTabelaTransportadoras(transportadoras);
-    }
 
     public void printTransportadoras( Map<String,Transportadoras> t){
         out.printTransportadoras(t);
     }
 
-    public void printArtigos(List<Artigo> a){
-        out.printArtigos(a);
+    public void printArtigos(List<Artigo> a, LocalDate data){
+        out.printArtigos(a,data);
+    }
+
+    public void printEncomendas(List<Encomenda> e,LocalDate data){
+        out.printEncomendas(e,data);
+    }
+
+    public void printCarrinho(List<Integer> carrinho){
+        out.printCarrinho(carrinho);
     }
 
 }

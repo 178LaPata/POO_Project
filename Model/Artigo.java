@@ -1,8 +1,9 @@
 package Model;
 
 import java.io.*;
+import java.time.LocalDate;
 
-public class Artigo implements Serializable{
+public abstract class Artigo implements Serializable{
     // Atributos
     public enum Estado{
         NOVO,
@@ -24,8 +25,7 @@ public class Artigo implements Serializable{
     private String codigo;              // Código Alfa-Númerico
     private double precoBase;           // Preço Base
     private double correcaoPreco;       // Correção do Preço
-    private Transportadoras transportadora; // Transportadora
-
+    private String transportadora;      // Transportadora
 
     public Artigo(){
         this.id = nextID++;
@@ -41,7 +41,7 @@ public class Artigo implements Serializable{
         this.transportadora = null;
     }
 
-    public Artigo(String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco,Transportadoras transportadora) {
+    public Artigo(String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco,String transportadora) {
         this.id = nextID++;
         this.tipo = tipo;
         this.estado = estado;
@@ -71,6 +71,7 @@ public class Artigo implements Serializable{
         this.codigo = a.getCodigo();
         this.precoBase = a.getPrecoBase();
         this.correcaoPreco = a.getCorrecaoPreco();
+        this.transportadora = a.getTransportadora();
     }
 
     public int getId() {
@@ -154,13 +155,15 @@ public class Artigo implements Serializable{
     }
 
 
-    public Transportadoras getTransportadora(){
+    public String getTransportadora(){
         return this.transportadora;
     }
 
-    public void setTransportadora(Transportadoras t){
+    public void setTransportadora(String t){
         this.transportadora = t;
     }
+
+
 
 
     public boolean equals(Object o){
@@ -181,7 +184,7 @@ public class Artigo implements Serializable{
                 this.transportadora.equals(a.getTransportadora());
     }
 
-    public String toString() {
+    public String toString(LocalDate data) {
         StringBuilder sb = new StringBuilder();
         sb.append("ID: ").append(this.id).append("\n");
         sb.append("Tipo: ").append(this.tipo).append("\n");
@@ -193,11 +196,13 @@ public class Artigo implements Serializable{
         sb.append("Código: ").append(this.codigo).append("\n");
         sb.append("Preço Base: ").append(this.precoBase).append("\n");
         sb.append("Correção do Preço: ").append(this.correcaoPreco).append("\n");
-        sb.append("Transportadora: ").append(this.transportadora.getNome()).append("\n");
+        sb.append("Transportadora: ").append(this.transportadora).append("\n");
         return sb.toString();
     }
 
-    public Artigo clone(){
-        return new Artigo(this);
-    }
+
+
+    public abstract double precoFinal(LocalDate data);
+
+    public abstract Artigo clone();
 }

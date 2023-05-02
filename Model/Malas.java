@@ -1,8 +1,8 @@
 package Model;
 
-import java.io.*;
+import java.time.LocalDate;
 
-public class Malas extends Artigo implements Serializable{
+public class Malas extends Artigo {
     public enum Tipos_Malas {
         NORMAL,
         PREMIUM
@@ -20,7 +20,7 @@ public class Malas extends Artigo implements Serializable{
         this.ano_da_colecao = 0;
     }
 
-    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, Transportadoras t) {
+    public Malas(Tipos_Malas tipo_mala, float dim, String material, int ano_da_colecao, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, String t) {
         super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco, t);
         this.tipo_mala = tipo_mala;
         this.dim = dim;
@@ -73,21 +73,21 @@ public class Malas extends Artigo implements Serializable{
             return true;
         if((o == null) || (this.getClass() != o.getClass())) 
             return false;
-        Artigo a = (Malas) o;
-        return (this.tipo_mala == ((Malas) o).getTipo_mala() &&
-                this.dim == ((Malas) o).getDim() &&
-                this.material.equals(((Malas) o).getMaterial()) &&
-                this.ano_da_colecao == ((Malas) o).getAno_da_colecao());
+        Malas m = (Malas) o;
+        return (this.tipo_mala == m.getTipo_mala() &&
+                this.dim == m.getDim() &&
+                this.material.equals(m.getMaterial()) &&
+                this.ano_da_colecao == m.getAno_da_colecao());
     }
 
-    public String toString() {
+    public String toString(LocalDate data) {
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString());
+        sb.append(super.toString(data));
         sb.append("Tipo de mala: ").append(this.tipo_mala).append("\n");
         sb.append("Dimensões: ").append(this.dim).append("\n");
         sb.append("Material: ").append(this.material).append("\n");
         sb.append("Ano da coleção: ").append(this.ano_da_colecao).append("\n");
-        sb.append("Preco Final: ").append(this.precoFinal()).append("\n");
+        sb.append("Preco Final: ").append(this.precoFinal(data)).append("\n");
         return sb.toString();
     }
     
@@ -95,11 +95,20 @@ public class Malas extends Artigo implements Serializable{
         return new Malas(this);
     }
 
-    public double precoFinal() {
-        double pf = getPrecoBase();
-        double c = getCorrecaoPreco();
-        pf -= pf * c;
-        return pf;
+    public double precoFinal(LocalDate data) {
+        double precoFinal = super.getPrecoBase();
+        int difAno = data.getYear() - this.ano_da_colecao;
+
+        if (this.dim < 10){  // Podemos vir a acrescentar o material
+            precoFinal += (super.getCorrecaoPreco() * 0.5 * difAno);
+        }
+        if (this.dim >= 10 && this.dim < 30){
+            precoFinal += super.getCorrecaoPreco() * difAno;
+        }
+        if (this.dim >= 30){
+            precoFinal += super.getCorrecaoPreco() * difAno * 1.5;
+        }
+        return precoFinal;
     }
 }
 

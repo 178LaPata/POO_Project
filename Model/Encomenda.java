@@ -2,7 +2,9 @@ package Model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.*;
 
 public class Encomenda implements Serializable{
@@ -14,9 +16,11 @@ public class Encomenda implements Serializable{
     public enum Estado_Encomenda {
         PENDENTE,
         FINALIZADA,
-        EXPEDIDA
-    }
+        EXPEDIDA,
+        DEVOLVIDA
+    } 
     private static int nextID = 1;
+    private String dono;
     private int id;
     private List<Artigo> artigos;
     private Dimensao_Embalagem embalagem;
@@ -25,10 +29,12 @@ public class Encomenda implements Serializable{
     private Estado_Encomenda estado;
     private LocalDate dataCriacao;
     private int tamanho;  // não sei se é preciso (serve para definir a Dimensão da embalagem)
-    private LocalDate prazoLimite; // 30 dias para trocar 
-    
+    private LocalDate prazoLimite; 
+    private Map<Integer,String> vendedores;
+
     public Encomenda() {
         this.id = nextID++;
+        this.dono = "";
         this.artigos = new ArrayList<>();
         this.embalagem = null;
         this.precoFinal = 0;
@@ -36,21 +42,43 @@ public class Encomenda implements Serializable{
         this.estado = Estado_Encomenda.PENDENTE;
         this.dataCriacao = LocalDate.now();
         this.tamanho = 0;
-        prazoLimite = dataCriacao.plusDays(30);
+        prazoLimite = dataCriacao.plusDays(2);
+        this.vendedores = new HashMap<>();
     }
 
-    public Encomenda(List<Artigo> artigos, double precoFinal, double taxaSatisfacao, double custosExpedicao, Estado_Encomenda estado, LocalDate dataCriacao) {
+    public Encomenda(String dono, List<Artigo> artigos, double custosExpedicao, LocalDate dataCriacao, Map<Integer,String> vendedores) {
+        this.precoFinal = 0.0;
         setArtigos(artigos);
         this.id = nextID++;
-        this.precoFinal = precoFinal;
+        this.dono = dono;
         this.custosExpedicao = custosExpedicao;
-        this.estado = estado;
+        this.estado = Estado_Encomenda.EXPEDIDA;
         this.dataCriacao = dataCriacao;
         this.tamanho = artigos.size();
         if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
         if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
         if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
-        this.prazoLimite = dataCriacao.plusDays(30);
+        this.prazoLimite = dataCriacao.plusDays(2);
+        this.vendedores  = vendedores; // devemos ter que fazer clone
+
+        for (Artigo a : artigos){
+
+            if (a instanceof TShirt){
+                TShirt t = (TShirt) a;
+                precoFinal += t.precoFinal(dataCriacao);
+            }
+            else if (a instanceof Sapatilhas){
+                Sapatilhas s = (Sapatilhas) a;
+                precoFinal += s.precoFinal(dataCriacao);
+            }
+            else if (a instanceof Malas){
+                Malas m = (Malas) a;
+                precoFinal += m.precoFinal(dataCriacao);
+            }
+            if (a.getEstado() == Artigo.Estado.NOVO){this.precoFinal += 0.5;}
+            else{this.precoFinal += 0.25;}
+        }
+        
     }
 
     public Encomenda(Encomenda enc) {
@@ -71,6 +99,15 @@ public class Encomenda implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public String getDono(){
+        return this.dono;
+    }
+
+    public void setDono(String dono){
+        this.dono = dono;
     }
 
     public int getTamanho(){
@@ -145,6 +182,14 @@ public class Encomenda implements Serializable{
         this.prazoLimite = prazo;
     }
 
+
+    public Map<Integer,String> getVendedores(){
+        return this.vendedores;
+    }
+    public void setVendedores(Map<Integer,String> vendedores){
+        this.vendedores = vendedores;
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
@@ -158,14 +203,14 @@ public class Encomenda implements Serializable{
                 this.dataCriacao.equals(enc.getDataCriacao());
     }
 
-    public String toString() {
+    public String toString(LocalDate data) {
         StringBuilder sb = new StringBuilder();
         sb.append("==========  Encomenda  ==========\n");
         sb.append("ID da Encomenda: " + id + "\n");
         sb.append("Encomenda criada em: " + dataCriacao + "\n");
         sb.append("==========   Artigos   ==========\n");
         for (Artigo artigo : artigos) {
-            sb.append(artigo.toString() + "\n");
+            sb.append(artigo.toString(dataCriacao) + "\n");
         }
         sb.append("========== Fim Artigos ==========\n");
         sb.append("Dimensão da embalagem: " + embalagem + "\n");
@@ -177,38 +222,5 @@ public class Encomenda implements Serializable{
     public Encomenda clone() {
         return new Encomenda(this);
     }
-
-    // Quando adicionamos um produto a uma Encomenda, o seu preço é incrementado
-    public void adicionarArtigo(Artigo artigo) {
-        this.tamanho++;
-        if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
-        if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
-        if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
-        this.artigos.add(artigo);
-        double pf = artigo.getPrecoBase() - (artigo.getPrecoBase() * artigo.getCorrecaoPreco() / 100.0);  // basicamente nós aqui aplicamos o desconto ao preco base do produto
-        if (artigo.getEstado() == Artigo.Estado.NOVO){
-            pf+=0.5;
-        }else{
-            pf+=0.25;
-        }
-        this.precoFinal+=pf;
-    }
-
-    // Quando retiramos um produto a uma Encomenda, o seu preço é reduzido
-    public void removerArtigo(Artigo artigo) {
-        this.tamanho--;
-        if (this.tamanho > 5) this.embalagem = Dimensao_Embalagem.GRANDE;
-        if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
-        if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
-        this.artigos.remove(artigo);
-        double pf = artigo.getPrecoBase() - (artigo.getPrecoBase() * artigo.getCorrecaoPreco() / 100.0);  // basicamente nós aqui aplicamos o desconto ao preco base do produto
-        if (artigo.getEstado() == Artigo.Estado.NOVO){
-            pf-=0.5;
-        }else{
-            pf-=0.25;
-        }
-        this.precoFinal-=pf;
-    }
-
     
 }

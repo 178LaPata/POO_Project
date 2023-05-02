@@ -2,9 +2,10 @@ package Model;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.io.*;
+import java.time.Period;
 
-public class Sapatilhas extends Artigo implements Serializable{
+
+public class Sapatilhas extends Artigo {
 
     public enum Tipos_Sapatilhas{
         NORMAL,
@@ -25,7 +26,7 @@ public class Sapatilhas extends Artigo implements Serializable{
         this.tipos_sapatilhas = null;
     }
 
-    public Sapatilhas(int tamanho_numerico, boolean atilhos, String cor, LocalDate data_lancamento, Tipos_Sapatilhas tipos_sapatilhas, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, Transportadoras t){
+    public Sapatilhas(int tamanho_numerico, boolean atilhos, String cor, LocalDate data_lancamento, Tipos_Sapatilhas tipos_sapatilhas, String tipo, Estado estado, int numeroDonos, Avaliação avaliacao, String descricao, String marca, String codigo, double precoBase, double correcaoPreco, String t){
         // mudar depois ao criar a tshirt
         super(tipo, estado, numeroDonos, avaliacao, descricao, marca, codigo, precoBase, correcaoPreco, t);
         this.tamanho_numerico = tamanho_numerico;
@@ -93,23 +94,23 @@ public class Sapatilhas extends Artigo implements Serializable{
         if (!super.equals(o)) 
             return false;
 
-        Artigo a = (Sapatilhas) o;
-        return (this.tamanho_numerico == ((Sapatilhas) o).getTamanhoNumerico() &&
-                this.atilhos == ((Sapatilhas) o).getAtilhos() &&
-                this.cor.equals(((Sapatilhas) o).getCor()) &&
-                this.data_lancamento.equals(((Sapatilhas) o).getDataLancamento()) &&
-                this.tipos_sapatilhas.equals(((Sapatilhas) o).getTiposSapatilhas()));
+        Sapatilhas s = (Sapatilhas) o;
+        return (this.tamanho_numerico == s.getTamanhoNumerico() &&
+                this.atilhos == s.getAtilhos() &&
+                this.cor.equals(s.getCor()) &&
+                this.data_lancamento.equals(s.getDataLancamento()) &&
+                this.tipos_sapatilhas.equals(s.getTiposSapatilhas()));
     }
 
-    public String toString() {
+    public String toString(LocalDate data) {
         StringBuilder sb = new StringBuilder();
-        sb.append(super.toString());
+        sb.append(super.toString(data));
         sb.append("Tamanho Numerico: ").append(this.tamanho_numerico).append("\n");
         sb.append("Atilhos: ").append(this.atilhos).append("\n");
         sb.append("Cor: ").append(this.cor).append("\n");
         sb.append("Data de Lancamento: ").append(this.data_lancamento).append("\n");
         sb.append("Tipo de Sapatilhas: ").append(this.tipos_sapatilhas).append("\n");
-        sb.append("Preco Final: ").append(this.precoFinal()).append("\n");
+        sb.append("Preco Final: ").append(this.precoFinal(data)).append("\n");
         return sb.toString();
     }
 
@@ -117,23 +118,23 @@ public class Sapatilhas extends Artigo implements Serializable{
         return new Sapatilhas(this);
     }
 
-    // nao e bem assim, o desconto nao esta bem ig
-    public double precoFinal() {
-        double pf = getPrecoBase();
-        double c = getCorrecaoPreco();
-        if(tamanho_numerico > 45 || this.getEstado() == Estado.USADO) {
-            pf -= c*pf;                
-            return pf;
-        } else 
-            return pf;
-    }
-    
-    // nao sei bem que valor é suposto aumentar
-    public double valorMercado() {
-        double vm = getPrecoBase();
-        if(tipos_sapatilhas == Tipos_Sapatilhas.PREMIUM) {
-            vm *= 1.1;
+
+    public double precoFinal(LocalDate data) {
+        double precoFinal = 0.0;
+
+        if(tamanho_numerico > 45 || this.getEstado() == Estado.USADO) {            
+            precoFinal = (super.getPrecoBase() - (super.getCorrecaoPreco() * 0.5 * super.getNumeroDonos()));
+        } else {
+            precoFinal = super.getPrecoBase();
         }
-        return vm;
-    }
+
+        if (tipos_sapatilhas == Tipos_Sapatilhas.PREMIUM){
+            int diferenca = Period.between(data_lancamento, data).getYears();
+            precoFinal = precoFinal * (1 + diferenca);
+        }
+
+    return precoFinal;
+}
+    
+
 }

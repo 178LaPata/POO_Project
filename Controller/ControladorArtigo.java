@@ -19,6 +19,8 @@ public class ControladorArtigo implements Serializable{
     public TShirt registarTShirt(Apresentacao a, Vintage v){
         int numDonos;
         Artigo.Avaliação avaliacao;
+        Transportadoras transportadora = null; // MUDAR MAIS TARDE CASO SEJA NECESSARIO
+        String transp = "";
 
         a.printMessage("===== Registo T-Shirt ====");
         String tamanhoString = in.lerString(a, ">> Tamanho T-Shirt (S,M,L,XL): ");
@@ -41,10 +43,11 @@ public class ControladorArtigo implements Serializable{
         Double precoB = in.lerDouble(a,">> Preço Base T-Shirt: ",0,100000);
         Double correcaoP = in.lerDouble(a,">> Correção Preço T-Shirt: ",0,10000);
         a.printTransportadoras(v.getTransportadoras());
-        String transp = in.lerString(a, ">> Transportadora: ");
-        Transportadoras transportadora = v.getTransportadora(transp);
-
-        return new TShirt(tamanho, padrao,"TShirt",estado,numDonos,avaliacao,descricao,marca,cod,precoB,correcaoP, transportadora);
+        while (transportadora == null){
+            transp = in.lerString(a, ">> Transportadora: ");
+            transportadora = v.getTransportadora(transp);
+        }
+        return new TShirt(tamanho, padrao,"TShirt",estado,numDonos,avaliacao,descricao,marca,cod,precoB,correcaoP,transp);
     }
 
 
@@ -53,7 +56,8 @@ public class ControladorArtigo implements Serializable{
     public Malas registarMala(Apresentacao a, Vintage v){
         int numDonos;
         Artigo.Avaliação avaliacao;
-
+        Transportadoras transportadora = null;
+        String transp = "";
         a.printMessage("===== Registo Mala =====");
         String tipoString = in.lerString(a, ">> Tipo Mala (NORMAL,PREMIUM)");
         Malas.Tipos_Malas tipo = Malas.Tipos_Malas.valueOf(tipoString);
@@ -76,10 +80,12 @@ public class ControladorArtigo implements Serializable{
         Double precoB = in.lerDouble(a,">> Preço Base Mala: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">> Correção Preço Mala: ",0,1000000);
         a.printTransportadoras(v.getTransportadoras());
-        String transp = in.lerString(a, ">> Transportadora: ");
-        Transportadoras transportadora = v.getTransportadora(transp);
-
-        return new Malas(tipo,dimensao,material,ano,"Mala",estado,numDonos,avaliacao,descricao,marca,cod,precoB,correcaoP,transportadora);
+        
+        while (transportadora == null){
+            transp = in.lerString(a, ">> Transportadora: ");
+            transportadora = v.getTransportadora(transp);
+        }
+        return new Malas(tipo,dimensao,material,ano,"Mala",estado,numDonos,avaliacao,descricao,marca,cod,precoB,correcaoP,transp);
     }
 
 
@@ -89,6 +95,8 @@ public class ControladorArtigo implements Serializable{
     public Sapatilhas registarSapatilha(Apresentacao a, Vintage v){
         int numDonos;
         Artigo.Avaliação avaliacao;
+        Transportadoras transportadora = null;
+        String transp = "";
 
         a.printMessage("===== Registo Sapatilha =====");
         String tipoString = in.lerString(a, ">> Tipo Sapatilha (NORMAL,PREMIUM): ");
@@ -113,10 +121,12 @@ public class ControladorArtigo implements Serializable{
         Double precoB = in.lerDouble(a,">>> Preço Base Sapatilha: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">>> Correção Preço Sapatilha: ",0,1000000);
         a.printTransportadoras(v.getTransportadoras());
-        String transp = in.lerString(a, ">>> Transportadora: ");
-        Transportadoras transportadora = v.getTransportadora(transp);
+        while (transportadora == null){
+            transp = in.lerString(a, ">> Transportadora: ");
+            transportadora = v.getTransportadora(transp);
+        }
 
-        return new Sapatilhas(tamanho,temAtilhos,cor,data,tipo,"Sapatilha",estado,numDonos,avaliacao,desc,marca,cod,precoB,correcaoP,transportadora);
+        return new Sapatilhas(tamanho,temAtilhos,cor,data,tipo,"Sapatilha",estado,numDonos,avaliacao,desc,marca,cod,precoB,correcaoP,transp);
     }
 
 

@@ -2,6 +2,7 @@ package View;
 
 import Model.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -50,52 +51,6 @@ public class Output implements Serializable {
         printLine(length);
     }
 
-    public void printArray(String message, List<String> arr) {
-        System.out.println("\n" + message);
-
-        for(String line : arr)
-            System.out.println(line);
-
-        System.out.print("\n");
-    }
-
-
-    public void printTable(String message, List<String> arr) {
-        System.out.println("\n" + message);
-
-        for(int i=0; i<arr.size(); i++)
-            System.out.println(String.format("%2d %1s",(i+1), ") ") + arr.get(i));
-
-        System.out.print("\n");
-    }
-
-    public void printTableArtigo(String message, List<Artigo> arr) {
-        System.out.println("\n" + message);
-
-        for(int i=0; i<arr.size(); i++)
-            System.out.println(String.format("%2d %1s",(i+1), ") ") + arr.get(i).toString());
-
-        System.out.print("\n");
-    }
-
-
-
-    
-    public void imprimirTabelaTransportadoras(Map<String, Transportadoras> transportadoras) {
-            System.out.printf("| %-20s | %-10s | %-15s | %-10s | %-10s |\n", "Nome", "Imposto", "Preço Expedição", "Lucro", "Premium");
-            System.out.println("|----------------------|------------|-----------------|----------|----------|");
-
-            for (Map.Entry<String, Transportadoras> entry : transportadoras.entrySet()) {
-                Transportadoras transportadora = entry.getValue();
-
-                System.out.printf("| %-20s | %-10.2f | %-15.2f | %-8.2f | %-8s |\n", 
-                                    transportadora.getNome(), transportadora.getImposto(), 
-                                    transportadora.getPrecoExpedicao(), transportadora.getLucro(),
-                                    transportadora.isPremium());
-            }
-    }
-
-
 
     public void printMessage(String message) {
         System.out.println(message);
@@ -121,11 +76,27 @@ public class Output implements Serializable {
 
 
 
-    public void printArtigos(List<Artigo> artigos){
+    public void printArtigos(List<Artigo> artigos,LocalDate data){
         System.out.println("+--------------------------+\n|          Artigos         |\n+--------------------------+");
         for (Artigo a : artigos){
-            System.out.print(a);
+            System.out.print(a.toString(data));
             System.out.println("+--------------------------+");
         }
+    }
+
+    public void printEncomendas(List<Encomenda> encomendas, LocalDate data){
+        System.out.println("+--------------------------+\n|          Encomendas         |\n+--------------------------+");
+        for (Encomenda e : encomendas){
+            System.out.print(e.toString(data));
+            System.out.println("+--------------------------+");
+        }
+    }
+
+    public void printCarrinho(List<Integer> carrinho){
+        System.out.print("[CARRINHO] : ");
+        for (int i : carrinho){
+            System.out.print("[" + i + "] ");
+        }
+        System.out.println();
     }
 }

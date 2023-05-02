@@ -4,20 +4,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import Model.Encomenda.Estado_Encomenda;
+
 import java.io.*;
+import java.time.LocalDate;
 
 public class Vintage implements Serializable{
     private String sessaoAtual; // é a pessoa na qual damos o login fica com o email associado para conseguir associar os artigos que comprar ou vender a ela
     private Map<String, Utilizador> utilizadores;
-    private Map<Integer, Encomenda> encomendas;
+    private List<Encomenda> encomendas;
     private Map<String, Transportadoras> transportadoras;
+    private LocalDate dataPrograma;
 
     public Vintage() {
         this.sessaoAtual = null;
         this.utilizadores = new HashMap<>();
-        this.encomendas = new HashMap<>();
+        this.encomendas = new ArrayList<>();
         this.transportadoras = new HashMap<>();
+        this.dataPrograma = LocalDate.now();
     }
+
+
 
 
 
@@ -33,27 +42,31 @@ public class Vintage implements Serializable{
 
 
 
+
+
     // PERGUNTAR AO PROFESSOR
     public List<Artigo> getArtigosVenda(){
         List<Artigo> artigos = new ArrayList<>();
         for (Map.Entry<String,Utilizador> entry: utilizadores.entrySet()){
             if (entry.getKey() != this.sessaoAtual){
-                entry.getValue().getPorVender().stream().map(Artigo :: clone).forEach(artigos::add);
+                entry.getValue().getPorVender().stream()/* .map(Artigo :: clone)*/.forEach(artigos::add);
             } 
         }
         return artigos;
     }
 
 
-
     
+    public void setDataPrograma(LocalDate data){
+        this.dataPrograma = data;
+    }
 
-    // REMOVER ISTO
-    public void printUtilizadores() {
-    for (Utilizador u : utilizadores.values()) {
-        System.out.println("UTI" + u);
+    public LocalDate getDataPrograma(){
+        return this.dataPrograma;
     }
-    }
+
+
+
 
     // Aqui tirei o clone porque supostamente vamos querer adicionar produtos ao Utilizador original e não a uma clone dele
     public Utilizador getUtilizador(String email) {
@@ -67,15 +80,6 @@ public class Vintage implements Serializable{
     public void adicionaUtilizador(Utilizador user){
         utilizadores.put(user.getEmail(),user);
     }
-
-    public Encomenda getEncomenda(int id) {
-        return encomendas.get(id).clone();
-    }
-
-    public void setEncomenda(int id, Encomenda e) {
-        encomendas.replace(e.getId(), e);
-    }
-
 
 
     public void adicionarTransportadora(Transportadoras t){
@@ -98,6 +102,7 @@ public class Vintage implements Serializable{
         return this.utilizadores.containsKey(email);
     }
 
+
     public boolean existeUser(String email, String password){
         Utilizador user = this.utilizadores.get(email);
         if (user != null){
@@ -105,5 +110,64 @@ public class Vintage implements Serializable{
         }
         return false;
     }
+
+    // temos que fazer clone provavelmente
+    public Map<String,Utilizador> getUtilizadores(){
+        return this.utilizadores;
+    }
+
+    public void addEncomenda(Encomenda e){
+        this.encomendas.add(e);
+    }
+
+    public void avancarTempo(){
+        for (Encomenda e : this.encomendas){
+            int comparar = this.dataPrograma.compareTo(e.getPrazoLimite());
+            if (comparar > 0){
+                e.setEstado(Estado_Encomenda.FINALIZADA);
+                Utilizador u = this.getUtilizador(e.getDono());
+                for(Artigo a : e.getArtigos()){
+                    u.adicionaCompra(a);
+                }
+            }
+
+        }
+    }
+
+
+    public List<Encomenda> encomendasParaDevolver(){
+        return this.encomendas.stream().filter(e -> e.getPrazoLimite().isAfter(dataPrograma)).map(e -> e.clone()).collect(Collectors.toList());
+    }
+
+
+    public void devolverEncomenda(int id){
+        Encomenda enc = null;
+        for (Encomenda e : this.encomendas){
+            if (id == e.getId()){
+                for (Map.Entry<Integer,String> dono : e.getVendedores().entrySet()){
+                    adicionaArtigoVenda(dono.getKey(), dono.getValue(), e);
+                }
+                enc = e;
+                e.setEstado(Estado_Encomenda.DEVOLVIDA);
+                break;
+            }
+        }
+        this.encomendas.remove(enc);
+    }
+
+    private void adicionaArtigoVenda(int id, String email, Encomenda e){
+        for(Artigo a : e.getArtigos()){
+            if (a.getId() == id){
+                for(String u : this.utilizadores.keySet()){
+                    if (email.equals(u)){ this.utilizadores.get(u).getPorVender().add(a.clone()); }
+                }
+            }
+        }
+    }
+
+
+    
+
+
 
 }

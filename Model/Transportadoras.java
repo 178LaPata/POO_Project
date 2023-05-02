@@ -1,48 +1,41 @@
 package Model;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.io.*;
 
-import Model.Encomenda.Dimensao_Embalagem;
 
 public class Transportadoras implements Serializable{
     private String nome;
     private double imposto;
-    private double precoExpedicao;
     private double lucro;
     private boolean premium; // pode vir a ser mudado para enum
-    private List<Artigo> artigos; // lista de artigos entregues. 
+    private double volFaturacao;
 
 
     public Transportadoras() {
         this.nome = "";
         this.imposto = 0.3;
-        this.precoExpedicao = 0;
-        this.lucro = 5.5;
+        this.lucro = 0.10;
         this.premium = false;
-        this.artigos = null;
+        this.volFaturacao = 0.0;
     }
 
-    public Transportadoras(String nome, double imposto, double precoExpedicao, double lucro, boolean premium, List<Artigo> artigos) {
+    public Transportadoras(String nome, double imposto, double lucro, boolean premium, double volFaturacao) {
         this.nome = nome;
         this.imposto = imposto;
-        this.precoExpedicao = precoExpedicao;
         this.lucro = lucro;
         this.premium = premium;
-        setArtigos(artigos);
+        this.volFaturacao = volFaturacao;
     }
 
     public Transportadoras(Transportadoras t) {
         this.nome = t.getNome();
         this.imposto = t.getImposto();
-        this.precoExpedicao = t.getPrecoExpedicao();
         this.lucro = t.getLucro();
         this.premium = t.isPremium();
-        this.artigos = t.getArtigos();
+        this.volFaturacao = t.getVolFaturacao();
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -57,13 +50,6 @@ public class Transportadoras implements Serializable{
         this.imposto = imposto;
     }
     
-    public double getPrecoExpedicao() {
-        return precoExpedicao;
-    }
-
-    public void setPrecoExpedicao(double precoExpedicao) {
-        this.precoExpedicao = precoExpedicao;
-    }
     
     public double getLucro() {
         return lucro;
@@ -81,23 +67,22 @@ public class Transportadoras implements Serializable{
         this.premium = premium;
     }
 
-    public List<Artigo> getArtigos(){
-        return this.artigos.stream().map(Artigo::clone).collect(Collectors.toList());
+    public double getVolFaturacao(){
+        return this.volFaturacao;
     }
 
-    public void setArtigos(List<Artigo> artigos){
-        this.artigos = artigos.stream().map(Artigo::clone).collect(Collectors.toList());
+    public void setVolFaturacao(double vol){
+        this.volFaturacao = vol;
     }
 
-    public void addArtigo(Artigo a){
-        this.artigos.add(a);
+    public void addVolFaturacao(double vol){
+        this.volFaturacao+=vol;
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Nome: ").append(this.nome).append("\n");
         sb.append("Imposto: ").append(this.imposto).append("\n");
-        sb.append("Preço de Expedição: ").append(this.precoExpedicao).append("\n");
         sb.append("Lucro: ").append(this.lucro).append("\n");
         sb.append("Premium: ").append(this.premium).append("\n");
         return sb.toString();
@@ -109,24 +94,24 @@ public class Transportadoras implements Serializable{
         Transportadoras t = (Transportadoras) o;
         return this.nome.equals(t.getNome()) &&
                 this.imposto == t.getImposto() &&
-                this.precoExpedicao == t.getPrecoExpedicao() &&
                 this.lucro == t.getLucro() &&
                 this.premium == t.isPremium() && 
-                this.artigos.equals(t.getArtigos()); // NAO SEI SE POSSO FAZER ASSIM O EQUALS!
+                this.volFaturacao == t.getVolFaturacao();
     }
 
     public Transportadoras clone() {
         return new Transportadoras(this);
     }
 
-    public double calculaPrecoExpedicao(Encomenda e){
-        int valorBase = 0;
-        if (e.getEmbalagem() == Dimensao_Embalagem.GRANDE) valorBase = 500;
-        if (e.getEmbalagem() == Dimensao_Embalagem.MEDIO) valorBase = 300;
-        if (e.getEmbalagem() == Dimensao_Embalagem.PEQUENO) valorBase = 100;
 
-        this.precoExpedicao = (valorBase * this.lucro * (1 + this.imposto)) * 0.9;
-        return this.precoExpedicao;
+
+
+    public double calculaPrecoExpedicao(Long dimensao){
+        int valorBase = 0;
+        if  (dimensao > 4) valorBase = 50;
+        if (dimensao > 1 && dimensao < 5) valorBase = 30;
+        if (dimensao == 1) valorBase = 10;
+        return (valorBase * this.lucro * (1 + this.imposto)) * 0.9;
     }
 
 }
