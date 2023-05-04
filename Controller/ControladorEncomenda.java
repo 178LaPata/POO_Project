@@ -110,16 +110,7 @@ public class ControladorEncomenda implements Serializable{
                     List<Artigo> artigos = new ArrayList<>();            // guarda a lista de artigos da encomenda
                     Map<Integer,String> vendedores = new HashMap<>();    // guarda o id do produto e o email do vendedor 
                     
-                    for (int id : carrinho){
-                        for (Utilizador user : v.getUtilizadores().values()){
-                                user.getPorVender().stream().filter(art -> art.getId() == id)
-                                                            .forEach(art -> {
-                                                                artigos.add(art);                       // Adiciona o artigo à lista de artigos da encomenda
-                                                                vendedores.put(id, u.getEmail());       // adiciona o id do produto e o email do dono respetivo
-                                                            });
-                                user.getPorVender().removeAll(artigos);     // Remove todos os artigos da lista de vendas que estão na encomenda
-                        }
-                    }
+                    v.trataEncomenda(carrinho, artigosVenda, vendedores);
                     String dono = v.getSessaoAtual();
                     double custoExpedicao = calculaCustoExpedicao(artigos, v);
 

@@ -112,9 +112,13 @@ public class Utilizador implements Serializable{
     }
 
 
-    // Aqui nao faz sentido usar clone porque num método vamos querer remover alguns elementos da lista 
+
     public List<Artigo> getPorVender() {
-        return this.porVender;
+        List<Artigo> aux = new ArrayList<>();
+        for (Artigo a : this.porVender){
+            aux.add(a.clone());
+        }
+        return aux;
     }
 
 
@@ -127,8 +131,24 @@ public class Utilizador implements Serializable{
 
     
     public void adicionarPorVender(Artigo a){
-        this.porVender.add(a);
+        this.porVender.add(a.clone());
     }
+
+    public Artigo removePorVender(int id){
+        Artigo art = null;
+        for(Artigo a : this.porVender){
+            if (a.getId() == id){
+                art  = a;
+                break;
+            }
+        }
+        if (art != null){
+        this.porVender.remove(art);
+        }
+        return art;
+    }
+
+
 
 
     // Para jogar pelo seguro

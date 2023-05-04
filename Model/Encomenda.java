@@ -118,7 +118,7 @@ public class Encomenda implements Serializable{
         this.tamanho = t;
     }
 
-    // aqui podemos dar clone (VISTO)
+
     public List<Artigo> getArtigos() {
     ArrayList<Artigo> res = new ArrayList<>();
         for(Artigo a: this.artigos){

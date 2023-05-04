@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.swing.RowFilter.Entry;
+
 import Model.Encomenda.Estado_Encomenda;
 
 import java.io.*;
@@ -67,7 +69,7 @@ public class Vintage implements Serializable{
         List<Artigo> artigos = new ArrayList<>();
         for (Map.Entry<String,Utilizador> entry: utilizadores.entrySet()){
             if (entry.getKey() != this.sessaoAtual){
-                entry.getValue().getPorVender().stream().map(Artigo :: clone).forEach(artigos::add);
+                entry.getValue().getPorVender().stream().forEach(artigos::add);
             } 
         }
         return artigos;
@@ -158,11 +160,31 @@ public class Vintage implements Serializable{
         for(Artigo a : e.getArtigos()){
             if (a.getId() == id){
                 for(String u : this.utilizadores.keySet()){
-                    if (email.equals(u)){ this.utilizadores.get(u).getPorVender().add(a.clone()); }
+                    if (email.equals(u)){ this.utilizadores.get(u).adicionarPorVender(a); }
                 }
             }
         }
     }
+
+
+    public void trataEncomenda(List<Integer> carrinho, List<Artigo> artigos, Map<Integer,String> vendedores){
+        for (int id: carrinho){
+            adicionaArtigo(id, artigos, vendedores);
+        }
+    }
+
+    private void adicionaArtigo(int id,List<Artigo> artigos,Map<Integer,String> vendedores){
+
+        for (Map.Entry<String,Utilizador> user : this.utilizadores.entrySet()){
+            if (user.getValue().getPorVender().stream().anyMatch(artigo -> artigo.getId() == id)){
+                Artigo a = user.getValue().removePorVender(id);
+                artigos.add(a.clone());
+                vendedores.put(id, user.getKey());
+            }
+        }
+    }
+
+
 
 
 }
