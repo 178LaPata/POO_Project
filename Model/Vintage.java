@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.swing.RowFilter.Entry;
-
 import Model.Encomenda.Estado_Encomenda;
 
 import java.io.*;
@@ -39,24 +37,23 @@ public class Vintage implements Serializable{
 
     // nao podemos fazer clone porque estamos a alterar mesmo o estado do utilizador (retirar artigos da lista do user)
     public Map<String,Utilizador> getUtilizadores(){
-        return this.utilizadores;
+        Map<String,Utilizador> aux = new HashMap<>();
+        for (Map.Entry<String,Utilizador> a : this.utilizadores.entrySet()){
+            aux.put(a.getKey(), a.getValue().clone());
+        }
+        return aux;
     }
 
-
-    // Aqui tirei o clone porque supostamente vamos querer adicionar produtos ao Utilizador original e não a uma clone dele
-    public Utilizador getUtilizador(String email) {
-        return utilizadores.get(email);
-    }
-
-    public void setUtilizador(String email, Utilizador u) {
-        utilizadores.replace(u.getEmail(), u);
-    }
-
+    
 
 
     // nao podemos fazer clone porque vamos querer alterar a transportadora diretamente (adicionar o volume de faturacao à transportadora e não ao clone)
     public Map<String, Transportadoras> getTransportadoras() {
-        return transportadoras;
+        Map<String,Transportadoras> aux = new HashMap<>();
+        for (Map.Entry<String,Transportadoras> e : this.transportadoras.entrySet()){
+            aux.put(e.getKey(), e.getValue().clone());
+        }
+        return aux;
     }
 
 
@@ -97,7 +94,7 @@ public class Vintage implements Serializable{
     }
 
     public Transportadoras getTransportadora(String t){
-        return this.transportadoras.get(t);
+        return this.transportadoras.get(t).clone();
     }
 
 
@@ -126,7 +123,7 @@ public class Vintage implements Serializable{
             int comparar = this.dataPrograma.compareTo(e.getPrazoLimite());
             if (comparar > 0){
                 e.setEstado(Estado_Encomenda.FINALIZADA);
-                Utilizador u = this.getUtilizador(e.getDono());
+                Utilizador u = this.utilizadores.get(e.getDono());
                 for(Artigo a : e.getArtigos()){
                     u.adicionaCompra(a);
                 }
@@ -160,7 +157,7 @@ public class Vintage implements Serializable{
         for(Artigo a : e.getArtigos()){
             if (a.getId() == id){
                 for(String u : this.utilizadores.keySet()){
-                    if (email.equals(u)){ this.utilizadores.get(u).adicionarPorVender(a); }
+                    if (email.equals(u)){ adicionarPorVender(a, u); }
                 }
             }
         }
@@ -182,6 +179,23 @@ public class Vintage implements Serializable{
                 vendedores.put(id, user.getKey());
             }
         }
+    }
+
+    public double calculaCustoExpedicao(List<Artigo> artigosEncomenda){
+        double custosExpedicao = 0.0;
+
+        for (String t : this.transportadoras.keySet()){
+            Long aux = artigosEncomenda.stream().filter(a -> a.getTransportadora().equals(t)).count();
+            if (aux != 0){
+                double expedicaoT = this.transportadoras.get(t).calculaPrecoExpedicao(aux);
+                custosExpedicao +=expedicaoT;
+            }
+        }
+        return custosExpedicao;
+    }
+
+    public void adicionarPorVender(Artigo a,String user){
+        this.utilizadores.get(user).adicionarPorVender(a);
     }
 
 

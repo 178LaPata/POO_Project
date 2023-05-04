@@ -60,29 +60,12 @@ public class ControladorEncomenda implements Serializable{
     }
 
 
-    public double calculaCustoExpedicao(List<Artigo> artigosEncomenda, Vintage v){
-        Map<String,Transportadoras> transp = v.getTransportadoras(); 
-        double custosExpedicao = 0.0;
-
-        for (String t : transp.keySet()){
-            Long aux = artigosEncomenda.stream().filter(a -> a.getTransportadora().equals(t)).count();
-            if (aux != 0){
-            double expedicaoT = transp.get(t).calculaPrecoExpedicao(aux);
-                transp.get(t).addVolFaturacao(expedicaoT);
-                custosExpedicao+=expedicaoT;
-            }
-        }
-        return custosExpedicao;
-    }
-
 
 
     public void interpretador(Apresentacao a, Vintage v){
         boolean b = true;
         int comando;
-        Utilizador u = v.getUtilizador(v.getSessaoAtual());
         List<Artigo> artigosVenda = v.getArtigosVenda(); // produtos disponíveis
-
         List<Integer> carrinho = new ArrayList<>(); // carrinho de compras
         List<Integer> idDisponivel = getIDArtigosVenda(artigosVenda);
         a.printArtigos(artigosVenda,v.getDataPrograma());
@@ -110,9 +93,10 @@ public class ControladorEncomenda implements Serializable{
                     List<Artigo> artigos = new ArrayList<>();            // guarda a lista de artigos da encomenda
                     Map<Integer,String> vendedores = new HashMap<>();    // guarda o id do produto e o email do vendedor 
                     
-                    v.trataEncomenda(carrinho, artigosVenda, vendedores);
+                    v.trataEncomenda(carrinho, artigos, vendedores);
+
                     String dono = v.getSessaoAtual();
-                    double custoExpedicao = calculaCustoExpedicao(artigos, v);
+                    double custoExpedicao = v.calculaCustoExpedicao(artigos);
 
                     Encomenda encomenda = new Encomenda(dono, artigos, custoExpedicao, v.getDataPrograma(), vendedores);
                     v.addEncomenda(encomenda);

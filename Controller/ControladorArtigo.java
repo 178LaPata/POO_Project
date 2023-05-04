@@ -139,7 +139,7 @@ public class ControladorArtigo implements Serializable{
     public void interpretador(Apresentacao a,Vintage v){
         boolean b = true;
         int comando;
-        Utilizador u =  v.getUtilizador(v.getSessaoAtual());
+        String userAtual = v.getSessaoAtual();
         
         while(b){
             a.printMenuArtigo();
@@ -149,19 +149,19 @@ public class ControladorArtigo implements Serializable{
                 case 1:
                     TShirt tShirt = registarTShirt(a, v);
                     a.printMessage("T-Shirt registada com Sucesso!");
-                    u.adicionarPorVender(tShirt);
+                    v.adicionarPorVender(tShirt,userAtual);
                     break;
                     
                 case 2:
                     Malas mala = registarMala(a,v);
                     a.printMessage("Mala registada com Sucesso!");
-                    u.adicionarPorVender(mala);
+                    v.adicionarPorVender(mala,userAtual);
                     break;
 
                 case 3:
                     Sapatilhas sap = registarSapatilha(a,v);
                     a.printMessage("Sapatilha registada com Sucesso!");
-                    u.adicionarPorVender(sap);
+                    v.adicionarPorVender(sap,userAtual);
                     break;
                 case 0:
                     b = false;
