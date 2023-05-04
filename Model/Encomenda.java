@@ -118,7 +118,7 @@ public class Encomenda implements Serializable{
         this.tamanho = t;
     }
 
-
+    // aqui podemos dar clone (VISTO)
     public List<Artigo> getArtigos() {
     ArrayList<Artigo> res = new ArrayList<>();
         for(Artigo a: this.artigos){
@@ -207,10 +207,10 @@ public class Encomenda implements Serializable{
         StringBuilder sb = new StringBuilder();
         sb.append("==========  Encomenda  ==========\n");
         sb.append("ID da Encomenda: " + id + "\n");
-        sb.append("Encomenda criada em: " + dataCriacao + "\n");
+        sb.append("Encomenda criada em: " + this.dataCriacao + "\n");
         sb.append("==========   Artigos   ==========\n");
         for (Artigo artigo : artigos) {
-            sb.append(artigo.toString(dataCriacao) + "\n");
+            sb.append(artigo.toString(this.dataCriacao) + "\n");
         }
         sb.append("========== Fim Artigos ==========\n");
         sb.append("Dimensão da embalagem: " + embalagem + "\n");

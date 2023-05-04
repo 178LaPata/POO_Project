@@ -134,9 +134,9 @@ public class Controlador implements Serializable{
                         break;
                     case 5: // Avançar no Tempo
                         Input in = new Input();
-                        a.printMessage("Data do Programa: " + LocalDate.now());
-                        LocalDate data = in.lerData(a, "Selecione a data para que pretende ir: (dd-MM-yyyy)");
-                        v.setDataPrograma(data);
+                        a.printMessage("Data do Programa: " + v.getDataPrograma());
+                        int dias= in.lerInt(a, "Selecione quantos dias pretende avançar: ",0,1000);
+                        v.setDataPrograma(v.getDataPrograma().plusDays(dias));
                         v.avancarTempo();
                         a.printMessage("Data do Programa Atualizada: " + v.getDataPrograma());
                         break;

@@ -35,7 +35,7 @@ public class Vintage implements Serializable{
         this.sessaoAtual = s;
     }
 
-    // temos que fazer clone provavelmente
+    // nao podemos fazer clone porque estamos a alterar mesmo o estado do utilizador (retirar artigos da lista do user)
     public Map<String,Utilizador> getUtilizadores(){
         return this.utilizadores;
     }
@@ -52,7 +52,7 @@ public class Vintage implements Serializable{
 
 
 
-
+    // nao podemos fazer clone porque vamos querer alterar a transportadora diretamente (adicionar o volume de faturacao à transportadora e não ao clone)
     public Map<String, Transportadoras> getTransportadoras() {
         return transportadoras;
     }
@@ -62,7 +62,7 @@ public class Vintage implements Serializable{
 
 
 
-    // Aqui usamos clone porque apenas usamos isto para
+    // Aqui usamos clone (VISTO) (usamos apenas para mostrar quais os artigos que estão à venda)
     public List<Artigo> getArtigosVenda(){
         List<Artigo> artigos = new ArrayList<>();
         for (Map.Entry<String,Utilizador> entry: utilizadores.entrySet()){

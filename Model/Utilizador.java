@@ -112,6 +112,7 @@ public class Utilizador implements Serializable{
     }
 
 
+    // Aqui nao faz sentido usar clone porque num método vamos querer remover alguns elementos da lista 
     public List<Artigo> getPorVender() {
         return this.porVender;
     }
@@ -130,7 +131,7 @@ public class Utilizador implements Serializable{
     }
 
 
-    
+    // Para jogar pelo seguro
     public void adicionaCompra(Artigo a){
         this.compras.add(a.clone());
     }
