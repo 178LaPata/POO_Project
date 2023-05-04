@@ -104,6 +104,7 @@ public class ControladorEncomenda implements Serializable{
                     carrinho = removerArtigo(a, carrinho);
                     break;
 
+                
                 case 3: // terminar encomenda
                     if (carrinho.isEmpty()){a.printMessage("Carrinho de Compras Vazio!");break;}
                     List<Artigo> artigos = new ArrayList<>();            // guarda a lista de artigos da encomenda

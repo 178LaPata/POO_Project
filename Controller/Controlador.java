@@ -6,7 +6,6 @@ import View.*;
 
 import java.util.Scanner;
 import java.io.*;
-import java.time.LocalDate;
 
 public class Controlador implements Serializable{
     private final Input in;

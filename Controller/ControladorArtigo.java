@@ -29,7 +29,8 @@ public class ControladorArtigo implements Serializable{
         TShirt.Padrao padrao = TShirt.Padrao.valueOf(padraoString);
         String estadoString = in.lerString(a, ">> Estado T-Shirt (NOVO,USADO): ");
         Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
-        if (estadoString == "USADO"){
+        System.out.println(estadoString.length());
+        if ((estadoString.equals("USADO"))){
             numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
             String avaliacaoString = in.lerString(a, ">> Avaliação T-Shirt (IMPECÁVEL,BOM,SATISFATÓRIO): ");
             avaliacao = Artigo.Avaliação.valueOf(avaliacaoString);
@@ -66,7 +67,7 @@ public class ControladorArtigo implements Serializable{
         int ano = in.lerInt(a, ">> Ano Coleção: ", 0, 10000);
         String estadoString = in.lerString(a, ">> Estado da Mala (NOVO,USADO): ");
         Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
-        if (estadoString == "USADO"){
+        if (estadoString.equals("USADO")){
             numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
             String avaliacaoString = in.lerString(a, ">> Avaliação Mala (IMPECÁVEL,BOM,SATISFATÓRIO): ");
             avaliacao = Artigo.Avaliação.valueOf(avaliacaoString);
@@ -107,7 +108,7 @@ public class ControladorArtigo implements Serializable{
         LocalDate data = in.lerData(a, ">> Data Lançamento Sapatilha (dd-mm-yyyy): ");
         String estadoString = in.lerString(a, ">> Estado Sapatilha (NOVO,USADO): ");
         Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
-        if (estadoString == "USADO"){
+        if (estadoString.equals("USADO")){
             numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
             String avaliacaoString = in.lerString(a, ">> Avaliação Sapatilha (IMPECÁVEL,BOM,SATISFATÓRIO): ");
             avaliacao = TShirt.Avaliação.valueOf(avaliacaoString);
