@@ -59,7 +59,7 @@ public class Encomenda implements Serializable{
         if (this.tamanho > 1 && this.tamanho <= 5) this.embalagem = Dimensao_Embalagem.MEDIO;
         if (this.tamanho == 1) this.embalagem = Dimensao_Embalagem.PEQUENO;
         this.prazoLimite = dataCriacao.plusDays(2);
-        this.vendedores  = vendedores; // devemos ter que fazer clone
+        this.vendedores  = vendedores; 
 
         for (Artigo a : artigos){
 
@@ -78,6 +78,7 @@ public class Encomenda implements Serializable{
             if (a.getEstado() == Artigo.Estado.NOVO){this.precoFinal += 0.5;}
             else{this.precoFinal += 0.25;}
         }
+        this.precoFinal += this.custosExpedicao;
         
     }
 
@@ -214,6 +215,7 @@ public class Encomenda implements Serializable{
         }
         sb.append("========== Fim Artigos ==========\n");
         sb.append("Dimensão da embalagem: " + embalagem + "\n");
+        sb.append("Custo Expedição: " + custosExpedicao + "\n");
         sb.append("Preço final: " + precoFinal + "\n");
         sb.append("Estado da encomenda: " + estado + "\n");
         return sb.toString();
