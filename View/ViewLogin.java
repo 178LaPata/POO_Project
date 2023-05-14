@@ -13,21 +13,6 @@ public class ViewLogin implements Serializable {
         out.printMenus((new String[]{"Login", "Registar"}),"     MENU LOGIN",1);
     }
 
-    public void printLoginSucesso() {
-        System.out.println("Login efetuado com sucesso");
-    }
-
-    public void printLogoutSucesso() {
-        System.out.println("Logout efetuado com sucesso");
-    }
-
-    public void printRegistoSucesso() {
-        System.out.println("Registo efetuado com sucesso");
-    }
-
-    public void printErroDadosInvalidos() {
-        System.out.println("Dados inválidos");
-    }
 }
     
 

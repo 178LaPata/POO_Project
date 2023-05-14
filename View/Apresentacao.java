@@ -58,21 +58,7 @@ public class Apresentacao implements Serializable {
         al.printMenuLogin();
     }
 
-    public void printLoginSucesso() {
-        al.printLoginSucesso();
-    }
 
-    public void printLogoutSucesso() {
-        al.printLogoutSucesso();
-    }
-
-    public void printRegistoSucesso() {
-        al.printRegistoSucesso();
-    }
-
-    public void printErroDadosInvalidos() {
-        al.printErroDadosInvalidos();
-    }
 
     //Outros
 
@@ -80,15 +66,6 @@ public class Apresentacao implements Serializable {
     public void printMessage(String message) {
         out.printMessage(message);
     }
-
-    public void printDouble(Double dou){
-        out.printDouble(dou);
-    }
-
-    public void printInteiro(int inteiro){
-        out.printInteiro(inteiro);
-    }
-
 
     public void printTransportadoras( Map<String,Transportadoras> t){
         out.printTransportadoras(t);
@@ -104,6 +81,14 @@ public class Apresentacao implements Serializable {
 
     public void printCarrinho(List<Integer> carrinho){
         out.printCarrinho(carrinho);
+    }
+
+    public void printTop10(Map<String,Double> top){
+        out.printTop10(top);
+    }
+
+    public void formulasTransportadora(){
+        out.formulasTransportadora();
     }
 
 }

@@ -6,18 +6,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+
+
 public class Output implements Serializable {
 
-    // esta não da clear ao ecra todo
-    //public void clear() {
-    //    for(int i = 0; i<5; i++)
-    //        System.out.println("");
-    //}
 
-    public void screenClear() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
+
 
     private void printLine(int size) {
         for(int i=0; i<size; i++)
@@ -56,15 +50,6 @@ public class Output implements Serializable {
         System.out.println(message);
     }
 
-    public void printDouble(Double dou){
-        System.out.println(dou);
-    }
-
-    public void printInteiro(int inteiro){
-        System.out.println(inteiro);
-    }
-
-
 
     public void printTransportadoras(Map<String, Transportadoras> transportadoras){
         System.out.println("+------------------------------+\n|        Transportadoras       |\n+------------------------------+");
@@ -98,5 +83,27 @@ public class Output implements Serializable {
             System.out.print("[" + i + "] ");
         }
         System.out.println();
+    }
+
+    public void printTop10(Map<String,Double> top){
+        int i = 1;
+        System.out.println("+-------------------------+\n|          TOP-10         |\n+-------------------------+");
+        for(Map.Entry<String, Double> map : top.entrySet()){
+            System.out.println(i + " -> " + map.getKey() + " | " + map.getValue()+"\n");
+            i++;
+            if (i > 10) {break;}
+        }
+        System.out.println("+-------------------------+");
+    }
+
+    public void formulasTransportadora(){
+        System.out.println("+---------------------------------------------+");
+        System.out.println("|                    FÓRMULAS                 |");
+        System.out.println("+---------------------------------------------+");
+        System.out.println("1 - ValorBase * Lucro * (1 + Imposto) * 0.9");
+        System.out.println("2 - Valor(Base + Lucro * Imposto) * 0.5");
+        System.out.println("3 - (1 + Lucro) * Imposto * ValorBase ");
+        System.out.println("4 - Imposto * 5 + ValorBase - Lucro * 5");
+        System.out.println("+---------------------------------------------+");
     }
 }

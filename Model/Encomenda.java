@@ -28,7 +28,7 @@ public class Encomenda implements Serializable{
     private double custosExpedicao;                 // Dependem da transportadora, na classe Artigo vamos ter de adicionar a transportadora depois
     private Estado_Encomenda estado;
     private LocalDate dataCriacao;
-    private int tamanho;  // não sei se é preciso (serve para definir a Dimensão da embalagem)
+    private int tamanho;  
     private LocalDate prazoLimite; 
     private Map<Integer,String> vendedores;
 
@@ -209,6 +209,7 @@ public class Encomenda implements Serializable{
         sb.append("==========  Encomenda  ==========\n");
         sb.append("ID da Encomenda: " + id + "\n");
         sb.append("Encomenda criada em: " + this.dataCriacao + "\n");
+        sb.append("Prazo Limite: " + this.prazoLimite + "\n");
         sb.append("==========   Artigos   ==========\n");
         for (Artigo artigo : artigos) {
             sb.append(artigo.toString(this.dataCriacao) + "\n");

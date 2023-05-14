@@ -25,11 +25,11 @@ public class ViewMain implements Serializable {
     }
 
     public void printMenuInicial() {
-        out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um Ficheiro","Criar Transportadora","Avançar no Tempo"}),"      MENU PRINCIPAL",0);
+        out.printMenus((new String[]{"Login/Registar", "Gravar para um Ficheiro", "Carregar de um Ficheiro","Transportadoras","Avançar no Tempo","Estatísticas"}),"      MENU PRINCIPAL",0);
     }
 
     public void printMainMenuLogOut() {
-        out.printMenus((new String[]{"Logout","Estatísticas", "Consultas", "Vender Artigo","Comprar Artigo","Devolver Encomenda"}),"   MENU PRINCIPAL  ",0);
+        out.printMenus((new String[]{"Logout", "Consultas", "Vender Artigo","Comprar Artigo","Encomendas"}),"   MENU PRINCIPAL  ",0);
     }
 
     public void printMenuArtigo(){
@@ -40,16 +40,16 @@ public class ViewMain implements Serializable {
     
 
     public void printMenuConsultas(){
-        out.printMenus((new String[]{"Consultar meus Produtos a Vender", "Consultar Produtos Comprados", "Consultar Produtos Vendidos","Consultar Transportadoras Disponíveis"}),"      CONSULTAS",0);
+        out.printMenus((new String[]{"Produtos a Vender", "Produtos Comprados", "Produtos Vendidos","Transportadoras Disponíveis"}),"      CONSULTAS",1);
     }
 
     public void printMenuEstatisticas(){
-        out.printMenus((new String[]{"Qual é o vendedor que mais facturou num período ou desde sempre", 
-                                    "Qual o transportador com maior volume de facturação", 
-                                    "Listar as encomendas emitidas por um vendedor",
-                                    "Fornecer uma ordenação dos maiores compradores/vendedores do sistema durante um período a determinar",
-                                    "Determinar quanto dinheiro ganhou o Vintage no seu funcionamento"
-                                    }),"      ESTATISTICAS",0);
+        out.printMenus((new String[]{"Vendedor que mais facturou num período ou desde sempre", 
+                                    "Transportador com maior volume de facturação", 
+                                    "Listar as vendas emitidas por um vendedor",
+                                    "Top 10 maiores compradores/vendedores do sistema num período",
+                                    "Quanto dinheiro ganhou o Vintage"
+                                    }),"                          ESTATÍSTICAS",1);
     }
 
 

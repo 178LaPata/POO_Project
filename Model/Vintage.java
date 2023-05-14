@@ -1,7 +1,9 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,7 +37,7 @@ public class Vintage implements Serializable{
         this.sessaoAtual = s;
     }
 
-    // nao podemos fazer clone porque estamos a alterar mesmo o estado do utilizador (retirar artigos da lista do user)
+
     public Map<String,Utilizador> getUtilizadores(){
         Map<String,Utilizador> aux = new HashMap<>();
         for (Map.Entry<String,Utilizador> a : this.utilizadores.entrySet()){
@@ -47,7 +49,6 @@ public class Vintage implements Serializable{
     
 
 
-    // nao podemos fazer clone porque vamos querer alterar a transportadora diretamente (adicionar o volume de faturacao à transportadora e não ao clone)
     public Map<String, Transportadoras> getTransportadoras() {
         Map<String,Transportadoras> aux = new HashMap<>();
         for (Map.Entry<String,Transportadoras> e : this.transportadoras.entrySet()){
@@ -57,20 +58,30 @@ public class Vintage implements Serializable{
     }
 
 
+    public Map<String, Transportadoras> getTransportadorasPremium(){
+        Map<String,Transportadoras> aux = new HashMap<>();
+        for (Map.Entry<String,Transportadoras> e : this.transportadoras.entrySet()){
+            if(e.getValue().isPremium()){
+            aux.put(e.getKey(), e.getValue().clone());
+            }
+        }
+        return aux;
+    }
 
 
 
 
-    // Aqui usamos clone (VISTO) (usamos apenas para mostrar quais os artigos que estão à venda)
+
     public List<Artigo> getArtigosVenda(){
         List<Artigo> artigos = new ArrayList<>();
         for (Map.Entry<String,Utilizador> entry: utilizadores.entrySet()){
-            if (entry.getKey() != this.sessaoAtual){
+            if (!entry.getKey().equals(this.sessaoAtual)){
                 entry.getValue().getPorVender().stream().forEach(artigos::add);
-            } 
+            }
         }
         return artigos;
     }
+
 
 
     
@@ -134,7 +145,7 @@ public class Vintage implements Serializable{
 
 
     public List<Encomenda> encomendasParaDevolver(){
-        return this.encomendas.stream().filter(e -> e.getPrazoLimite().isAfter(dataPrograma)).map(e -> e.clone()).collect(Collectors.toList());
+        return this.encomendas.stream().filter(e -> e.getPrazoLimite().isAfter(dataPrograma) && e.getDono().equals(this.sessaoAtual)).map(e -> e.clone()).collect(Collectors.toList());
     }
 
 
@@ -153,11 +164,23 @@ public class Vintage implements Serializable{
         this.encomendas.remove(enc);
     }
 
+    public void adiarPrazoLimite(int id, int dias){
+        for (Encomenda e : this.encomendas){
+            if (id == e.getId()){
+                LocalDate dataLimite = e.getPrazoLimite().plusDays(dias);
+                e.setPrazoLimite(dataLimite);
+            }
+        }
+    }
+
     private void adicionaArtigoVenda(int id, String email, Encomenda e){
         for(Artigo a : e.getArtigos()){
             if (a.getId() == id){
                 for(String u : this.utilizadores.keySet()){
-                    if (email.equals(u)){ adicionarPorVender(a, u); }
+                    if (email.equals(u)){ 
+                        adicionarPorVender(a, u);
+                        this.utilizadores.get(u).removeVenda(id);
+                     }
                 }
             }
         }
@@ -175,6 +198,8 @@ public class Vintage implements Serializable{
         for (Map.Entry<String,Utilizador> user : this.utilizadores.entrySet()){
             if (user.getValue().getPorVender().stream().anyMatch(artigo -> artigo.getId() == id)){
                 Artigo a = user.getValue().removePorVender(id);
+                user.getValue().adicionaVendas(a);
+                user.getValue().adicionaFaturacao(this.dataPrograma,a.precoFinal(dataPrograma));    // adiciona a faturação
                 artigos.add(a.clone());
                 vendedores.put(id, user.getKey());
             }
@@ -197,6 +222,135 @@ public class Vintage implements Serializable{
     public void adicionarPorVender(Artigo a,String user){
         this.utilizadores.get(user).adicionarPorVender(a);
     }
+
+
+
+    public void aterarTransportadora(String transportadora, Double lucro, Double imposto, int formula){
+        this.transportadoras.get(transportadora).altera(lucro,imposto,formula);
+    }
+
+
+
+
+    // ESTATISTICAS
+
+    public String calculaMaiorFaturacaoSempre(){
+        double max = 0.0;
+        String utilizador = "";
+        for(String user : this.utilizadores.keySet()){
+            double valor = this.utilizadores.get(user).calculaFaturacaoSempre();
+            if (valor > max) {
+                max = valor;
+                utilizador = user;
+            }
+        }
+        return utilizador;
+    }
+
+    public double getMaiorFaturacaoSempre(String user){
+        return this.utilizadores.get(user).calculaFaturacaoSempre();
+    }
+
+    public String calculaMaiorFauracaoIntevalo(LocalDate before, LocalDate after){
+        double max = 0.0;
+        String utilizador = "";
+        for(String user : this.utilizadores.keySet()){
+            double valor = this.utilizadores.get(user).calculaFaturacaoIntervalo(before, after);
+            if (valor > max) {
+                max = valor;
+                utilizador = user;
+            }
+        }
+        return utilizador;
+    }
+
+    public double getMaiorFaturacaoIntervalo(LocalDate before, LocalDate after, String user){
+        return this.utilizadores.get(user).calculaFaturacaoIntervalo(before, after);
+    }
+
+
+    public String calculaMaiorVolFaturacao(){
+        double max = 0.0;
+        String transportadora = "";
+        for(String transp : this.transportadoras.keySet()){
+            double valor = this.transportadoras.get(transp).getVolFaturacao();
+            if (valor > max){
+                max = valor;
+                transportadora = transp;
+            }
+        }
+        return transportadora;
+    }
+
+    public double getMaiorVolFaturacao(String transp){
+        return this.transportadoras.get(transp).getVolFaturacao();
+    }
+
+    public List<Artigo> listarVendas(String email){
+        if (this.utilizadores.containsKey(email)){
+            return this.utilizadores.get(email).getVendas();
+        } else {
+            return null;
+        }
+    }
+
+    public Map<String,Double> top10Vendedores(LocalDate data){
+        Map<String,Double> vendasUser = new LinkedHashMap<>();
+        for(String u : this.utilizadores.keySet()){
+            double venda = verificaCompras(data, this.utilizadores.get(u).getVendas());
+            vendasUser.put(u, venda);
+        }
+        return vendasUser.entrySet().stream()
+                                            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                                            .collect(Collectors.toMap(
+                                                    Map.Entry::getKey,
+                                                    Map.Entry::getValue,
+                                                    (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+    }
+
+
+
+    public Map<String,Double> top10Compradores(LocalDate data){
+
+        Map<String,Double> comprasUser = new LinkedHashMap<>();
+        for(String u : this.utilizadores.keySet()){
+            double compra = verificaCompras(data,this.utilizadores.get(u).getCompras());
+            comprasUser.put(u, compra);
+        }
+
+        return comprasUser.entrySet().stream()
+                                            .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                                            .collect(Collectors.toMap(
+                                                    Map.Entry::getKey,
+                                                    Map.Entry::getValue,
+                                                    (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+
+    }
+
+
+    private double verificaCompras(LocalDate data, List<Artigo> compras){
+        double total = 0.0;
+        for (Artigo a : compras){
+            for (Encomenda e : this.encomendas){
+                if (e.getArtigos().contains(a) && e.getDataCriacao().isAfter(data)){
+                        total+= a.precoFinal(e.getDataCriacao());
+                }
+            }
+        }
+        return total;
+    }
+
+
+
+    public double totalDinheiroVintage(){
+        double total = 0.0;
+        for (Encomenda e : this.encomendas){
+            if (e.getEstado() == Estado_Encomenda.FINALIZADA) 
+            total += e.getPrecoFinal();
+        }
+        return total;
+    } 
 
 
 

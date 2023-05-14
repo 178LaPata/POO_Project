@@ -4,8 +4,10 @@ import Files.*;
 import Model.*;
 import View.*;
 
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
+import java.time.LocalDate;
 
 public class Controlador implements Serializable{
     private final Input in;
@@ -23,25 +25,64 @@ public class Controlador implements Serializable{
     }
 
 
-    /*
+    
     private void interpretadorEstatisticas (Vintage v, Apresentacao a){
         int comando;
         boolean b = true;
 
         while(b){
-            a.printMenuEstatisticas(); // por fazer
+            a.printMenuEstatisticas(); 
             comando = in.lerInt(a,"Escolha uma das opções:",0,5);
 
             switch(comando){
                 case 1:
+                    a.printMessage("--------------------------");
+                    int opcao = in.lerInt(a, "1 | Desde sempre\n2 | Intervalo de Tempo", 1, 2);
+                    a.printMessage("--------------------------");
+                    if (opcao == 1) {
+                        String vendedor = v.calculaMaiorFaturacaoSempre();
+                        double valor = v.getMaiorFaturacaoSempre(vendedor);
+                        a.printMessage("O Vendedor que mais faturou desde sempre foi: " + vendedor + " num total de: " + valor);
+                    }
+                    if (opcao == 2){
+                        LocalDate before = in.lerData(a, "Data início (dd-mm-aaaa): ");
+                        LocalDate after = in.lerData(a, "Data fim (dd-mm-aaaa): ");
+                        String vendedor = v.calculaMaiorFauracaoIntevalo(before, after);
+                        double valor = v.getMaiorFaturacaoIntervalo(before, after, vendedor);
+                        a.printMessage("O Vendedor que mais faturou entre" + before + " e " + after + " foi: " + vendedor + " num total de: " + valor);
+                    }
                     break;
                 case 2:
+                    String transportadora = v.calculaMaiorVolFaturacao();
+                    double valor = v.getMaiorVolFaturacao(transportadora);
+                    a.printMessage("A transportadora com maior volume de faturação é: " + transportadora + " num total de: " + valor);
                     break;
                 case 3:
+                    String email = in.lerString(a, "Email do vendedor: ");
+                    List<Artigo> vendas = v.listarVendas(email);
+                    if (vendas != null){
+                        a.printArtigos(vendas, v.getDataPrograma());
+                    }
+                    else {
+                        a.printMessage("Email não existe!");
+                    }
                     break;
                 case 4:
+                    a.printMessage("--------------------------");
+                    int opt = in.lerInt(a, "1 | Listar Vendedores\n2 | Listar Compradores", 0, 1);
+                    int dias = in.lerInt(a,"Indique os dias que quer recuar: ", 0, 1000);
+                    a.printMessage(".-------------------------");
+                    LocalDate dataInicial = v.getDataPrograma().minusDays(dias);
+                    if (opt == 1) {
+                        a.printTop10(v.top10Vendedores(dataInicial));
+                    }
+                    if (opt == 2){
+                        a.printTop10(v.top10Compradores(dataInicial));
+                    }
                     break;
                 case 5:
+                    double total = v.totalDinheiroVintage();
+                    a.printMessage("Dinheiro ganho pela Vintage: " + total);
                     break;
                 case 0:
                     b = false;
@@ -52,30 +93,32 @@ public class Controlador implements Serializable{
             }
         }
     }
-    */
+    
 
 
 
 
-    /*
-    private void interpretadorConsultas (Vintage v, Apresentacao a, Utilizador u){
+
+    private void interpretadorConsultas (Vintage v, Apresentacao a){
         int comando;
         boolean b = true;
 
         while(b){
             a.printMenuConsultas();
-            comando = in.lerInt(a,"Escolha uma das opções:",0,3);
+            comando = in.lerInt(a,"Escolha uma das opções:",0,4);
 
             switch(comando){
                  case 1: // Ver Produtos que está a Vender       
+                    a.printArtigos(v.getUtilizadores().get(v.getSessaoAtual()).getPorVender(), v.getDataPrograma());
                     break;
                 case 2: // Ver os Produtos que já Comprou
+                    a.printArtigos(v.getUtilizadores().get(v.getSessaoAtual()).getCompras(), v.getDataPrograma());
                     break;
                 case 3: // Ver os Produtos que já Vendeu
+                    a.printArtigos(v.getUtilizadores().get(v.getSessaoAtual()).getVendas(), v.getDataPrograma());
                     break;
                 case 4: // Ver transportadoras disponíveis
-                    // Sacar o map das transportadoras
-                    // Printar esse Map
+                    a.printTransportadoras(v.getTransportadoras());
                     break;
                 case 0:
                     b = false;
@@ -87,7 +130,6 @@ public class Controlador implements Serializable{
 
     }
 
-    */
 
 
 
@@ -110,7 +152,7 @@ public class Controlador implements Serializable{
             if(v.getSessaoAtual() == null){
                 
                 a.printMenuInicial();
-                comando = in.lerInt(a,"Escolhe uma das opcões: ",0,5);
+                comando = in.lerInt(a,"Escolhe uma das opcões: ",0,6);
                 
                 switch(comando){
                     case 1: // Login / Registar
@@ -129,7 +171,12 @@ public class Controlador implements Serializable{
                         a.printMessage("Dados Carregados com Sucesso em " + ficheiroA + ".dat");
                         break;
                     case 4: // Criar Transportadora
-                        ct.interpretador(v,a);
+                        a.printMessage("----------------------------");
+                        a.printMessage("1 | Criar Transportadora\n2 | Editar Transportadora\n0 | Voltar Atrás");
+                        a.printMessage("----------------------------");
+                        int option = in.lerInt(a, "Escolha uma das opções: ", 0, 2);
+                        if (option == 1){ct.interpretador(v,a);break;}
+                        if (option == 2){ct.alterarTransportadora(v,a);break;}
                         break;
                     case 5: // Avançar no Tempo
                         Input in = new Input();
@@ -139,8 +186,9 @@ public class Controlador implements Serializable{
                         v.avancarTempo();
                         a.printMessage("Data do Programa Atualizada: " + v.getDataPrograma());
                         break;
-
-                        
+                    case 6: // Estatísticas
+                        this.interpretadorEstatisticas(v, a);
+                        break;
                     case 0: // Sair do programa
                         b = false;
                         break;
@@ -150,27 +198,28 @@ public class Controlador implements Serializable{
                 }
             }else{
                 a.printMainMenuLogOut();
-                comando = in.lerInt(a,"Escolhe uma das opções: ",0,6);
+                comando = in.lerInt(a,"Escolhe uma das opções: ",0,5);
                 switch(comando){
                     case 1: // Dar logout
                         v.SetSessaoAtual(null);
                         a.printMessage("Logout feito com Sucesso!");
                         break;
-                    case 2: // Consultar as Estatisticas
-                        //interpretadorEstatisticas(v,a);
+                    case 2: // Consultar os Produtos
+                        interpretadorConsultas(v,a);
                         break;
-                    case 3: // Consultar os Produtos
-                        //u = v.getUtilizador(l.getemail());
-                        // interpretadorConsultas(v,a,u);
-                        break;
-                    case 4: // Colocar Produto para Vender
+                    case 3: // Colocar Produto para Vender
                         ca.interpretador(a,v);
                         break;
-                    case 5: // Fazer encomenda
+                    case 4: // Fazer encomenda
                         ce.interpretador(a,v);
                         break;
-                    case 6: // Devolver encomenda
-                        ce.interpretadorDevolver(a,v);
+                    case 5: // Devolver encomenda
+                        a.printMessage("--------------------------");
+                        a.printMessage("1 | Devolver Encomenda\n2 | Adiar Prazo Limite\n0 | Voltar Atrás");
+                        a.printMessage("--------------------------");
+                        int opt = in.lerInt(a,"Escolha uma das opções", 0, 2);
+                        if (opt == 1){ce.interpretadorDevolver(a,v);break;}
+                        if (opt == 2){ce.interpretadorAdiar(a, v);break;}
                         break;
                     case 0: // Sair do programa
                         b = false;

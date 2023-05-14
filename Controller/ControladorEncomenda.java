@@ -136,8 +136,29 @@ public class ControladorEncomenda implements Serializable{
         a.printMessage("Encomenda foi devolvida.");
     }
 
-        
 
+
+    public void interpretadorAdiar(Apresentacao a, Vintage v){
+        List<Encomenda> encomendas = v.encomendasParaDevolver();
+        if (encomendas.size() == 0){
+            a.printMessage("Não existem encomendas para adiar.");
+            return;
+        }
+
+        int encomenda = -1;
+        a.printEncomendas(encomendas, v.getDataPrograma());
+
+        List<Integer> idEnc = encomendas.stream().map(enc -> enc.getId()).collect(Collectors.toList());
+        boolean b = true;
+        while (b){
+            encomenda = in.lerInt(a, "Escolha a encomenda que pretende adiar: ", 0, 100000);
+            if (idEnc.contains(encomenda)){b = false;}
+            else{a.printMessage("Encomenda não existe.");}
+        }
+        int dias = in.lerInt(a, "Nº de dias que pretende adiar: ", 0, 100);
+        v.adiarPrazoLimite(encomenda,dias);
+        a.printMessage("Prazo limite encomenda adiado " + dias +" dias.");
+    }
 
 
 

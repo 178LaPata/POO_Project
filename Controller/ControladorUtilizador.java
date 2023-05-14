@@ -1,8 +1,11 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.*;
+import java.time.LocalDate;
 
 import Model.*;
 import View.*;
@@ -39,9 +42,12 @@ public class ControladorUtilizador implements Serializable{
         while (v.existeEmail(email)){ a.printMessage("Email já existente."); email = in.lerString(a, "Introduza o email: ");}
         String password = in.lerString(a, "Introduza a password: ");
         String morada = in.lerString(a, "Introduza a morada: ");
-        int nif = in.lerInt(a, "Introduza o NIF: ", 0, 10000);
-        return new Utilizador(email,password,nome,morada,nif,compras,porVender);
+        int nif = in.lerInt(a, "Introduza o NIF: ", 10000000, 999999999);
+        List<Artigo> vendas = new ArrayList<>();
+        Map<LocalDate,Double> faturacao = new HashMap<>();
+        return new Utilizador(email,password,nome,morada,nif,compras,porVender,vendas,faturacao);
     }
+
 
 
 
@@ -69,7 +75,7 @@ public class ControladorUtilizador implements Serializable{
                     email = u.getEmail();
                     a.printMessage("Registo com Sucesso!");
                     b = false;
-                    System.out.println("Email: " + u.getEmail() + " Password: " + u.getPassword()); // REMOVER (APENAS PARA TESTE)
+                    a.printMessage("Email: " + email + "  |  Password: " + u.getPassword());
                 case 0:
                     b = false;
                     break;

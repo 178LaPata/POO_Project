@@ -29,7 +29,6 @@ public class ControladorArtigo implements Serializable{
         TShirt.Padrao padrao = TShirt.Padrao.valueOf(padraoString);
         String estadoString = in.lerString(a, ">> Estado T-Shirt (NOVO,USADO): ");
         Artigo.Estado estado = Artigo.Estado.valueOf(estadoString);
-        System.out.println(estadoString.length());
         if ((estadoString.equals("USADO"))){
             numDonos = in.lerInt(a, ">> Nº Donos: ", 1, 1000);
             String avaliacaoString = in.lerString(a, ">> Avaliação T-Shirt (IMPECÁVEL,BOM,SATISFATÓRIO): ");
@@ -80,6 +79,9 @@ public class ControladorArtigo implements Serializable{
         String cod = in.lerString(a,">> Código Mala: ");
         Double precoB = in.lerDouble(a,">> Preço Base Mala: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">> Correção Preço Mala: ",0,1000000);
+        if (tipoString.equals("PREMIUM")){
+            a.printTransportadoras(v.getTransportadorasPremium());
+        }
         a.printTransportadoras(v.getTransportadoras());
         
         while (transportadora == null){

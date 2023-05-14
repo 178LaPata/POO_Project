@@ -1,8 +1,13 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 import java.io.*;
+import java.time.LocalDate;
 
 public class Utilizador implements Serializable{
     private static int nextID = 1;
@@ -14,6 +19,8 @@ public class Utilizador implements Serializable{
     private int nif;
     private List<Artigo> compras;
     private List<Artigo> porVender;
+    private List<Artigo> vendas;
+    private Map<LocalDate,Double> faturacao;    // em cada dia o valor das vendas
 
 
     public Utilizador() {
@@ -24,17 +31,22 @@ public class Utilizador implements Serializable{
         this.morada = "";
         this.nif = 0;
         this.porVender = new ArrayList<>();
+        this.compras = new ArrayList<>();
+        this.faturacao = new HashMap<>();
     }
 
-    public Utilizador(String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> porVender) {
+    public Utilizador(String email, String password, String nome, String morada, int nif, List<Artigo> compras, List<Artigo> porVender, List<Artigo> vendas, Map<LocalDate,Double> faturacao) {
         this.id = nextID++;
         this.email = email;
         this.password = password;
         this.nome = nome;
         this.morada = morada;
         this.nif = nif;
-        this.compras = compras;
-        this.porVender = porVender;
+        setCompras(compras);
+        setPorVender(porVender);
+        setVendas(vendas);
+        setFaturacao(faturacao);
+        
     }
 
     public Utilizador(Utilizador u) {
@@ -45,6 +57,9 @@ public class Utilizador implements Serializable{
         this.morada = u.getMorada();
         this.nif = u.getNif();
         this.porVender = u.getPorVender();
+        this.compras = u.getCompras();
+        this.vendas = u.getVendas();
+        this.faturacao = u.getFaturacao();
     }
 
     public int getId() {
@@ -129,6 +144,30 @@ public class Utilizador implements Serializable{
         }
     }
 
+    public List<Artigo> getVendas(){
+        List<Artigo> aux = new ArrayList<>();
+        for (Artigo a : this.vendas){
+            aux.add(a.clone());
+        }
+        return aux;
+    }
+
+    public void setVendas(List<Artigo> vendas){
+        this.vendas = new ArrayList<>();
+        for (Artigo a : vendas){
+            this.vendas.add(a.clone());
+        }
+    }
+
+
+    public Map<LocalDate,Double> getFaturacao(){
+        return this.faturacao;
+    }
+
+    public void setFaturacao(Map<LocalDate,Double> faturacao){
+        this.faturacao = faturacao;
+    }
+
     
     public void adicionarPorVender(Artigo a){
         this.porVender.add(a.clone());
@@ -148,6 +187,20 @@ public class Utilizador implements Serializable{
         return art;
     }
 
+    public void adicionaVendas(Artigo a){
+        this.vendas.add(a.clone());
+    }
+
+    public void removeVenda(int id){
+        Artigo art = null;
+        for (Artigo a : this.vendas){
+            if (a.getId() == id){
+                art = a;
+                break;
+            }
+        }
+        if (art != null){ this.vendas.remove(art);}
+    }
 
 
 
@@ -170,7 +223,9 @@ public class Utilizador implements Serializable{
                 this.nome.equals(u.getNome()) &&
                 this.morada.equals(u.getMorada()) &&
                 this.nif == u.getNif() &&
-                this.porVender.equals(u.getPorVender()));
+                this.compras.equals(u.getCompras()) &&
+                this.porVender.equals(u.getPorVender()) &&
+                this.faturacao.equals(u.getFaturacao()));
     }
 
     public String toString() {
@@ -191,4 +246,23 @@ public class Utilizador implements Serializable{
     public Utilizador clone() {
         return new Utilizador(this);
     }
+
+
+    public void adicionaFaturacao(LocalDate data, double valor){
+        if (this.faturacao.containsKey(data)){
+            double novoValor = faturacao.get(data) + valor;
+            faturacao.put(data, novoValor);
+        } else {
+            faturacao.put(data, valor);
+        }
+    }
+
+    public double calculaFaturacaoSempre(){
+        return this.faturacao.values().stream().reduce(0.0, (subtotal,valor) -> subtotal + valor);
+    }
+
+    public double calculaFaturacaoIntervalo(LocalDate before, LocalDate after){
+        return this.faturacao.entrySet().stream().filter(entry -> entry.getKey().isAfter(before) && entry.getKey().isBefore(after)).mapToDouble(Map.Entry::getValue).sum();
+    }
+
 }
