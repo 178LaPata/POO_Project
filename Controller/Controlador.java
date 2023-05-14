@@ -69,7 +69,7 @@ public class Controlador implements Serializable{
                     break;
                 case 4:
                     a.printMessage("--------------------------");
-                    int opt = in.lerInt(a, "1 | Listar Vendedores\n2 | Listar Compradores", 0, 1);
+                    int opt = in.lerInt(a, "1 | Listar Vendedores\n2 | Listar Compradores", 0, 2);
                     int dias = in.lerInt(a,"Indique os dias que quer recuar: ", 0, 1000);
                     a.printMessage(".-------------------------");
                     LocalDate dataInicial = v.getDataPrograma().minusDays(dias);
@@ -120,6 +120,8 @@ public class Controlador implements Serializable{
                 case 4: // Ver transportadoras disponíveis
                     a.printTransportadoras(v.getTransportadoras());
                     break;
+                case 5:
+                    a.printEncomendas(v.getEncomendasSessaoAtual());
                 case 0:
                     b = false;
                     break;

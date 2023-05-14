@@ -75,8 +75,8 @@ public class Apresentacao implements Serializable {
         out.printArtigos(a,data);
     }
 
-    public void printEncomendas(List<Encomenda> e,LocalDate data){
-        out.printEncomendas(e,data);
+    public void printEncomendas(List<Encomenda> e){
+        out.printEncomendas(e);
     }
 
     public void printCarrinho(List<Integer> carrinho){

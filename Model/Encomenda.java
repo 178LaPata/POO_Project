@@ -185,10 +185,11 @@ public class Encomenda implements Serializable{
 
 
     public Map<Integer,String> getVendedores(){
-        return this.vendedores;
+        return new HashMap<>(vendedores);
     }
+
     public void setVendedores(Map<Integer,String> vendedores){
-        this.vendedores = vendedores;
+        this.vendedores = new HashMap<>(vendedores);
     }
 
     public boolean equals(Object o) {

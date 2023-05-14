@@ -161,11 +161,11 @@ public class Utilizador implements Serializable{
 
 
     public Map<LocalDate,Double> getFaturacao(){
-        return this.faturacao;
+        return new HashMap<>(this.faturacao);
     }
 
     public void setFaturacao(Map<LocalDate,Double> faturacao){
-        this.faturacao = faturacao;
+        this.faturacao = new HashMap<>(faturacao);
     }
 
     
@@ -245,6 +245,19 @@ public class Utilizador implements Serializable{
 
     public Utilizador clone() {
         return new Utilizador(this);
+    }
+
+
+    public void removeCompras(List<Artigo> artigos){
+        this.compras.removeAll(artigos);        
+    }
+
+    public void removeFaturacao(LocalDate data, Double valor){
+        Double valorExistente = this.faturacao.get(data);
+        if (valorExistente != null){
+            faturacao.put(data, valorExistente - valor);
+        }
+
     }
 
 

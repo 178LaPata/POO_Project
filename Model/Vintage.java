@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import Model.Encomenda.Estado_Encomenda;
 
 import java.io.*;
@@ -28,6 +27,24 @@ public class Vintage implements Serializable{
         this.dataPrograma = LocalDate.now();
     }
 
+    public Vintage(String sessao, Map<String,Utilizador> users, List<Encomenda> enco, Map<String,Transportadoras> transp, LocalDate data){
+        this.sessaoAtual = sessao;
+        setUtizadores(users);
+        setEncomendas(enco);
+        setTransportadoras(transp);
+        this.dataPrograma = data;
+    }
+
+    public Vintage(Vintage v){
+        this.sessaoAtual = v.getSessaoAtual();
+        setUtizadores(v.getUtilizadores());
+        setEncomendas(v.getEncomendas());
+        setTransportadoras(v.getTransportadoras());
+        this.dataPrograma = v.getDataPrograma();
+    }
+
+
+
 
     public String getSessaoAtual(){
         return this.sessaoAtual;
@@ -38,6 +55,7 @@ public class Vintage implements Serializable{
     }
 
 
+
     public Map<String,Utilizador> getUtilizadores(){
         Map<String,Utilizador> aux = new HashMap<>();
         for (Map.Entry<String,Utilizador> a : this.utilizadores.entrySet()){
@@ -46,8 +64,33 @@ public class Vintage implements Serializable{
         return aux;
     }
 
+    public void setUtizadores(Map<String,Utilizador> u){
+        Map<String,Utilizador> aux = new HashMap<>();
+        for(Map.Entry<String,Utilizador> a : u.entrySet()){
+            aux.put(a.getKey(),a.getValue().clone());
+        }
+        this.utilizadores = aux;
+    }
+
+
+
+    public List<Encomenda> getEncomendas(){
+        List<Encomenda> enc = new ArrayList<>();
+        for (Encomenda e : this.encomendas){
+            enc.add(e.clone());
+        }
+        return enc;
+    }
+
     
 
+    public void setEncomendas(List<Encomenda> enco){
+        List<Encomenda> enc = new ArrayList<>();
+        for (Encomenda e : enco){
+            enc.add(e.clone());
+        }
+        this.encomendas = enc;
+    }
 
     public Map<String, Transportadoras> getTransportadoras() {
         Map<String,Transportadoras> aux = new HashMap<>();
@@ -58,16 +101,69 @@ public class Vintage implements Serializable{
     }
 
 
-    public Map<String, Transportadoras> getTransportadorasPremium(){
+    public void setTransportadoras(Map<String,Transportadoras> transp){
         Map<String,Transportadoras> aux = new HashMap<>();
-        for (Map.Entry<String,Transportadoras> e : this.transportadoras.entrySet()){
-            if(e.getValue().isPremium()){
+        for (Map.Entry<String,Transportadoras> e : transp.entrySet()){
             aux.put(e.getKey(), e.getValue().clone());
-            }
         }
-        return aux;
+        this.transportadoras = aux;
     }
 
+
+
+
+
+
+    public LocalDate getDataPrograma(){
+        return this.dataPrograma;
+    }
+
+
+
+    public void setDataPrograma(LocalDate data){
+        this.dataPrograma = data;
+    }
+
+
+
+
+
+    public boolean equals(Object o){
+        if (this == o) 
+            return true;
+        if ((o == null) || (this.getClass() != o.getClass())) 
+            return false;
+        Vintage v = (Vintage) o;
+        return (this.sessaoAtual.equals(v.getSessaoAtual()) &&
+                this.utilizadores.equals(v.getUtilizadores()) &&
+                this.encomendas.equals(v.getEncomendas()) &&
+                this.transportadoras.equals(v.getTransportadoras()) &&
+                this.dataPrograma.equals(v.getDataPrograma()));
+    } 
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("----------------------------------------\n");
+        sb.append("               VINTAGE                  \n");
+        sb.append("----------------------------------------\n");
+        sb.append("Sessão Atual: ").append(this.sessaoAtual).append("\n");
+        sb.append("Utilizadores: ").append(this.utilizadores).append("\n");
+        sb.append("Encomendas: ").append(this.encomendas).append("\n");
+        sb.append("Transportadoras: ").append(this.transportadoras).append("\n");
+        sb.append("Data do Programa: ").append(this.dataPrograma).append("\n");
+        return sb.toString();
+    }
+
+
+
+
+
+
+
+
+
+
+    //  Métodos auxiliares
 
 
 
@@ -83,14 +179,14 @@ public class Vintage implements Serializable{
     }
 
 
-
-    
-    public void setDataPrograma(LocalDate data){
-        this.dataPrograma = data;
-    }
-
-    public LocalDate getDataPrograma(){
-        return this.dataPrograma;
+    public Map<String, Transportadoras> getTransportadorasPremium(){
+        Map<String,Transportadoras> aux = new HashMap<>();
+        for (Map.Entry<String,Transportadoras> e : this.transportadoras.entrySet()){
+            if(e.getValue().isPremium()){
+            aux.put(e.getKey(), e.getValue().clone());
+            }
+        }
+        return aux;
     }
 
 
@@ -110,6 +206,16 @@ public class Vintage implements Serializable{
 
 
 
+
+    public List<Encomenda> getEncomendasSessaoAtual(){
+        List<Encomenda> encomendas = new ArrayList<>();
+        for (Encomenda e : this.encomendas){
+            if (e.getDono().equals(this.sessaoAtual)){
+                encomendas.add(e.clone());
+            }
+        }
+        return encomendas;
+    }
 
 
     public boolean existeEmail(String email){
@@ -132,12 +238,8 @@ public class Vintage implements Serializable{
     public void avancarTempo(){
         for (Encomenda e : this.encomendas){
             int comparar = this.dataPrograma.compareTo(e.getPrazoLimite());
-            if (comparar > 0){
+            if (comparar > 0 && e.getEstado() != Estado_Encomenda.DEVOLVIDA){
                 e.setEstado(Estado_Encomenda.FINALIZADA);
-                Utilizador u = this.utilizadores.get(e.getDono());
-                for(Artigo a : e.getArtigos()){
-                    u.adicionaCompra(a);
-                }
             }
 
         }
@@ -150,18 +252,16 @@ public class Vintage implements Serializable{
 
 
     public void devolverEncomenda(int id){
-        Encomenda enc = null;
         for (Encomenda e : this.encomendas){
             if (id == e.getId()){
                 for (Map.Entry<Integer,String> dono : e.getVendedores().entrySet()){
                     adicionaArtigoVenda(dono.getKey(), dono.getValue(), e);
                 }
-                enc = e;
+                this.utilizadores.get(e.getDono()).removeCompras(e.getArtigos());
                 e.setEstado(Estado_Encomenda.DEVOLVIDA);
                 break;
             }
         }
-        this.encomendas.remove(enc);
     }
 
     public void adiarPrazoLimite(int id, int dias){
@@ -180,6 +280,7 @@ public class Vintage implements Serializable{
                     if (email.equals(u)){ 
                         adicionarPorVender(a, u);
                         this.utilizadores.get(u).removeVenda(id);
+                        this.utilizadores.get(u).removeFaturacao(e.getDataCriacao(),a.precoFinal(e.getDataCriacao()));
                      }
                 }
             }
@@ -198,6 +299,7 @@ public class Vintage implements Serializable{
         for (Map.Entry<String,Utilizador> user : this.utilizadores.entrySet()){
             if (user.getValue().getPorVender().stream().anyMatch(artigo -> artigo.getId() == id)){
                 Artigo a = user.getValue().removePorVender(id);
+                this.utilizadores.get(this.sessaoAtual).adicionaCompra(a.clone());
                 user.getValue().adicionaVendas(a);
                 user.getValue().adicionaFaturacao(this.dataPrograma,a.precoFinal(dataPrograma));    // adiciona a faturação
                 artigos.add(a.clone());

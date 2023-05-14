@@ -69,7 +69,7 @@ public class Output implements Serializable {
         }
     }
 
-    public void printEncomendas(List<Encomenda> encomendas, LocalDate data){
+    public void printEncomendas(List<Encomenda> encomendas){
         System.out.println("+-----------------------------+\n|          Encomendas         |\n+-----------------------------+");
         for (Encomenda e : encomendas){
             System.out.print(e.toString());

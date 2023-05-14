@@ -40,7 +40,7 @@ public class ViewMain implements Serializable {
     
 
     public void printMenuConsultas(){
-        out.printMenus((new String[]{"Produtos a Vender", "Produtos Comprados", "Produtos Vendidos","Transportadoras Disponíveis"}),"      CONSULTAS",1);
+        out.printMenus((new String[]{"Produtos a Vender", "Produtos Comprados", "Produtos Vendidos","Transportadoras Disponíveis","Encomendas Realizadas"}),"      CONSULTAS",1);
     }
 
     public void printMenuEstatisticas(){

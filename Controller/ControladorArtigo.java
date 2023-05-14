@@ -82,7 +82,7 @@ public class ControladorArtigo implements Serializable{
         if (tipoString.equals("PREMIUM")){
             a.printTransportadoras(v.getTransportadorasPremium());
         }
-        a.printTransportadoras(v.getTransportadoras());
+        else {a.printTransportadoras(v.getTransportadoras());}
         
         while (transportadora == null){
             transp = in.lerString(a, ">> Transportadora: ");
@@ -123,7 +123,11 @@ public class ControladorArtigo implements Serializable{
         String cod = in.lerString(a,">>> Código Sapatilha: ");
         Double precoB = in.lerDouble(a,">>> Preço Base Sapatilha: ",0,10000000);
         Double correcaoP = in.lerDouble(a,">>> Correção Preço Sapatilha: ",0,1000000);
-        a.printTransportadoras(v.getTransportadoras());
+        if (tipoString.equals("PREMIUM")){
+            a.printTransportadoras(v.getTransportadorasPremium());
+        }
+        else {a.printTransportadoras(v.getTransportadoras());}
+
         while (transportadora == null){
             transp = in.lerString(a, ">> Transportadora: ");
             transportadora = v.getTransportadora(transp);

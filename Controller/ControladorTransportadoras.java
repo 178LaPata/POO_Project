@@ -41,7 +41,6 @@ public class ControladorTransportadoras implements Serializable{
             a.formulasTransportadora();
             int formula = in.lerInt(a,"Selecione a fórmula que pretende aplicar: ", 0,4);
             v.aterarTransportadora(transportadora,lucro,imposto,formula);
-            System.out.println(v.getTransportadora(transportadora));
             a.printMessage("Transportadora Alterada com Sucesso!");
         }
         else {

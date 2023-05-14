@@ -123,7 +123,7 @@ public class ControladorEncomenda implements Serializable{
         }
 
         int encomenda = -1;
-        a.printEncomendas(encomendas, v.getDataPrograma());
+        a.printEncomendas(encomendas);
 
         List<Integer> idEnc = encomendas.stream().map(enc -> enc.getId()).collect(Collectors.toList());
         boolean b = true;
@@ -146,7 +146,7 @@ public class ControladorEncomenda implements Serializable{
         }
 
         int encomenda = -1;
-        a.printEncomendas(encomendas, v.getDataPrograma());
+        a.printEncomendas(encomendas);
 
         List<Integer> idEnc = encomendas.stream().map(enc -> enc.getId()).collect(Collectors.toList());
         boolean b = true;
