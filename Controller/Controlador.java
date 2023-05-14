@@ -105,7 +105,7 @@ public class Controlador implements Serializable{
 
         while(b){
             a.printMenuConsultas();
-            comando = in.lerInt(a,"Escolha uma das opções:",0,4);
+            comando = in.lerInt(a,"Escolha uma das opções:",0,5);
 
             switch(comando){
                  case 1: // Ver Produtos que está a Vender       

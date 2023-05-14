@@ -66,6 +66,7 @@ public class ControladorEncomenda implements Serializable{
         boolean b = true;
         int comando;
         List<Artigo> artigosVenda = v.getArtigosVenda(); // produtos disponíveis
+        if (artigosVenda.size() == 0){a.printMessage("Não existem artigos disponíveis.");return;}
         List<Integer> carrinho = new ArrayList<>(); // carrinho de compras
         List<Integer> idDisponivel = getIDArtigosVenda(artigosVenda);
         a.printArtigos(artigosVenda,v.getDataPrograma());
